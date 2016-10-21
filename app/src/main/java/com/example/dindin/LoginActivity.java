@@ -96,8 +96,10 @@ public class LoginActivity extends FragmentActivity {
                     "Welcome " + userProfile.getFirstName() + " " + userProfile.getLastName()
             );
         }
-        Intent goToNextActivity = new Intent(getApplicationContext(), YourNewClass.class);
-        startActivity(goToNextActivity);
+        if(userProfile != null) {
+            Intent goToNextActivity = new Intent(getApplicationContext(), LandingActivity.class);
+            startActivity(goToNextActivity);
+        }
     }
 
     @Override
