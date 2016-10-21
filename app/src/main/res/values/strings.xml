@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">dindin</string>
+    <string name="app_id">352800581722920</string>
+    <string name="welcome_message">welcome\nto\ndindin</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="mTextDetails"></string>
+</resources>
