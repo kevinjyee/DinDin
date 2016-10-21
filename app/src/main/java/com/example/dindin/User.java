@@ -24,5 +24,6 @@ public class User {
 
     public User(Profile profile){
         this.facebookUser = profile;
+        this.name = profile.getName();
     }
 }
