@@ -54,7 +54,19 @@
             android:name=".LandingActivity"
             android:label="@string/title_activity_landing"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".SplashActivity"></activity>
+        <activity android:name=".SplashActivity" />
+        <activity
+            android:name="com.android.slidingmenu.MainActivity"
+            android:label="@string/title_activity_main"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".com.example.slidingmenu.MainActivity"
+            android:label="@string/title_activity_main"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".app.android.slidingmenu.MainActivity"
+            android:label="@string/title_activity_main"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
