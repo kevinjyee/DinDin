@@ -1,121 +1,151 @@
-package com.example.dindin;
 
-import android.*;
+        package com.example.dindin;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.example.dindin.com.example.NavBarActivity;
-import com.facebook.AccessToken;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
-import com.facebook.Profile;
-import com.facebook.ProfileTracker;
-import com.facebook.appevents.AppEventsLogger;
-import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
-import com.facebook.login.widget.ProfilePictureView;
-
-import layout.LoginFragment;
-import android.support.v4.app.FragmentActivity;
+        import android.os.Bundle;
+        import android.support.v7.app.AppCompatActivity;
+        import android.util.Log;
+        import android.view.Menu;
+        import android.view.MenuItem;
 import android.widget.TextView;
 
-public class LoginActivity extends FragmentActivity {
+import com.example.dindin.com.example.NavBarActivity;
+import com.facebook.CallbackManager;
+        import com.facebook.FacebookCallback;
+        import com.facebook.FacebookException;
+        import com.facebook.FacebookSdk;
+        import com.facebook.GraphRequest;
+        import com.facebook.GraphResponse;
+        import com.facebook.appevents.AppEventsLogger;
+        import com.facebook.login.LoginResult;
+        import com.facebook.login.widget.LoginButton;
+        import com.facebook.ProfileTracker;
+import com.facebook.Profile;
+import com.facebook.login.widget.ProfilePictureView;
+        import org.json.JSONObject;
 
-    private TextView info;
-    private LoginButton loginButton;
-    private CallbackManager callbackManager;
-    private Profile userProfile;
-    private ProfilePictureView profilePictureView;
 
+        public class LoginActivity extends AppCompatActivity {
+
+            private TextView info;
+            private LoginButton loginButton;
+            private LoginResult loginfinal;
+            private Profile userProfile;
+            private ProfilePictureView profilePictureView;
+    CallbackManager callbackManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        FacebookSdk.sdkInitialize(getApplicationContext());
-        setContentView(R.layout.activity_login);
-        callbackManager = CallbackManager.Factory.create();
-        // Info is displayed below the login button
-        info = (TextView)findViewById(R.id.info);
-        loginButton = (LoginButton)findViewById(R.id.login_button); // Create login button using layout.
-        // The registerCallback method specifies button behavior upon click.
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            private ProfileTracker mProfileTracker;
+            super.onCreate(savedInstanceState);
+            facebookSDKInitialize();
+            setContentView(R.layout.activity_login);
+            LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
+            loginButton.setReadPermissions("email");
+            getLoginDetails(loginButton);
+    }
+/*
+    Initialize the facebook sdk and then callback manager will handle the login responses.
+ */
+    protected void facebookSDKInitialize() {
+                FacebookSdk.sdkInitialize(getApplicationContext());
+                callbackManager = CallbackManager.Factory.create();
+    }
+        /*
+    Register a callback function with LoginButton to respond to the login result.
+    On successful login,login result has new access token and  recently granted permissions.
+    */
+        protected void getLoginDetails(LoginButton login_button){
+                // Callback registration
+            info = (TextView)findViewById(R.id.info);
+                login_button.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+                    private ProfileTracker mProfileTracker;
             @Override
-            public void onSuccess(LoginResult loginResult) {
-                AccessToken accessToken = loginResult.getAccessToken();
+            public void onSuccess(LoginResult login_result) {
+                                getUserInfo(login_result);
 
-                if(Profile.getCurrentProfile() == null) {
-                    mProfileTracker = new ProfileTracker() {
+
+            }
                         @Override
-                        protected void onCurrentProfileChanged(Profile profile, Profile profile2) {
-                            // profile2 is the new profile
-                            Log.v("facebook - profile", profile2.getFirstName());
-                            userProfile = profile2;
-                            mProfileTracker.stopTracking();
-                            profilePictureView = (ProfilePictureView) findViewById(R.id.userProfilePic);
-                            profilePictureView.setProfileId(userProfile.getId());
-                            info.setText(
-                                    "Welcome " + userProfile.getFirstName() + " " + userProfile.getLastName()
-                            );
-                        }
-                    };
-                    // no need to call startTracking() on mProfileTracker
-                    // because it is called by its constructor, internally.
-                }
-                else {
-                    Profile userProfile = Profile.getCurrentProfile();
-                    Log.v("facebook - userprofile", userProfile.getFirstName());
-                    profilePictureView = (ProfilePictureView) findViewById(R.id.userProfilePic);
-                    profilePictureView.setProfileId(userProfile.getId());
-                    info.setText(
-                            "Welcome " + userProfile.getFirstName() + " " + userProfile.getLastName()
-                    );
-                }
-            }
-
-            @Override
             public void onCancel() {
-                info.setText("Login attempt canceled.");
+                // code for cancellation
+                            info.setText("Login attempt canceled.");
             }
-
-            @Override
-            public void onError(FacebookException error) {
-                info.setText("Login attempt failed.");
+                        @Override
+            public void onError(FacebookException exception) {
+                //  code to handle error
+                            info.setText("Login attempt failed.");
             }
         });
-        userProfile = Profile.getCurrentProfile();
-        if(userProfile != null){
-            profilePictureView = (ProfilePictureView) findViewById(R.id.userProfilePic);
-            profilePictureView.setProfileId(userProfile.getId());
-            info.setText(
-                    "Welcome " + userProfile.getFirstName() + " " + userProfile.getLastName()
-            );
-        }
-        if(userProfile != null) {
-            Intent goToNextActivity = new Intent(getApplicationContext(), NavBarActivity.class);
-            startActivity(goToNextActivity);
-        }
-    }
+            userProfile = Profile.getCurrentProfile();
+            if(userProfile != null){
+                profilePictureView = (ProfilePictureView) findViewById(R.id.userProfilePic);
+                profilePictureView.setProfileId(userProfile.getId());
+                info.setText(
+                        "Welcome " + userProfile.getFirstName() + " " + userProfile.getLastName()
+                );
+            }
+            if(userProfile != null) {
 
-    @Override
+                Intent goToNextActivity = new Intent(getApplicationContext(), NavBarActivity.class);
+
+                startActivity(goToNextActivity);
+            }
+    }
+/*
+    To get the facebook user's own profile information via  creating a new request.
+    When the request is completed, a callback is called to handle the success condition.
+ */
+    protected void getUserInfo(LoginResult login_result){
+                GraphRequest data_request = GraphRequest.newMeRequest(
+
+                login_result.getAccessToken(),
+                new GraphRequest.GraphJSONObjectCallback() {
+                    @Override
+                    public void onCompleted(
+                            JSONObject json_object,
+                                                    GraphResponse response) {
+                                                Intent intent = new Intent(LoginActivity.this,NavBarActivity.class);
+                                intent.putExtra("jsondata",json_object.toString());
+                                startActivity(intent);
+                    }
+                });
+                Bundle permission_param = new Bundle();
+                permission_param.putString("fields", "id,name,email,picture.width(120).height(120)");
+                data_request.setParameters(permission_param);
+                data_request.executeAsync();
+            }
+        @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        // if you don't add following block,
-        // your registered `FacebookCallback` won't be called
-        if (callbackManager.onActivityResult(requestCode, resultCode, data)) {
-            return;
+            super.onActivityResult(requestCode, resultCode, data);
+            callbackManager.onActivityResult(requestCode, resultCode, data);
+            Log.e("data",data.toString());
+    }
+        @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        // getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+        @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+                //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
         }
+                return super.onOptionsItemSelected(item);
     }
-
-    public void simple(View v){
-        Intent intent = new Intent(getApplicationContext(), LoginFragment.class);
-        startActivity(intent);
+        @Override
+    protected void onResume() {
+            super.onResume();
+                // Logs 'install' and 'app activate' App Events.
+                AppEventsLogger.activateApp(this);
     }
-
+        @Override
+    protected void onPause() {
+            super.onPause();
+                // Logs 'app deactivate' App Event.
+                AppEventsLogger.deactivateApp(this);
+    }
 }
