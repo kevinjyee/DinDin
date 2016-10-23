@@ -65,8 +65,9 @@ public void onBackPressed() {
      */
     public void setNavigationHeader(){
         navigation_view = (NavigationView) findViewById(R.id.nav_view);
-        View header = LayoutInflater.from(this).inflate(R.layout.nav_header_main, null);
-        navigation_view.addHeaderView(header);
+        //View header = LayoutInflater.from(this).inflate(R.layout.nav_header_main, null);
+        View header = navigation_view.getHeaderView(0);
+       // navigation_view.addHeaderView(header);
         user_name = (TextView) header.findViewById(R.id.username);
         user_picture = (ImageView) header.findViewById(R.id.profile_pic);
         user_email = (TextView) header.findViewById(R.id.email);
