@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.dindin.com.example.NavBarActivity;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -97,7 +98,7 @@ public class LoginActivity extends FragmentActivity {
             );
         }
         if(userProfile != null) {
-            Intent goToNextActivity = new Intent(getApplicationContext(), LandingActivity.class);
+            Intent goToNextActivity = new Intent(getApplicationContext(), NavBarActivity.class);
             startActivity(goToNextActivity);
         }
     }

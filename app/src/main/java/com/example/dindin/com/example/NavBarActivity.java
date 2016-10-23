@@ -1,4 +1,4 @@
-package com.android.slidingmenu;
+package com.example.dindin.com.example;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -15,7 +15,7 @@ import android.view.MenuItem;
 
 import com.example.dindin.R;
 
-public class MainActivity extends AppCompatActivity
+public class NavBarActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
 

@@ -66,7 +66,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name="com.android.slidingmenu.MainActivity"
+            android:name=".com.example.NavBarActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
 
