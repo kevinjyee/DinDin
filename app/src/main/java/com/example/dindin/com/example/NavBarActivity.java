@@ -5,7 +5,9 @@ import android.content.Intent;
         import android.support.design.widget.FloatingActionButton;
         import android.support.design.widget.NavigationView;
         import android.support.design.widget.Snackbar;
-        import android.support.v4.view.GravityCompat;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
         import android.support.v4.widget.DrawerLayout;
         import android.support.v7.app.ActionBarDrawerToggle;
         import android.support.v7.app.AppCompatActivity;
@@ -16,6 +18,9 @@ import android.content.Intent;
         import android.view.View;
         import android.widget.ImageView;
         import android.widget.TextView;
+
+import com.example.dindin.PreferencesFragment;
+import com.example.dindin.ProfileFragment;
 import com.example.dindin.R;
 import com.squareup.picasso.Picasso;
 import org.json.JSONObject;
@@ -25,6 +30,7 @@ public class NavBarActivity extends AppCompatActivity
         TextView user_name, user_email;
         ImageView user_picture;
         NavigationView navigation_view;
+        private boolean viewIsAtHome;
     @Override
 protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,14 +58,17 @@ public void onClick(View view) {
         navigation_view.setNavigationItemSelectedListener(this);
     }
     @Override
-public void onBackPressed() {
+    public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
-        drawer.closeDrawer(GravityCompat.START);
+            drawer.closeDrawer(GravityCompat.START);
+        }
+        if (!viewIsAtHome) { //if the current view is not the News fragment
+            displayView(R.id.nav_profile); //display the News fragment
         } else {
-        super.onBackPressed();
+            moveTaskToBack(true);  //If view is in News fragment, exit application
         }
-        }
+    }
     /*
         Set Navigation header by using Layout Inflater.
      */
@@ -110,17 +119,39 @@ if (id == R.id.action_settings) {
 @Override
 public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-        int id = item.getItemId();
-        if (id == R.id.nav_camera) {
-        // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-        } else if (id == R.id.nav_slideshow) {
-        } else if (id == R.id.nav_manage) {
-        } else if (id == R.id.nav_share) {
-        } else if (id == R.id.nav_send) {
-        }
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+        displayView(item.getItemId());
         return true;
         }
+    public void displayView(int viewId) {
+        Fragment fragment = null;
+        String title = getString(R.string.app_name);
+
+        switch (viewId) {
+            case R.id.nav_profile:
+                fragment = new ProfileFragment();
+                title  = "Profile";
+
+                break;
+            case R.id.nav_manage:
+                fragment = new PreferencesFragment();
+                title = "Preferences";
+                break;
+
+        }
+
+        if (fragment != null) {
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.content_frame, fragment);
+            ft.commit();
+        }
+
+        // set the toolbar title
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(title);
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+
+    }
         }
