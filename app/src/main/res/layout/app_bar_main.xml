@@ -27,15 +27,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:text="dindin" />
-            <Button
-                android:id="@+id/button_right_menu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/selector_for_message_button"
-                android:onClick="rightmenu" />
+
 
         </android.support.v7.widget.Toolbar>
 
