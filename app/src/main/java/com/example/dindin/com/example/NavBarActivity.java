@@ -31,7 +31,7 @@ protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Home Page");
+
         Intent intent = getIntent();
         String jsondata = intent.getStringExtra("jsondata");
         setNavigationHeader();    // call setNavigationHeader Method.
