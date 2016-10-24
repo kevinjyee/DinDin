@@ -8,6 +8,12 @@ android {
         mavenCentral()
     }
 
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+    }
+
     defaultConfig {
         applicationId "com.example.dindin"
         minSdkVersion 15
@@ -24,7 +30,10 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile files('../lib/libs/jackson-annotations-2.8.4.jar')
+    compile files('../lib/libs/jackson-core-2.8.4.jar')
+    compile files('../lib/libs/jackson-databind-2.8.4.jar')
     compile 'com.android.support:appcompat-v7:24.2.0'
     compile 'com.facebook.android:facebook-android-sdk:4.15.0'
     compile 'com.android.support:support-v4:24.2.0'
@@ -33,6 +42,7 @@ dependencies {
     compile 'com.google.firebase:firebase-messaging:9.6.1'
     compile 'com.google.android.gms:play-services:9.6.1'
     testCompile 'junit:junit:4.12'
+    compile project(':lib')
 }
 
 
