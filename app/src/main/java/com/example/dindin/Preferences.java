@@ -1,15 +1,59 @@
 package com.example.dindin;
 
-import java.util.List;
+import com.example.dindin.com.example.AgeRange;
+
+import java.util.Set;
 
 /**
  * Created by Davin on 10/20/2016.
  */
 
 public class Preferences {
-    String preferredTask;
-    float matchDistance; //radius size (miles) within user location for matching
-    int minAge;
-    int maxAge;
-    List<String> preferredCuisines;
+    private String preferredTask;
+    private double maxMatchDistance; //radius size (miles) within user location for matching
+    private AgeRange ageRange;
+    private Set<String> preferredCuisines;
+
+    public Preferences(){
+
+    }
+
+    public Preferences(String prefTask, double matchDistance, AgeRange prefAgeRange, Set<String> cuisines){
+        this.preferredTask = prefTask;
+        this.maxMatchDistance = matchDistance;
+        this.ageRange = prefAgeRange;
+        this.preferredCuisines = cuisines;
+    }
+
+    public String getPreferredTask(){
+        return this.preferredTask;
+    }
+
+    public double getMaxMatchDistance(){
+        return this.maxMatchDistance;
+    }
+
+    public AgeRange getAgeRange(){
+        return this.ageRange;
+    }
+
+    public Set<String> getPreferredCuisines(){
+        return this.preferredCuisines;
+    }
+
+    public void setPreferredTask(String task){
+        this.preferredTask = task;
+    }
+
+    public void setMaxMatchDistance(double distance){
+        this.maxMatchDistance = distance;
+    }
+
+    public void setAgeRange(AgeRange range){
+        this.ageRange = range;
+    }
+
+    public void setPreferredCuisines(Set<String> cuisinePreferences){
+        this.preferredCuisines = cuisinePreferences;
+    }
 }
