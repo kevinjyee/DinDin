@@ -86,6 +86,7 @@ import org.json.JSONObject;
                 }
                 if (!viewIsAtHome) { //if the current view is not the News fragment
                     displayView(R.id.nav_profile); //display the News fragment
+                    viewIsAtHome = true;
                 } else {
                     moveTaskToBack(true);  //If view is in News fragment, exit application
                 }
@@ -181,7 +182,7 @@ import org.json.JSONObject;
                     case R.id.nav_profile:
                         fragment = new ProfileFragment();
                         title = "Profile";
-
+                        viewIsAtHome = true;
                         break;
                     case R.id.nav_manage:
                         fragment = new PreferencesFragment();
