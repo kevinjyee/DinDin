@@ -40,7 +40,6 @@ import org.json.JSONObject;
             TextView user_name, user_email;
             ImageView user_picture;
             NavigationView navigation_view;
-            private boolean viewIsAtHome;
             /**
              * ATTENTION: This was auto-generated to implement the App Indexing API.
              * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -78,19 +77,6 @@ import org.json.JSONObject;
                 client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
             }
 
-            @Override
-            public void onBackPressed() {
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                if (drawer.isDrawerOpen(GravityCompat.START)) {
-                    drawer.closeDrawer(GravityCompat.START);
-                }
-                if (!viewIsAtHome) { //if the current view is not the News fragment
-                    displayView(R.id.nav_profile); //display the News fragment
-                    viewIsAtHome = true;
-                } else {
-                    moveTaskToBack(true);  //If view is in News fragment, exit application
-                }
-            }
 
             /*
                 Set Navigation header by using Layout Inflater.
@@ -182,7 +168,6 @@ import org.json.JSONObject;
                     case R.id.nav_profile:
                         fragment = new ProfileFragment();
                         title = "Profile";
-                        viewIsAtHome = true;
                         break;
                     case R.id.nav_manage:
                         fragment = new PreferencesFragment();
