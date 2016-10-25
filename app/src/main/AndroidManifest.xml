@@ -3,6 +3,9 @@
     package="com.example.dindin">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> // Stephen Oct24
+    <uses-permission android:name="android.permission.ACCESS_COURSE_LOCATION" />
+    <uses-permission android:name="android.permission.LOCATION_HARDWARE" />
 
     <service android:name=".MyFirebaseMessagingService">
         <intent-filter>
@@ -69,6 +72,21 @@
             android:name=".com.example.NavBarActivity"
             android:label=""
             android:theme="@style/HiddenTitleTheme" />
+// Stephen Oct24
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <activity
+            android:name="com.example.dindin.MainActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity> // Stephen Oct24
 
     </application>
 

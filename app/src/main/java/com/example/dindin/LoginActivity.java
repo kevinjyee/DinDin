@@ -8,6 +8,7 @@ import android.content.Intent;
         import android.view.MenuItem;
 import android.widget.TextView;
 
+import android.util.Log;
 import com.example.dindin.com.example.NavBarActivity;
 import com.facebook.CallbackManager;
         import com.facebook.FacebookCallback;
@@ -35,6 +36,10 @@ import com.facebook.login.widget.ProfilePictureView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
+        Log.v("myApp", "no network");
+            MainActivity test = new MainActivity();
+        test.displayLocation();
+        Log.v("MainActivity.java", "fuck");
             facebookSDKInitialize();
             setContentView(R.layout.activity_login);
             LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
