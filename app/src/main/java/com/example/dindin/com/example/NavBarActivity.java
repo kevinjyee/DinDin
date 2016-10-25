@@ -7,6 +7,7 @@ import android.os.Bundle;
         import android.support.design.widget.NavigationView;
         import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
@@ -21,6 +22,7 @@ import android.support.v4.widget.DrawerLayout;
         import android.widget.ImageView;
         import android.widget.TextView;
 
+import com.example.dindin.FindMatches;
 import com.example.dindin.MessageActivity;
 import com.example.dindin.PreferencesFragment;
 import com.example.dindin.ProfileFragment;
@@ -66,11 +68,31 @@ import org.json.JSONObject;
                                 .setAction("Action", null).show();
                     }
                 });
+
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                 ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                         this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
                 drawer.setDrawerListener(toggle);
                 toggle.syncState();
+
+
+                /*Set up Fragment*.
+
+                 */
+                try {
+                    FragmentManager fm = NavBarActivity.this.getSupportFragmentManager();
+                    FragmentTransaction ft = fm.beginTransaction();
+                    FindMatches fragment = new FindMatches();
+                    ft.add(R.id.activity_main_content_fragment, fragment);
+                   // tvTitle.setText(getResources().getString(R.string.app_name));
+
+                    ft.commit();
+                    //setProfilePick(profileimage);
+
+                } catch (Exception e) {
+                    //AppLog.handleException("onCreate Exception ", e);
+
+                }
                 navigation_view.setNavigationItemSelectedListener(this);
                 // ATTENTION: This was auto-generated to implement the App Indexing API.
                 // See https://g.co/AppIndexing/AndroidStudio for more information.

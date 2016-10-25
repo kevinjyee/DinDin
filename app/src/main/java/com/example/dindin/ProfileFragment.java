@@ -40,6 +40,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         final FragmentTransaction ft = getFragmentManager().beginTransaction();
         ProfileEditFragment editFragment = new ProfileEditFragment();
         editFragment.setProfileFrag(this);
+       //TODO: Replace content frame
         ft.replace(R.id.content_frame, editFragment);
         ft.addToBackStack(null);
         ft.commit();
