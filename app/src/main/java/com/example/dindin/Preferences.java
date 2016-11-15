@@ -2,6 +2,7 @@ package com.example.dindin;
 
 import com.example.dindin.com.example.AgeRange;
 
+import java.util.Collections;
 import java.util.Set;
 
 /**
@@ -55,5 +56,24 @@ public class Preferences {
 
     public void setPreferredCuisines(Set<String> cuisinePreferences){
         this.preferredCuisines = cuisinePreferences;
+    }
+
+    public boolean areComplementaryRoles(Preferences pref2){
+        if((this.getPreferredTask().equalsIgnoreCase("cook") &&
+                pref2.getPreferredTask().equalsIgnoreCase("clean")) ||
+                (this.getPreferredTask().equalsIgnoreCase("clean") &&
+                        pref2.getPreferredTask().equalsIgnoreCase("cook"))){
+            return true;
+        } else{
+            return false;
+        }
+    }
+
+    public boolean isInAgeRange(Preferences pref2){
+        if()
+    }
+
+    public boolean shareCuisineInterests(Preferences pref2){
+        return !Collections.disjoint(this.getPreferredCuisines(), pref2.getPreferredCuisines());
     }
 }

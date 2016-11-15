@@ -116,7 +116,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Getting shops Count
-    public int getShopsCount() {
+    public int getUserCount() {
         String countQuery = "SELECT * FROM " + TABLE_NAME;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);

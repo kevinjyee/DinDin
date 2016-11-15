@@ -1,36 +1,35 @@
-
-        package com.example.dindin;
+package com.example.dindin;
 import android.content.Intent;
-        import android.os.Bundle;
-        import android.support.v7.app.AppCompatActivity;
-        import android.util.Log;
-        import android.view.Menu;
-        import android.view.MenuItem;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.example.dindin.com.example.NavBarActivity;
 import com.facebook.CallbackManager;
-        import com.facebook.FacebookCallback;
-        import com.facebook.FacebookException;
-        import com.facebook.FacebookSdk;
-        import com.facebook.GraphRequest;
-        import com.facebook.GraphResponse;
-        import com.facebook.appevents.AppEventsLogger;
-        import com.facebook.login.LoginResult;
-        import com.facebook.login.widget.LoginButton;
-        import com.facebook.ProfileTracker;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
+import com.facebook.ProfileTracker;
 import com.facebook.Profile;
 import com.facebook.login.widget.ProfilePictureView;
-        import org.json.JSONObject;
+import org.json.JSONObject;
 
 
-        public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
-            private TextView info;
-            private LoginButton loginButton;
-            private LoginResult loginfinal;
-            private Profile userProfile;
-            private ProfilePictureView profilePictureView;
+    private TextView info;
+    private LoginButton loginButton;
+    private LoginResult loginfinal;
+    private Profile userProfile;
+    private ProfilePictureView profilePictureView;
     CallbackManager callbackManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +37,7 @@ import com.facebook.login.widget.ProfilePictureView;
             facebookSDKInitialize();
             setContentView(R.layout.activity_login);
             LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
-            loginButton.setReadPermissions("email");
+            loginButton.setReadPermissions("email"); // https://developers.facebook.com/docs/facebook-login/permissions/
             getLoginDetails(loginButton);
     }
 /*

@@ -15,6 +15,7 @@ import java.util.Set;
 
 public class User {
     private int id;
+    private Date birthday;
     private String name;
     private Location location;
     private Profile facebookProfile;
@@ -125,6 +126,24 @@ public class User {
 
     public void setPreferences(Preferences preferences) {
         this.preferences = preferences;
+    }
+
+    public boolean matchesPreferences(User user2){
+        if(this.getPreferences().areComplementaryRoles(user2.getPreferences()) &&
+                this.isInAgeRange(user2) &&
+                this.getPreferences().shareCuisineInterests(user2.getPreferences())){
+            return true;
+        } else{
+            return false;
+        }
+    }
+
+    public boolean isInAgeRange(User user2){
+        if()
+    }
+
+    public boolean isInPreferredRange(User user2){
+
     }
 }
 

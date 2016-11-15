@@ -7,8 +7,18 @@ import android.content.pm.Signature;
 import android.util.Base64;
 import android.util.Log;
 
+import com.example.dindin.com.example.AgeRange;
+import com.example.dindin.com.example.Location;
+import com.facebook.Profile;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.PriorityQueue;
+import java.util.Queue;
+import java.util.Set;
 
 /**
  * Created by Stefan on 10/19/2016.

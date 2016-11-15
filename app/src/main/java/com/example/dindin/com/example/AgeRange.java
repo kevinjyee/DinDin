@@ -32,4 +32,8 @@ public class AgeRange {
     public void setMaxAge(int maximumAge){
         this.maxAge = maximumAge;
     }
+
+    public boolean isInAgeRange(int age_in_years){
+        return (age_in_years >= minAge) && (age_in_years <= maxAge);
+    }
 }

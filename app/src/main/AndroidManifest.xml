@@ -67,7 +67,7 @@
 
         <activity
             android:name=".com.example.NavBarActivity"
-            android:label="@string/tit11le_activity_main"
+            android:label="@string/title_activity_main"
             android:theme="@style/HiddenTitleTheme" />
 
     </application>
