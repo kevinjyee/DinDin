@@ -27,15 +27,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:text="dindin" />
-            <Button
-                android:id="@+id/button_right_menu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/selector_for_message_button"
-                android:onClick="rightmenu" />
+
 
         </android.support.v7.widget.Toolbar>
 
@@ -44,6 +36,15 @@
 
     <include layout="@layout/content_main" />
 
+    <!-- This is where fragment will show up -->
+
+    <FrameLayout
+        android:id="@+id/activity_main_content_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white" >
+    </FrameLayout>
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
@@ -51,5 +52,6 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="@android:drawable/ic_dialog_email" />
+
 
 </android.support.design.widget.CoordinatorLayout>

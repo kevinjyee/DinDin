@@ -1,5 +1,214 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent" android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
+        <ImageButton
+            android:id="@+id/user_profile_photo"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_below="@+id/header_cover_image"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="-60dp"
+            android:background="@drawable/profile_circular_imageview"
+            android:elevation="5dp"
+            android:padding="20dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/sampleprofile"/>
+
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/profile_layout"
+            android:layout_marginTop="5dp"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff"
+                android:clickable="false"
+                android:text="Display Name"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+            <EditText
+                android:id="@+id/user_profile_name"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/line"
+                android:clickable="true"
+                android:elevation="4dp"
+                android:maxLength="200"
+                android:padding="20dp"
+                android:top = "2dp"
+                android:text="Davin Siu"/>
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff"
+                android:clickable="false"
+                android:text="Gender"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+
+            <RadioGroup
+                android:id="@+id/user_profile_gender"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/line">
+            <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/male"
+            android:text="Male" />
+            <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/female"
+            android:text="Female" />
+            </RadioGroup>
+
+            <TextView
+
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff"
+                android:clickable="false"
+                android:text="Age"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:ems="10"
+                android:maxLength="3"
+                android:id="@+id/profile_age" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff"
+                android:clickable="false"
+                android:text="Location"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+            <EditText
+                android:id="@+id/profile_location"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/line"
+                android:clickable="true"
+                android:elevation="4dp"
+                android:padding="20dp"
+                android:maxLength="30"
+                android:top = "2dp"
+                android:text="Austin, TX" />
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff"
+                android:clickable="false"
+                android:text="About Me"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+            <EditText
+                android:id="@+id/profile_short_bio"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/line"
+                android:clickable="true"
+                android:elevation="4dp"
+                android:maxLength="200"
+                android:padding="20dp"
+                android:top = "2dp"
+                android:text="Typical college student with the sink that's always loaded with beautiful dishes waiting to be washed!" />
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff"
+                android:clickable="false"
+                android:text="Favorite Dish"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+            <EditText
+                android:id="@+id/profile_dish"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_marginBottom="3dp"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/line"
+                android:clickable="true"
+                android:maxLength="40"
+                android:elevation="4dp"
+                android:padding="20dp"
+                android:text="Pho" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff"
+                android:clickable="false"
+                android:text="Favorite Cuisine"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+
+            <EditText
+                android:id="@+id/profile_cuisine"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/line"
+                android:clickable="true"
+                android:maxLength="40"
+                android:elevation="4dp"
+                android:padding="20dp"
+                android:text="Err' thing" />
+
+            <Button
+                android:text="Save"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/saveProfileButton" />
+
+            <Button
+                android:text="Cancel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/cancelProfileButton" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/header_cover_image"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/roughwood"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <RelativeLayout
+            android:id="@+id/profile_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:elevation="4dp"
+            android:paddingBottom="24dp"
+            android:layout_below="@+id/header_cover_image"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="76dp"
+                android:text="Edit Profile"
+                android:textColor="#fff"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+    </RelativeLayout>
 </ScrollView>
