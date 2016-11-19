@@ -139,11 +139,11 @@ public class User {
     }
 
     public boolean isInAgeRange(User user2){
-        if()
+        return false;
     }
 
     public boolean isInPreferredRange(User user2){
-
+        return false;
     }
 }
 

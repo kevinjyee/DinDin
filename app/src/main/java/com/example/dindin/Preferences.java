@@ -70,7 +70,7 @@ public class Preferences {
     }
 
     public boolean isInAgeRange(Preferences pref2){
-        if()
+        return false;
     }
 
     public boolean shareCuisineInterests(Preferences pref2){
