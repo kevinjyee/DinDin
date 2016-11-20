@@ -173,8 +173,7 @@ public class FindMatches extends Fragment implements View.OnClickListener{
         likedislikelayout.setLayoutParams(likedislikeparam);
 
         try {
-//            setProfilePick(userProfilImage, profileImageHeightAndWidth[0],
-//                    profileImageHeightAndWidth[1]);
+//            TODO set profile picture here
         } catch (Exception e) {
             AppLog.handleException(TAG + " onCreateView  Exception ", e);
         }
@@ -188,14 +187,14 @@ public class FindMatches extends Fragment implements View.OnClickListener{
 
         if (connectionDetector.isConnectingToInternet()) {
 
-            //findMatch();
+            //findMatches(); TODO here
             // }
         } else {
 
 
         }
 
-        // addView(MachedataList);
+        // addView Here
 
         return view;
     }
