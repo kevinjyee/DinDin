@@ -1,27 +1,36 @@
 package com.example.dindin;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.dindin.utilities.AppLog;
+import com.example.dindin.utilities.ConnectionDetector;
+import com.example.dindin.utilities.Utilities;
+
+import static com.google.android.gms.wearable.DataMap.TAG;
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link FindMatches.OnFragmentInteractionListener} interface
- * to handle interaction events.
+ * handle interaction events.
  * Use the {@link FindMatches#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FindMatches extends Fragment{
+public class FindMatches extends Fragment implements View.OnClickListener{
         // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -34,7 +43,7 @@ public class FindMatches extends Fragment{
     private int[] matchUserHeightAndWidth;
     private int[] topMarginForInvitelayoutAndText;
     private int[] profileImageHeightAndWidth;
-    private SharedPreferences preferences;
+
     private int[] imageLayoutHeightandWidth;
     private String machedUserFaceBookid;
     private Button likeButton, dislikeButton;
@@ -49,6 +58,8 @@ public class FindMatches extends Fragment{
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private SharedPreferences preferences;
+    private Animation anime;
 
 
     public FindMatches() {
@@ -87,7 +98,7 @@ public class FindMatches extends Fragment{
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_layout1, null);
 
-
+        preferences = PreferenceManager.getDefaultSharedPreferences(inflater.getContext());
         invitebuttonlayout = (RelativeLayout) view
                 .findViewById(R.id.invitebuttonlayout);
         findingpeopletextlayout = (RelativeLayout) view
@@ -110,13 +121,96 @@ public class FindMatches extends Fragment{
         likedislikelayout = (RelativeLayout) view
                 .findViewById(R.id.likedislikelayout);
 
-       // matchedUserInfoButton.setOnClickListener(this);
-       // likeButton.setOnClickListener(this);
-        //dislikeButton.setOnClickListener(this);
-        //inviteButton.setOnClickListener(this);
+        matchedUserInfoButton.setOnClickListener(this);
+        likeButton.setOnClickListener(this);
+        dislikeButton.setOnClickListener(this);
+        inviteButton.setOnClickListener(this);
+
+        Utilities mUltilities = new Utilities();
+        matchUserHeightAndWidth = mUltilities
+                .getImageHeightAndWidthForMatchedUser(getActivity());
+        profileImageHeightAndWidth = mUltilities
+                .getImageHeightAndWidthForProFileImageHomsecreen(getActivity());
+        imageLayoutHeightandWidth = mUltilities
+                .imageLayoutHeightandWidth(getActivity());
+        topMarginForInvitelayoutAndText = mUltilities
+                .getTopMarginForInviteLayoutAndText(getActivity());
+
+        RelativeLayout.LayoutParams findPeoplelayoutParams = mUltilities
+                .getRelativelayoutParams(
+                        RelativeLayout.LayoutParams.WRAP_CONTENT,
+                        RelativeLayout.LayoutParams.WRAP_CONTENT);
+        findPeoplelayoutParams.addRule(RelativeLayout.BELOW,
+                R.id.imageviewlayout);
+        findPeoplelayoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        findPeoplelayoutParams.setMargins(0,
+                topMarginForInvitelayoutAndText[0], 0, 0);
+        findingpeopletextlayout.setLayoutParams(findPeoplelayoutParams);
+
+        RelativeLayout.LayoutParams invitlayoutParams = mUltilities
+                .getRelativelayoutParams(
+                        RelativeLayout.LayoutParams.WRAP_CONTENT,
+                        RelativeLayout.LayoutParams.WRAP_CONTENT);
+        invitlayoutParams.addRule(RelativeLayout.BELOW,
+                R.id.findingpeopletextlayout);
+        invitlayoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        invitlayoutParams.setMargins(0, topMarginForInvitelayoutAndText[1], 0,
+                0);
+        invitebuttonlayout.setLayoutParams(invitlayoutParams);
+
+//        ScreenSize screenSize = new ScreenSize(getActivity());
+//        // Log.e(TAG,
+//        // "his : "
+//        // + getActivity().getWindowManager().getDefaultDisplay()
+//        // .getWidth() + "my : "
+//        // + screenSize.getScreenWidthPixel());
+//        windowwidth = (int) screenSize.getScreenWidthPixel();
+//        screenCenter = windowwidth / 2;
+        RelativeLayout.LayoutParams likedislikeparam = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.MATCH_PARENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT);
+        likedislikeparam.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        likedislikeparam.setMargins(0, imageLayoutHeightandWidth[3], 0, 0);
+        likedislikelayout.setLayoutParams(likedislikeparam);
+
+        try {
+//            setProfilePick(userProfilImage, profileImageHeightAndWidth[0],
+//                    profileImageHeightAndWidth[1]);
+        } catch (Exception e) {
+            AppLog.handleException(TAG + " onCreateView  Exception ", e);
+        }
+//        anime = AnimationUtils.loadAnimation(getActivity(), R.anim.zoomin);
+//        amimagetedview.startAnimation(anime);
+
+
+
+        ConnectionDetector connectionDetector = new ConnectionDetector(
+                getActivity());
+
+        if (connectionDetector.isConnectingToInternet()) {
+
+            //findMatch();
+            // }
+        } else {
+            Utilities ultilities = new Utilities();
+            ultilities.displayMessageAndExit(getActivity(), "Alert",
+                    " working internet connection required");
+
+        }
+
+        // addView(MachedataList);
+
         return view;
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        };
+
     }
 
 
 
-}
+
+
