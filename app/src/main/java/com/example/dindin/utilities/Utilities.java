@@ -248,14 +248,14 @@
         int screenWidth = getWidth(activity);
         // //Log.i(TAG, "getImageHeightAndWidth  screenHeight "+screenHeight);
         // //Log.i(TAG, "getImageHeightAndWidth  screenWidth  "+screenWidth);
-        int imagehiegth;
+        int imageheight;
         int imagewidth;
         if ((screenHeight <= 500 && screenHeight >= 480)
                 && (screenWidth <= 340 && screenWidth >= 300)) {
             // //Log.i(TAG, "getImageHeightAndWidth mdpi");
-            imagehiegth = 100;
+            imageheight = 100;
             imagewidth = 100;
-            imageHeightAndWidth[0] = imagehiegth;
+            imageHeightAndWidth[0] = imageheight;
             imageHeightAndWidth[1] = imagewidth;
 
         }
@@ -266,9 +266,9 @@
         {
 
             // //Log.i(TAG, "getImageHeightAndWidth ldpi");
-            imagehiegth = 120;
+            imageheight = 120;
             imagewidth = 120;
-            imageHeightAndWidth[0] = imagehiegth;
+            imageHeightAndWidth[0] = imageheight;
             imageHeightAndWidth[1] = imagewidth;
         }
 
@@ -276,22 +276,22 @@
                 && (screenWidth <= 500 && screenWidth >= 440)) {
 
             // //Log.i(TAG, "getImageHeightAndWidth hdpi");
-            imagehiegth = 480;
+            imageheight = 480;
             imagewidth = 440;
-            imageHeightAndWidth[0] = imagehiegth;
+            imageHeightAndWidth[0] = imageheight;
             imageHeightAndWidth[1] = imagewidth;
         } else if ((screenHeight <= 1280 && screenHeight >= 840)
                 && (screenWidth <= 720 && screenWidth >= 500)) {
 
             // //Log.i(TAG, "getImageHeightAndWidth xdpi");
-            imagehiegth = 600;
+            imageheight = 600;
             imagewidth = 760;
-            imageHeightAndWidth[0] = imagehiegth;
+            imageHeightAndWidth[0] = imageheight;
             imageHeightAndWidth[1] = imagewidth;
         } else {
-            imagehiegth = 200;
+            imageheight = 200;
             imagewidth = 200;
-            imageHeightAndWidth[0] = imagehiegth;
+            imageHeightAndWidth[0] = imageheight;
             imageHeightAndWidth[1] = imagewidth;
         }
 
@@ -306,14 +306,14 @@
         int screenWidth = getWidth(activity);
         // //Log.i(TAG, "getImageHeightAndWidth  screenHeight "+screenHeight);
         // //Log.i(TAG, "getImageHeightAndWidth  screenWidth  "+screenWidth);
-        int imagehiegth;
+        int imageheight;
         int imagewidth;
         if ((screenHeight <= 500 && screenHeight >= 480)
                 && (screenWidth <= 340 && screenWidth >= 300)) {
             // //Log.i(TAG, "getImageHeightAndWidth mdpi");
-            imagehiegth = 100;
+            imageheight = 100;
             imagewidth = 100;
-            imageHeightAndWidth[0] = imagehiegth;
+            imageHeightAndWidth[0] = imageheight;
             imageHeightAndWidth[1] = imagewidth;
 
         }
@@ -324,9 +324,9 @@
         {
 
             // //Log.i(TAG, "getImageHeightAndWidth ldpi");
-            imagehiegth = 120;
+            imageheight = 120;
             imagewidth = 120;
-            imageHeightAndWidth[0] = imagehiegth;
+            imageHeightAndWidth[0] = imageheight;
             imageHeightAndWidth[1] = imagewidth;
         }
 
@@ -334,22 +334,22 @@
                 && (screenWidth <= 500 && screenWidth >= 440)) {
 
             // //Log.i(TAG, "getImageHeightAndWidth hdpi");
-            imagehiegth = 50;
+            imageheight = 50;
             imagewidth = 20;
-            imageHeightAndWidth[0] = imagehiegth;
+            imageHeightAndWidth[0] = imageheight;
             imageHeightAndWidth[1] = imagewidth;
         } else if ((screenHeight <= 1280 && screenHeight >= 840)
                 && (screenWidth <= 720 && screenWidth >= 500)) {
 
             // //Log.i(TAG, "getImageHeightAndWidth xdpi");
-            imagehiegth = 100;
+            imageheight = 100;
             imagewidth = 70;
-            imageHeightAndWidth[0] = imagehiegth;
+            imageHeightAndWidth[0] = imageheight;
             imageHeightAndWidth[1] = imagewidth;
         } else {
-            imagehiegth = 200;
+            imageheight = 200;
             imagewidth = 200;
-            imageHeightAndWidth[0] = imagehiegth;
+            imageHeightAndWidth[0] = imageheight;
             imageHeightAndWidth[1] = imagewidth;
         }
 
@@ -366,14 +366,14 @@
         int screenWidth = getWidth(activity);
         // //Log.i(TAG, "getImageHeightAndWidth  screenHeight "+screenHeight);
         // //Log.i(TAG, "getImageHeightAndWidth  screenWidth  "+screenWidth);
-        int imagehiegth;
+        int imageheight;
         int imagewidth;
         if ((screenHeight <= 500 && screenHeight >= 480)
                 && (screenWidth <= 340 && screenWidth >= 300)) {
             // //Log.i(TAG, "getImageHeightAndWidth mdpi");
-            imagehiegth = 100;
+            imageheight = 100;
             imagewidth = 100;
-            imageHeightAndWidth[0] = imagehiegth;
+            imageHeightAndWidth[0] = imageheight;
             imageHeightAndWidth[1] = imagewidth;
 
         }
@@ -384,9 +384,9 @@
         {
 
             // //Log.i(TAG, "getImageHeightAndWidth ldpi");
-            imagehiegth = 120;
+            imageheight = 120;
             imagewidth = 120;
-            imageHeightAndWidth[0] = imagehiegth;
+            imageHeightAndWidth[0] = imageheight;
             imageHeightAndWidth[1] = imagewidth;
         }
 
@@ -394,22 +394,22 @@
                 && (screenWidth <= 500 && screenWidth >= 440)) {
 
             // //Log.i(TAG, "getImageHeightAndWidth hdpi");
-            imagehiegth = 150;
+            imageheight = 150;
             imagewidth = 150;
-            imageHeightAndWidth[0] = imagehiegth;
+            imageHeightAndWidth[0] = imageheight;
             imageHeightAndWidth[1] = imagewidth;
         } else if ((screenHeight <= 1280 && screenHeight >= 840)
                 && (screenWidth <= 720 && screenWidth >= 500)) {
 
             // //Log.i(TAG, "getImageHeightAndWidth xdpi");
-            imagehiegth = 200;
+            imageheight = 200;
             imagewidth = 200;
-            imageHeightAndWidth[0] = imagehiegth;
+            imageHeightAndWidth[0] = imageheight;
             imageHeightAndWidth[1] = imagewidth;
         } else {
-            imagehiegth = 200;
+            imageheight = 200;
             imagewidth = 200;
-            imageHeightAndWidth[0] = imagehiegth;
+            imageHeightAndWidth[0] = imageheight;
             imageHeightAndWidth[1] = imagewidth;
         }
 
@@ -424,7 +424,7 @@
         int screenWidth = getWidth(activity);
         // //Log.i(TAG, "getImageHeightAndWidth  screenHeight "+screenHeight);
         // //Log.i(TAG, "getImageHeightAndWidth  screenWidth  "+screenWidth);
-        int imagehiegth;
+        int imageheight;
         int imagewidth;
         int topMargin;
         int likedisliketopMarging;
@@ -432,9 +432,9 @@
         if ((screenHeight <= 500 && screenHeight >= 480)
                 && (screenWidth <= 340 && screenWidth >= 300)) {
             // //Log.i(TAG, "getImageHeightAndWidth mdpi");
-            imagehiegth = 100;
+            imageheight = 100;
             imagewidth = 100;
-            imageHeightAndWidth[0] = imagehiegth;
+            imageHeightAndWidth[0] = imageheight;
             imageHeightAndWidth[1] = imagewidth;
 
         }
@@ -445,10 +445,10 @@
         {
 
             // //Log.i(TAG, "getImageHeightAndWidth ldpi");
-            imagehiegth = 120;
+            imageheight = 120;
             imagewidth = 120;
 
-            imageHeightAndWidth[0] = imagehiegth;
+            imageHeightAndWidth[0] = imageheight;
             imageHeightAndWidth[1] = imagewidth;
         }
 
@@ -456,12 +456,12 @@
                 && (screenWidth <= 500 && screenWidth >= 440)) {
 
             // //Log.i(TAG, "getImageHeightAndWidth hdpi");
-            imagehiegth = 480;
+            imageheight = 480;
             imagewidth = 430;
             topMargin = 20;
             likedisliketopMarging = 520;
             leftMargin = 25;
-            imageHeightAndWidth[0] = imagehiegth;
+            imageHeightAndWidth[0] = imageheight;
             imageHeightAndWidth[1] = imagewidth;
             imageHeightAndWidth[2] = topMargin;
             imageHeightAndWidth[3] = likedisliketopMarging;
@@ -470,20 +470,20 @@
                 && (screenWidth <= 720 && screenWidth >= 500)) {
 
             // //Log.i(TAG, "getImageHeightAndWidth xdpi");
-            imagehiegth = 600;
+            imageheight = 600;
             imagewidth = 645;
             topMargin = 100;
             likedisliketopMarging = 750;
             leftMargin = 32;
-            imageHeightAndWidth[0] = imagehiegth;
+            imageHeightAndWidth[0] = imageheight;
             imageHeightAndWidth[1] = imagewidth;
             imageHeightAndWidth[2] = topMargin;
             imageHeightAndWidth[3] = likedisliketopMarging;
             imageHeightAndWidth[4] = leftMargin;
         } else {
-            imagehiegth = 200;
+            imageheight = 200;
             imagewidth = 200;
-            imageHeightAndWidth[0] = imagehiegth;
+            imageHeightAndWidth[0] = imageheight;
             imageHeightAndWidth[1] = imagewidth;
         }
 
@@ -498,14 +498,14 @@
         int screenWidth = getWidth(activity);
         // //Log.i(TAG, "getImageHeightAndWidth  screenHeight "+screenHeight);
         // //Log.i(TAG, "getImageHeightAndWidth  screenWidth  "+screenWidth);
-        int imagehiegth;
+        int imageheight;
         int imagewidth;
         if ((screenHeight <= 500 && screenHeight >= 480)
                 && (screenWidth <= 340 && screenWidth >= 300)) {
             // //Log.i(TAG, "getImageHeightAndWidth mdpi");
-            imagehiegth = 100;
+            imageheight = 100;
             imagewidth = 100;
-            imageHeightAndWidth[0] = imagehiegth;
+            imageHeightAndWidth[0] = imageheight;
             imageHeightAndWidth[1] = imagewidth;
 
         }
@@ -516,9 +516,9 @@
         {
 
             // //Log.i(TAG, "getImageHeightAndWidth ldpi");
-            imagehiegth = 120;
+            imageheight = 120;
             imagewidth = 120;
-            imageHeightAndWidth[0] = imagehiegth;
+            imageHeightAndWidth[0] = imageheight;
             imageHeightAndWidth[1] = imagewidth;
         }
 
@@ -526,22 +526,22 @@
                 && (screenWidth <= 500 && screenWidth >= 440)) {
 
             // //Log.i(TAG, "getImageHeightAndWidth hdpi");
-            imagehiegth = 150;
+            imageheight = 150;
             imagewidth = 150;
-            imageHeightAndWidth[0] = imagehiegth;
+            imageHeightAndWidth[0] = imageheight;
             imageHeightAndWidth[1] = imagewidth;
         } else if ((screenHeight <= 1280 && screenHeight >= 840)
                 && (screenWidth <= 720 && screenWidth >= 500)) {
 
             // //Log.i(TAG, "getImageHeightAndWidth xdpi");
-            imagehiegth = 200;
+            imageheight = 200;
             imagewidth = 200;
-            imageHeightAndWidth[0] = imagehiegth;
+            imageHeightAndWidth[0] = imageheight;
             imageHeightAndWidth[1] = imagewidth;
         } else {
-            imagehiegth = 250;
+            imageheight = 250;
             imagewidth = 250;
-            imageHeightAndWidth[0] = imagehiegth;
+            imageHeightAndWidth[0] = imageheight;
             imageHeightAndWidth[1] = imagewidth;
         }
 
@@ -556,14 +556,14 @@
         int screenWidth = getWidth(activity);
         // //Log.i(TAG, "getImageHeightAndWidth  screenHeight "+screenHeight);
         // //Log.i(TAG, "getImageHeightAndWidth  screenWidth  "+screenWidth);
-        int imagehiegth;
+        int imageheight;
         int imagewidth;
         if ((screenHeight <= 500 && screenHeight >= 480)
                 && (screenWidth <= 340 && screenWidth >= 300)) {
             // //Log.i(TAG, "getImageHeightAndWidth mdpi");
-            imagehiegth = 100;
+            imageheight = 100;
             imagewidth = 100;
-            imageHeightAndWidth[0] = imagehiegth;
+            imageHeightAndWidth[0] = imageheight;
             imageHeightAndWidth[1] = imagewidth;
 
         }
@@ -574,9 +574,9 @@
         {
 
             // //Log.i(TAG, "getImageHeightAndWidth ldpi");
-            imagehiegth = 400;
+            imageheight = 400;
             imagewidth = 400;
-            imageHeightAndWidth[0] = imagehiegth;
+            imageHeightAndWidth[0] = imageheight;
             imageHeightAndWidth[1] = imagewidth;
         }
 
@@ -584,22 +584,22 @@
                 && (screenWidth <= 500 && screenWidth >= 440)) {
 
             // //Log.i(TAG, "getImageHeightAndWidth hdpi");
-            imagehiegth = 500;
+            imageheight = 500;
             imagewidth = 480;
-            imageHeightAndWidth[0] = imagehiegth;
+            imageHeightAndWidth[0] = imageheight;
             imageHeightAndWidth[1] = imagewidth;
         } else if ((screenHeight <= 1280 && screenHeight >= 840)
                 && (screenWidth <= 720 && screenWidth >= 500)) {
 
             // //Log.i(TAG, "getImageHeightAndWidth xdpi");
-            imagehiegth = 700;
+            imageheight = 700;
             imagewidth = 720;
-            imageHeightAndWidth[0] = imagehiegth;
+            imageHeightAndWidth[0] = imageheight;
             imageHeightAndWidth[1] = imagewidth;
         } else {
-            imagehiegth = 250;
+            imageheight = 250;
             imagewidth = 250;
-            imageHeightAndWidth[0] = imagehiegth;
+            imageHeightAndWidth[0] = imageheight;
             imageHeightAndWidth[1] = imagewidth;
         }
 
@@ -614,14 +614,14 @@
         int screenWidth = getWidth(activity);
         // //Log.i(TAG, "getImageHeightAndWidth  screenHeight "+screenHeight);
         // //Log.i(TAG, "getImageHeightAndWidth  screenWidth  "+screenWidth);
-        int imagehiegth;
+        int imageheight;
         int imagewidth;
         if ((screenHeight <= 500 && screenHeight >= 480)
                 && (screenWidth <= 340 && screenWidth >= 300)) {
             // //Log.i(TAG, "getImageHeightAndWidth mdpi");
-            imagehiegth = 100;
+            imageheight = 100;
             imagewidth = 100;
-            imageHeightAndWidth[0] = imagehiegth;
+            imageHeightAndWidth[0] = imageheight;
             imageHeightAndWidth[1] = imagewidth;
 
         }
@@ -632,9 +632,9 @@
         {
 
             // //Log.i(TAG, "getImageHeightAndWidth ldpi");
-            imagehiegth = 120;
+            imageheight = 120;
             imagewidth = 120;
-            imageHeightAndWidth[0] = imagehiegth;
+            imageHeightAndWidth[0] = imageheight;
             imageHeightAndWidth[1] = imagewidth;
         }
 
@@ -642,22 +642,22 @@
                 && (screenWidth <= 500 && screenWidth >= 440)) {
 
             // //Log.i(TAG, "getImageHeightAndWidth hdpi");
-            imagehiegth = 280;
+            imageheight = 280;
             imagewidth = 280;
-            imageHeightAndWidth[0] = imagehiegth;
+            imageHeightAndWidth[0] = imageheight;
             imageHeightAndWidth[1] = imagewidth;
         } else if ((screenHeight <= 1280 && screenHeight >= 840)
                 && (screenWidth <= 720 && screenWidth >= 500)) {
 
             // //Log.i(TAG, "getImageHeightAndWidth xdpi");
-            imagehiegth = 428;
+            imageheight = 428;
             imagewidth = 428;
-            imageHeightAndWidth[0] = imagehiegth;
+            imageHeightAndWidth[0] = imageheight;
             imageHeightAndWidth[1] = imagewidth;
         } else {
-            imagehiegth = 200;
+            imageheight = 200;
             imagewidth = 200;
-            imageHeightAndWidth[0] = imagehiegth;
+            imageHeightAndWidth[0] = imageheight;
             imageHeightAndWidth[1] = imagewidth;
         }
 
@@ -673,14 +673,14 @@
         int screenWidth = getWidth(activity);
         // //Log.i(TAG, "getImageHeightAndWidth  screenHeight "+screenHeight);
         // //Log.i(TAG, "getImageHeightAndWidth  screenWidth  "+screenWidth);
-        int imagehiegth;
+        int imageheight;
         int imagewidth;
         if ((screenHeight <= 500 && screenHeight >= 480)
                 && (screenWidth <= 340 && screenWidth >= 300)) {
             // //Log.i(TAG, "getImageHeightAndWidth mdpi");
-            imagehiegth = 100;
+            imageheight = 100;
             imagewidth = 100;
-            imageHeightAndWidth[0] = imagehiegth;
+            imageHeightAndWidth[0] = imageheight;
             imageHeightAndWidth[1] = imagewidth;
 
         }
@@ -691,9 +691,9 @@
         {
 
             // //Log.i(TAG, "getImageHeightAndWidth ldpi");
-            imagehiegth = 120;
+            imageheight = 120;
             imagewidth = 120;
-            imageHeightAndWidth[0] = imagehiegth;
+            imageHeightAndWidth[0] = imageheight;
             imageHeightAndWidth[1] = imagewidth;
         }
 
@@ -701,22 +701,22 @@
                 && (screenWidth <= 500 && screenWidth >= 440)) {
 
             // //Log.i(TAG, "getImageHeightAndWidth hdpi");
-            imagehiegth = 130;
+            imageheight = 130;
             imagewidth = 130;
-            imageHeightAndWidth[0] = imagehiegth;
+            imageHeightAndWidth[0] = imageheight;
             imageHeightAndWidth[1] = imagewidth;
         } else if ((screenHeight <= 1280 && screenHeight >= 840)
                 && (screenWidth <= 720 && screenWidth >= 500)) {
 
             // //Log.i(TAG, "getImageHeightAndWidth xdpi");
-            imagehiegth = 185;
+            imageheight = 185;
             imagewidth = 185;
-            imageHeightAndWidth[0] = imagehiegth;
+            imageHeightAndWidth[0] = imageheight;
             imageHeightAndWidth[1] = imagewidth;
         } else {
-            imagehiegth = 100;
+            imageheight = 100;
             imagewidth = 100;
-            imageHeightAndWidth[0] = imagehiegth;
+            imageHeightAndWidth[0] = imageheight;
             imageHeightAndWidth[1] = imagewidth;
         }
 
@@ -731,14 +731,14 @@
         int screenWidth = getWidth(activity);
         // //Log.i(TAG, "getImageHeightAndWidth  screenHeight "+screenHeight);
         // //Log.i(TAG, "getImageHeightAndWidth  screenWidth  "+screenWidth);
-        int imagehiegth;
+        int imageheight;
         int imagewidth;
         if ((screenHeight <= 500 && screenHeight >= 480)
                 && (screenWidth <= 340 && screenWidth >= 300)) {
             // //Log.i(TAG, "getImageHeightAndWidth mdpi");
-            imagehiegth = 50;
+            imageheight = 50;
             imagewidth = 50;
-            imageHeightAndWidth[0] = imagehiegth;
+            imageHeightAndWidth[0] = imageheight;
             imageHeightAndWidth[1] = imagewidth;
 
         }
@@ -749,9 +749,9 @@
         {
 
             // //Log.i(TAG, "getImageHeightAndWidth ldpi");
-            imagehiegth = 50;
+            imageheight = 50;
             imagewidth = 50;
-            imageHeightAndWidth[0] = imagehiegth;
+            imageHeightAndWidth[0] = imageheight;
             imageHeightAndWidth[1] = imagewidth;
         }
 
@@ -759,22 +759,22 @@
                 && (screenWidth <= 500 && screenWidth >= 440)) {
 
             // //Log.i(TAG, "getImageHeightAndWidth hdpi");
-            imagehiegth = 50;
+            imageheight = 50;
             imagewidth = 50;
-            imageHeightAndWidth[0] = imagehiegth;
+            imageHeightAndWidth[0] = imageheight;
             imageHeightAndWidth[1] = imagewidth;
         } else if ((screenHeight <= 1280 && screenHeight >= 840)
                 && (screenWidth <= 720 && screenWidth >= 500)) {
 
             // //Log.i(TAG, "getImageHeightAndWidth xdpi");
-            imagehiegth = 150;
+            imageheight = 150;
             imagewidth = 150;
-            imageHeightAndWidth[0] = imagehiegth;
+            imageHeightAndWidth[0] = imageheight;
             imageHeightAndWidth[1] = imagewidth;
         } else {
-            imagehiegth = 100;
+            imageheight = 100;
             imagewidth = 100;
-            imageHeightAndWidth[0] = imagehiegth;
+            imageHeightAndWidth[0] = imageheight;
             imageHeightAndWidth[1] = imagewidth;
         }
 
@@ -800,14 +800,14 @@
 
         // //Log.i(TAG, "getImageHeightAndWidth  screenHeight "+screenHeight);
         // //Log.i(TAG, "getImageHeightAndWidth  screenWidth  "+screenWidth);
-        int imagehiegth;
+        int imageheight;
         int imagewidth;
         if ((screenHeight <= 500 && screenHeight >= 480)
                 && (screenWidth <= 340 && screenWidth >= 300)) {
             // //Log.i(TAG, "getImageHeightAndWidth mdpi");
-            imagehiegth = 50;
+            imageheight = 50;
             imagewidth = 50;
-            imageHeightAndWidth[0] = imagehiegth;
+            imageHeightAndWidth[0] = imageheight;
             imageHeightAndWidth[1] = imagewidth;
 
         }
@@ -818,9 +818,9 @@
         {
 
             // //Log.i(TAG, "getImageHeightAndWidth ldpi");
-            imagehiegth = 50;
+            imageheight = 50;
             imagewidth = 50;
-            imageHeightAndWidth[0] = imagehiegth;
+            imageHeightAndWidth[0] = imageheight;
             imageHeightAndWidth[1] = imagewidth;
         }
 
@@ -828,22 +828,22 @@
                 && (screenWidth <= 500 && screenWidth >= 440)) {
 
             // //Log.i(TAG, "getImageHeightAndWidth hdpi");
-            imagehiegth = 190;
+            imageheight = 190;
             imagewidth = 190;
-            imageHeightAndWidth[0] = imagehiegth;
+            imageHeightAndWidth[0] = imageheight;
             imageHeightAndWidth[1] = imagewidth;
         } else if ((screenHeight <= 1280 && screenHeight >= 840)
                 && (screenWidth <= 720 && screenWidth >= 500)) {
 
             // //Log.i(TAG, "getImageHeightAndWidth xdpi");
-            imagehiegth = 220;
+            imageheight = 220;
             imagewidth = 220;
-            imageHeightAndWidth[0] = imagehiegth;
+            imageHeightAndWidth[0] = imageheight;
             imageHeightAndWidth[1] = imagewidth;
         } else {
-            imagehiegth = 200;
+            imageheight = 200;
             imagewidth = 200;
-            imageHeightAndWidth[0] = imagehiegth;
+            imageHeightAndWidth[0] = imageheight;
             imageHeightAndWidth[1] = imagewidth;
         }
 
@@ -858,14 +858,14 @@
         int screenWidth = getWidth(activity);
         // //Log.i(TAG, "getImageHeightAndWidth  screenHeight "+screenHeight);
         // //Log.i(TAG, "getImageHeightAndWidth  screenWidth  "+screenWidth);
-        int imagehiegth;
+        int imageheight;
         int imagewidth;
         if ((screenHeight <= 500 && screenHeight >= 480)
                 && (screenWidth <= 340 && screenWidth >= 300)) {
             // //Log.i(TAG, "getImageHeightAndWidth mdpi");
-            imagehiegth = 50;
+            imageheight = 50;
             imagewidth = 50;
-            imageHeightAndWidth[0] = imagehiegth;
+            imageHeightAndWidth[0] = imageheight;
             imageHeightAndWidth[1] = imagewidth;
 
         }
@@ -876,9 +876,9 @@
         {
 
             // //Log.i(TAG, "getImageHeightAndWidth ldpi");
-            imagehiegth = 100;
+            imageheight = 100;
             imagewidth = 100;
-            imageHeightAndWidth[0] = imagehiegth;
+            imageHeightAndWidth[0] = imageheight;
             imageHeightAndWidth[1] = imagewidth;
         }
 
@@ -886,22 +886,22 @@
                 && (screenWidth <= 500 && screenWidth >= 440)) {
 
             // //Log.i(TAG, "getImageHeightAndWidth hdpi");
-            imagehiegth = 145;
+            imageheight = 145;
             imagewidth = 145;
-            imageHeightAndWidth[0] = imagehiegth;
+            imageHeightAndWidth[0] = imageheight;
             imageHeightAndWidth[1] = imagewidth;
         } else if ((screenHeight <= 1280 && screenHeight >= 840)
                 && (screenWidth <= 720 && screenWidth >= 500)) {
 
             // //Log.i(TAG, "getImageHeightAndWidth xdpi");
-            imagehiegth = 215;
+            imageheight = 215;
             imagewidth = 215;
-            imageHeightAndWidth[0] = imagehiegth;
+            imageHeightAndWidth[0] = imageheight;
             imageHeightAndWidth[1] = imagewidth;
         } else {
-            imagehiegth = 250;
+            imageheight = 250;
             imagewidth = 250;
-            imageHeightAndWidth[0] = imagehiegth;
+            imageHeightAndWidth[0] = imageheight;
             imageHeightAndWidth[1] = imagewidth;
         }
 
@@ -916,14 +916,14 @@
         int screenWidth = getWidth(activity);
         // //Log.i(TAG, "getImageHeightAndWidth  screenHeight "+screenHeight);
         // //Log.i(TAG, "getImageHeightAndWidth  screenWidth  "+screenWidth);
-        int imagehiegth;
+        int imageheight;
         int imagewidth;
         if ((screenHeight <= 500 && screenHeight >= 480)
                 && (screenWidth <= 340 && screenWidth >= 300)) {
             // //Log.i(TAG, "getImageHeightAndWidth mdpi");
-            imagehiegth = 50;
+            imageheight = 50;
             imagewidth = 50;
-            imageHeightAndWidth[0] = imagehiegth;
+            imageHeightAndWidth[0] = imageheight;
             imageHeightAndWidth[1] = imagewidth;
 
         }
@@ -934,9 +934,9 @@
         {
 
             // //Log.i(TAG, "getImageHeightAndWidth ldpi");
-            imagehiegth = 100;
+            imageheight = 100;
             imagewidth = 100;
-            imageHeightAndWidth[0] = imagehiegth;
+            imageHeightAndWidth[0] = imageheight;
             imageHeightAndWidth[1] = imagewidth;
         }
 
@@ -944,73 +944,28 @@
                 && (screenWidth <= 500 && screenWidth >= 440)) {
 
             // //Log.i(TAG, "getImageHeightAndWidth hdpi");
-            imagehiegth = 200;
+            imageheight = 200;
             imagewidth = 200;
-            imageHeightAndWidth[0] = imagehiegth;
+            imageHeightAndWidth[0] = imageheight;
             imageHeightAndWidth[1] = imagewidth;
         } else if ((screenHeight <= 1280 && screenHeight >= 840)
                 && (screenWidth <= 720 && screenWidth >= 500)) {
 
             // //Log.i(TAG, "getImageHeightAndWidth xdpi");
-            imagehiegth = 220;
+            imageheight = 220;
             imagewidth = 220;
-            imageHeightAndWidth[0] = imagehiegth;
+            imageHeightAndWidth[0] = imageheight;
             imageHeightAndWidth[1] = imagewidth;
         } else {
-            imagehiegth = 250;
+            imageheight = 250;
             imagewidth = 250;
-            imageHeightAndWidth[0] = imagehiegth;
+            imageHeightAndWidth[0] = imageheight;
             imageHeightAndWidth[1] = imagewidth;
         }
 
         return imageHeightAndWidth;
     }
 
-    public int getDeviceType(Activity activity) {
-        // //Log.i(TAG, "getImageHeightAndWidth");
-
-        int devieytype = 0;
-        int screenHeight = getHeight(activity);
-        int screenWidth = getWidth(activity);
-        // //Log.i(TAG, "getImageHeightAndWidth  screenHeight "+screenHeight);
-        // //Log.i(TAG, "getImageHeightAndWidth  screenWidth  "+screenWidth);
-        // int imagehiegth;
-        // int imagewidth;
-        if ((screenHeight <= 500 && screenHeight >= 480)
-                && (screenWidth <= 340 && screenWidth >= 300)) {
-            // //Log.i(TAG, "getImageHeightAndWidth mdpi");
-            devieytype = 1;
-
-        }
-
-        else if ((screenHeight <= 400 && screenHeight >= 300)
-                && (screenWidth <= 240 && screenWidth >= 220))
-
-        {
-
-            // //Log.i(TAG, "getImageHeightAndWidth ldpi");
-            devieytype = 1;
-
-        }
-
-        else if ((screenHeight <= 840 && screenHeight >= 780)
-                && (screenWidth <= 500 && screenWidth >= 440)) {
-
-            // //Log.i(TAG, "getImageHeightAndWidth hdpi");
-            devieytype = 1;
-
-        } else if ((screenHeight <= 1280 && screenHeight >= 840)
-                && (screenWidth <= 720 && screenWidth >= 500)) {
-
-            // //Log.i(TAG, "getImageHeightAndWidth xdpi");
-
-            devieytype = 1;
-        } else {
-            devieytype = 3;
-        }
-
-        return devieytype;
-    }
 
 
     public void displayMessageAndExit(Activity activity, String tiltleMassage,
