@@ -1026,61 +1026,6 @@
 
 
 
-    public void DownloadPDF(String filePath, File fileName) {
-        // System.out.println("Entered download function");
-        // Log.i(TAG, "DownloadPDF filePath "+filePath);
-        // Log.i(TAG, "DownloadPDF fileName "+fileName);
-        try {
-            URL url = new URL(filePath);
-            // Log.i(TAG, "DownloadPDF url "+url);
-            HttpURLConnection c = (HttpURLConnection) url.openConnection();
-            // Log.i(TAG, "DownloadPDF c "+c);
-            c.setRequestMethod("GET");
-            c.setDoOutput(true);
-            c.connect();
-            // int fileLength = c.getContentLength();
-            // Log.i(TAG, "DownloadPDF fileLength "+fileLength);
-            // System.out.println("file length " + fileLength);
-            // String PATH = Environment.getExternalStorageDirectory()
-            // + "/Brunei/";
-            // + "/download/";
-            // Log.v("log_tag", "PATH: " + PATH);
-            // File file = new File(PATH);
-            // file.mkdirs();
-            File outputFile = new File(fileName.getAbsolutePath());
-            // Log.i(TAG, "DownloadPDF outputFile "+outputFile);
-            FileOutputStream fos = new FileOutputStream(outputFile);
-            // Log.i(TAG, "DownloadPDF fos "+fos);
-            InputStream is = c.getInputStream();
-            // Log.i(TAG, "DownloadPDF is "+is);
-            byte[] buffer = new byte[1024];
-            int len1 = 0;
-            long total = 0;
-            while ((len1 = is.read(buffer)) != -1) {
-                total += len1;
-                // publishProgress()
-
-                // mProgress = (int) ((total * 100) / fileLength);
-				/* System.out.println("mProgress is:" + mProgress); */
-                // publishProgress(mProgress);
-                fos.write(buffer, 0, len1);
-            }
-            fos.close();
-            is.close();
-            // System.out.println("file name is : " + outputFile.getName());
-            // Log.v("log_tag", "completed download");
-        } catch (Exception e) {
-            Log.d("log_tag", "Error: " + e);
-            // Log.i(TAG, "DownloadPDF Exception "+e);
-            // if (mDialog.isShowing())
-            // mDialog.cancel();
-            // File file = new File(Environment.getExternalStorageDirectory()
-            // .toString() + "/Brunei/" + title + ".pdf");
-            // boolean deleted = fileName.delete();
-            // System.out.println("file deleted");
-            e.printStackTrace();
-        }
-    }
 
     public static String getColor() {
         return color;
