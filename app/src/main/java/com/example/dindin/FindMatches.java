@@ -192,9 +192,7 @@ public class FindMatches extends Fragment implements View.OnClickListener{
             //findMatch();
             // }
         } else {
-            Utilities ultilities = new Utilities();
-            ultilities.displayMessageAndExit(getActivity(), "Alert",
-                    " working internet connection required");
+
 
         }
 
