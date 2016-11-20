@@ -102,7 +102,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         } else {
             AlertDialogManager
-                    .internetConnetionErrorAlertDialog(LoginActivity.this);
+                    .internetConnectionErrorMsg(LoginActivity.this);
         }
     }
 
@@ -161,6 +161,7 @@ public class LoginActivity extends AppCompatActivity {
                             info.setText("Login attempt failed.");
             }
         });
+/*
             userProfile = Profile.getCurrentProfile();
             if(userProfile != null){
                 profilePictureView = (ProfilePictureView) findViewById(R.id.userProfilePic);
@@ -169,12 +170,20 @@ public class LoginActivity extends AppCompatActivity {
                         "Welcome " + userProfile.getFirstName() + " " + userProfile.getLastName()
                 );
             }
+            */
+            //TODO: FIX THIS LINE OF CODE
+            userProfile = Profile.getCurrentProfile();
             if(userProfile != null) {
+                profilePictureView = (ProfilePictureView) findViewById(R.id.userProfilePic);
+                profilePictureView.setProfileId(userProfile.getId());
+
 
                 Intent goToNextActivity = new Intent(getApplicationContext(), NavBarActivity.class);
-
+                goToNextActivity.putExtra("jsondata", R.id.userProfilePic);
                 startActivity(goToNextActivity);
             }
+
+
     }
 /*
     To get the facebook user's own profile information via  creating a new request.
@@ -218,9 +227,7 @@ public class LoginActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
                 //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+
                 return super.onOptionsItemSelected(item);
     }
     @Override

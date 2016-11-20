@@ -104,7 +104,7 @@ public class FindMatches extends Fragment implements View.OnClickListener{
                 .findViewById(R.id.findingpeopletextlayout);
 
 
-        invitebuttonlayout.setVisibility(View.GONE);
+
 
         swipeviewlayout = (RelativeLayout) view
                 .findViewById(R.id.swipeviewlayout);
@@ -123,7 +123,7 @@ public class FindMatches extends Fragment implements View.OnClickListener{
         matchedUserInfoButton.setOnClickListener(this);
         likeButton.setOnClickListener(this);
         dislikeButton.setOnClickListener(this);
-        inviteButton.setOnClickListener(this);
+
 
         Utilities mUltilities = new Utilities();
         matchUserHeightAndWidth = mUltilities
@@ -155,7 +155,6 @@ public class FindMatches extends Fragment implements View.OnClickListener{
         invitlayoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
         invitlayoutParams.setMargins(0, topMarginForInvitelayoutAndText[1], 0,
                 0);
-        invitebuttonlayout.setLayoutParams(invitlayoutParams);
 
 //        ScreenSize screenSize = new ScreenSize(getActivity());
 //        // Log.e(TAG,

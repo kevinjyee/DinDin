@@ -60,14 +60,6 @@ import org.json.JSONObject;
                 String jsondata = intent.getStringExtra("jsondata");
                 setNavigationHeader();    // call setNavigationHeader Method.
                 setUserProfile(jsondata);  // call setUserProfile Method.
-                FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-                fab.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                                .setAction("Action", null).show();
-                    }
-                });
 
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                 ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -165,9 +157,7 @@ import org.json.JSONObject;
                 // as you specify a parent activity in AndroidManifest.xml.
                 int id = item.getItemId();
                 //noinspection SimplifiableIfStatement
-                if (id == R.id.action_settings) {
-                    return true;
-                } else if (id == R.id.message_select) {
+               if (id == R.id.message_select) {
                     Intent intent = new Intent(NavBarActivity.this,MessageActivity.class);
                     NavBarActivity.this.startActivity(intent);
                 }
