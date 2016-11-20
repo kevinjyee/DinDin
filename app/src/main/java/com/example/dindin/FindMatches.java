@@ -99,11 +99,10 @@ public class FindMatches extends Fragment implements View.OnClickListener{
         View view = inflater.inflate(R.layout.fragment_layout1, null);
 
         preferences = PreferenceManager.getDefaultSharedPreferences(inflater.getContext());
-        invitebuttonlayout = (RelativeLayout) view
-                .findViewById(R.id.invitebuttonlayout);
+
         findingpeopletextlayout = (RelativeLayout) view
                 .findViewById(R.id.findingpeopletextlayout);
-        inviteButton = (Button) view.findViewById(R.id.inviteButton);
+
 
         invitebuttonlayout.setVisibility(View.GONE);
 

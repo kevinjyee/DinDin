@@ -2,6 +2,7 @@ package com.example.dindin.utilities;
 
 /**
  * Created by Kevin on 11/19/2016.
+ * Handles errorMessages and internetConnectionErrors
  */
 
 import android.app.Activity;
@@ -37,7 +38,7 @@ public class AlertDialogManager {
     /**
      * Dialog to show No internet connection
      */
-    public static void internetConnetionErrorAlertDialog(final Activity activity) {
+    public static void internetConnectionErrorMsg(final Activity activity) {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setTitle("Internet Connection Error");
         builder.setMessage("Please connect to working Internet connection.");
@@ -48,10 +49,6 @@ public class AlertDialogManager {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
-                        // Intent intent=new Intent(SplashActivity.this,
-                        // HomeActivity.class);
-                        // intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                        // startActivity(intent);
                         activity.finish();
 
                     }

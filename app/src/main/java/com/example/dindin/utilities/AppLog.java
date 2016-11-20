@@ -2,6 +2,7 @@ package com.example.dindin.utilities;
 
 /**
  * Created by Kevin on 11/19/2016.
+ * Used to Log Information when in Debug Mode.
  */
 
 public class AppLog {

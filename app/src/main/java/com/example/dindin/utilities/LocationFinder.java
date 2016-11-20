@@ -5,10 +5,7 @@ package com.example.dindin.utilities;
  */
 
 /**
- * GPS Check is a public class that allows to find out current location of user
- * via GPS and also provides a GUI for the same.The GUI has two buttons to stop
- * the location search & back button. Stopping will lead to manual PoS
- * screen.The UI is launched immediately after a new activity is started.
+ *Checks for GPS and Internet Connection
  */
 
 import android.content.Context;
@@ -54,9 +51,11 @@ public class LocationFinder {
     boolean gps_enabled = false;
     boolean network_enabled = false;
     Context currentcontext;
+
+
+    /*getsLocation of the Current User*/
     public boolean getLocation(Context context, LocationResult result) {
-        // I use LocationResult callback class to pass location value from
-        // MyLocation to user code.
+
         currentcontext = context;
 
         locationResult = result;
@@ -190,26 +189,7 @@ public class LocationFinder {
 
     };
 
-    // public String getDistance(GeoPoint mGeoPoint, GeoPoint passPoint1)
-    // {
-    // return CabforuGeocoder.getDistance(mGeoPoint, passPoint1);
-    // }
-    // public String getDistanceInmeter(GeoPoint geoPoint, GeoPoint geoPoint2)
-    // {
-    // return CabforuGeocoder.getDistanceInmeter( geoPoint, geoPoint2);
-    // }
-    //
-    // public String gettiming(GeoPoint geoPoint, GeoPoint geoPoint2) {
-    // // TODO Auto-generated method stub
-    //
-    // return CabforuGeocoder.getTimings( geoPoint, geoPoint2);
-    // }
-    // public String gettiming2(GeoPoint mGeoPoint, GeoPoint passPoint1) {
-    // // TODO Auto-generated method stub
-    // //System.out.println("LOCATION FINDER:>>>>>>>> " + mGeoPoint +
-    // passPoint1);
-    // return CabforuGeocoder.getTimings2(mGeoPoint, passPoint1);
-    // }
+   /*Uses a timer to get last location*/
     class GetLastLocation extends TimerTask {
         @Override
         public void run() {
