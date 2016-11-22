@@ -2,6 +2,7 @@ package com.example.dindin;
 
 
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -23,9 +24,12 @@ import android.widget.TextView;
 
 import com.example.dindin.utilities.AppLog;
 import com.example.dindin.utilities.ConnectionDetector;
+import com.example.dindin.utilities.Constants;
 import com.example.dindin.utilities.ScalingUtilities;
 import com.example.dindin.utilities.Utilities;
 import com.facebook.internal.Utility;
+
+import java.util.List;
 
 import static com.google.android.gms.wearable.DataMap.TAG;
 
@@ -269,13 +273,16 @@ public class FindMatches extends Fragment implements View.OnClickListener{
 
     private class BackGroundTask extends AsyncTask<String,Void, Void>{
         private Utilities currentUtils = new Utilities();
+        private List<ContentValues>  findMatchList;
 
-
-
+        private String fbId;
         @Override
         protected Void doInBackground(String... params){
 
             try {
+                fbId = preferences.getString(Constants.FACEBOOK_ID, "");
+                String[] findMatchParamereter = { fbId };
+                //findMatchList = currentUtils
 
 
             } catch (Exception e) {

@@ -8,5 +8,6 @@ package com.example.dindin.utilities;
 public class Constants {
 
     public static final String PROFILE_IMAGE_ONE = "imageOne";
+    public static final String FACEBOOK_ID = "fbid";
 
 }

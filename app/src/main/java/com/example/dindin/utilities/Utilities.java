@@ -483,22 +483,14 @@
 
 
 
-    public RelativeLayout.LayoutParams getRelativelayoutParams(int width,
-                                                           int height) {
-    RelativeLayout.LayoutParams lp = null;
+        public RelativeLayout.LayoutParams getRelativelayoutParams(int width, int height) {
+            RelativeLayout.LayoutParams lp = null;
 
-    lp = new RelativeLayout.LayoutParams(/*
-                                         * RelativeLayout.LayoutParams.
-                                         * WRAP_CONTENT
-                                         */width, /*
-                                                 * RelativeLayout.LayoutParams
-                                                 * .WRAP_CONTENT
-                                                 */height);
+            lp = new RelativeLayout.LayoutParams(width, height);
+            return lp;
+        }
 
-    return lp;
-    }
-
-
+        /*Uses URL to retrieve BitMap for profile picture*/
         public static Bitmap getBitmapFromURL(String src) {
             try {
                 URL url = new URL(src);
