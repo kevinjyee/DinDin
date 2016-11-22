@@ -1,9 +1,14 @@
 
         package com.example.dindin.com.example;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-        import android.support.design.widget.FloatingActionButton;
+import android.os.Environment;
+import android.preference.PreferenceManager;
+import android.support.design.widget.FloatingActionButton;
         import android.support.design.widget.NavigationView;
         import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -27,6 +32,7 @@ import com.example.dindin.MessageActivity;
 import com.example.dindin.PreferencesFragment;
 import com.example.dindin.ProfileFragment;
 import com.example.dindin.R;
+import com.example.dindin.utilities.Constants;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
@@ -34,6 +40,13 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.squareup.picasso.Picasso;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 
         public class NavBarActivity extends AppCompatActivity
@@ -41,12 +54,15 @@ import org.json.JSONObject;
             JSONObject response, profile_pic_data, profile_pic_url;
             TextView user_name, user_email;
             ImageView user_picture;
+            ImageView middle_picture;
             NavigationView navigation_view;
             /**
              * ATTENTION: This was auto-generated to implement the App Indexing API.
              * See https://g.co/AppIndexing/AndroidStudio for more information.
              */
             private GoogleApiClient client;
+            private SharedPreferences preferences;
+            private SharedPreferences.Editor editor;
 
             @Override
             protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +71,8 @@ import org.json.JSONObject;
 
                 Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
                 setSupportActionBar(toolbar);
-
+                preferences = PreferenceManager.getDefaultSharedPreferences(this);
+                editor = preferences.edit();
                 Intent intent = getIntent();
                 String jsondata = intent.getStringExtra("jsondata");
                 setNavigationHeader();    // call setNavigationHeader Method.
@@ -102,6 +119,7 @@ import org.json.JSONObject;
                 // navigation_view.addHeaderView(header);
                 user_name = (TextView) header.findViewById(R.id.username);
                 user_picture = (ImageView) header.findViewById(R.id.profile_pic);
+
                 user_email = (TextView) header.findViewById(R.id.email);
             }
 
@@ -115,8 +133,12 @@ import org.json.JSONObject;
                     user_name.setText(response.get("name").toString());
                     profile_pic_data = new JSONObject(response.get("picture").toString());
                     profile_pic_url = new JSONObject(profile_pic_data.getString("data"));
+
                     Picasso.with(this).load(profile_pic_url.getString("url"))
                             .into(user_picture);
+                    editor.putString(Constants.PROFILE_IMAGE_ONE,
+                            getStoredImageUrl("1", profile_pic_url.getString("url")));
+                    editor.commit();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -238,5 +260,61 @@ import org.json.JSONObject;
                 // See https://g.co/AppIndexing/AndroidStudio for more information.
                 AppIndex.AppIndexApi.end(client, getIndexApiAction());
                 client.disconnect();
+            }
+
+
+            private void createIfNotDirectory() {
+                File f = new File(Environment.getExternalStorageDirectory()
+                        + File.separator + "ShoppingList");
+                if (f.exists()) {
+                    return;
+                } else {
+                    f.mkdir();
+                }
+
+            }
+
+            public static Bitmap getBitmapFromURL(String src) {
+                try {
+                    URL url = new URL(src);
+                    HttpURLConnection connection = (HttpURLConnection) url
+                            .openConnection();
+                    connection.setDoInput(true);
+                    connection.connect();
+                    InputStream input = connection.getInputStream();
+                    Bitmap myBitmap = BitmapFactory.decodeStream(input);
+                    return myBitmap;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return null;
+                }
+            }
+
+            protected String getStoredImageUrl(String name, String image) {
+
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                Bitmap bitmap = getBitmapFromURL(image);
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                // you can create a new file name "test.jpg" in sdcard folder.
+                File f = new File(Environment.getExternalStorageDirectory()
+                        + File.separator + "Meetr" + File.separator + name + ".jpg");
+
+                createIfNotDirectory();
+
+                if (f.exists()) {
+                    f.delete();
+                }
+                try {
+                    f.createNewFile();
+                    FileOutputStream fo = new FileOutputStream(f);
+                    fo.write(stream.toByteArray());
+                    // remember close de FileOutput
+                    fo.close();
+                    return f.getAbsolutePath();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return image;
+
             }
         }

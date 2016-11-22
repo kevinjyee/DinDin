@@ -3,6 +3,7 @@ package com.example.dindin;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -19,7 +20,9 @@ import android.widget.TextView;
 
 import com.example.dindin.utilities.AppLog;
 import com.example.dindin.utilities.ConnectionDetector;
+import com.example.dindin.utilities.ScalingUtilities;
 import com.example.dindin.utilities.Utilities;
+import com.facebook.internal.Utility;
 
 import static com.google.android.gms.wearable.DataMap.TAG;
 
@@ -172,7 +175,9 @@ public class FindMatches extends Fragment implements View.OnClickListener{
         likedislikelayout.setLayoutParams(likedislikeparam);
 
         try {
-//            TODO set profile picture here
+//
+            setProfilePic(userProfilImage, profileImageHeightAndWidth[0],
+                    profileImageHeightAndWidth[1]);
         } catch (Exception e) {
             AppLog.handleException(TAG + " onCreateView  Exception ", e);
         }
@@ -196,6 +201,65 @@ public class FindMatches extends Fragment implements View.OnClickListener{
         // addView Here
 
         return view;
+    }
+
+    private void setProfilePic(final ImageView userProfilImage,
+                                final int height, final int width) {
+        final Utilities mUltilities = new Utilities();
+        // try {
+        // DatabaseHandler mdaDatabaseHandler = new DatabaseHandler(
+        // getActivity());
+        // String imageOrderArray[] = { "1" };
+        // ArrayList<ImageDetail> imagelist = mdaDatabaseHandler
+        // .getImageDetailByImageOrder(imageOrderArray);
+        // if (imagelist != null && imagelist.size() > 0) {
+
+        new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                final Bitmap bitmapimage = Utilities.getBitmapFromURL(preferences
+                        .getString("imageOne", ""));
+                AppLog.Log(
+                        TAG,
+                        "Profile Image Url:"
+                                + preferences.getString(
+                                "imageOne", ""));
+                if (getActivity() != null) {
+                    getActivity().runOnUiThread(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            Bitmap cropedBitmap = null;
+                            ScalingUtilities mScalingUtilities = new ScalingUtilities();
+                            Bitmap mBitmap = null;
+                            if (bitmapimage != null) {
+                                cropedBitmap = mScalingUtilities
+                                        .createScaledBitmap(bitmapimage, width,
+                                                height, ScalingUtilities.ScalingLogic.CROP);
+                                bitmapimage.recycle();
+                                mBitmap = mUltilities.getCircleBitmap(
+                                        cropedBitmap, 1);
+                                cropedBitmap.recycle();
+                                userProfilImage.setImageBitmap(mBitmap);
+                            } else {
+
+                            }
+
+                        }
+                    });
+                }
+
+            }
+        }).start();
+
+        // } else {
+        //
+        // }
+        // } CATCH (EXCEPTION E) {
+        // APPLOG.HANDLEEXCEPTION("EXCEPTION DURIN SETPROFILEPICK ", E);
+        // }
+
     }
 
     @Override

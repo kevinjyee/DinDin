@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
-    android:background="@android:color/white" >
+    android:background="@drawable/bg" >
 
     <ImageView
         android:id="@+id/circleimageview"
@@ -60,26 +60,25 @@
 
             </RelativeLayout>
         </RelativeLayout>
-<!---
-        <RelativeLayout
-            android:id="@+id/invitebuttonlayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/findingpeopletextlayout"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp" >
-
-            <Button
-                android:id="@+id/inviteButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:background="@drawable/selector_for_delete_button"
-                android:gravity="center"
-                android:text="invite friends" />
-        </RelativeLayout>
-        -->
+        <!---
+                <RelativeLayout
+                    android:id="@+id/invitebuttonlayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/findingpeopletextlayout"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp" >
+                    <Button
+                        android:id="@+id/inviteButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/selector_for_delete_button"
+                        android:gravity="center"
+                        android:text="invite friends" />
+                </RelativeLayout>
+                -->
     </RelativeLayout>
 
     <RelativeLayout

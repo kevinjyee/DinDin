@@ -1,9 +1,11 @@
 package com.example.dindin;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -16,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.dindin.com.example.NavBarActivity;
+import com.example.dindin.utilities.Constants;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -27,6 +30,8 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.facebook.ProfileTracker;
 import com.facebook.Profile;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import com.facebook.login.widget.ProfilePictureView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -48,12 +53,17 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private ProfilePictureView profilePictureView;
     CallbackManager callbackManager;
 
+
     private Location mLastLocation;
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 1000;
     // Google client to interact with Google API
     private GoogleApiClient mGoogleApiClient;
     private LocationRequest mLocationRequest;
     private TextView lblLocation;
+
+    private SharedPreferences preferences;
+    private Editor editor;
+
     private static final int PERMISSION_REQUEST_ACCESS_FINE_LOCATION=5;
 
     @Override
@@ -74,6 +84,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
                 .setInterval(10 * 1000)
                 .setFastestInterval(1 * 1000);
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        editor = preferences.edit();
+
         getLoginDetails(loginButton);
 
     }
@@ -181,7 +195,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             if(userProfile != null) {
 
                 Intent goToNextActivity = new Intent(getApplicationContext(), NavBarActivity.class);
-
+            //   editor.putString(Constants.PROFILE_IMAGE_ONE,
+                        // getStoredImageUrl("1", data.getProfilePicture()));
                 startActivity(goToNextActivity);
             }
     }
