@@ -18,7 +18,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@drawable/stainlessnavbar"
+            android:background="@drawable/bg"
             app:popupTheme="@style/AppTheme.PopupOverlay">
             <TextView
                 android:id="@+id/activity_main_content_title"
@@ -42,8 +42,8 @@
         android:id="@+id/activity_main_content_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background = "@drawable/bg">
-        <!--android:background="@android:color/white" > -->
+        android:layout_marginTop="?android:attr/actionBarSize"
+        android:background="@android:color/white" >
     </FrameLayout>
 
 

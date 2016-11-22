@@ -142,10 +142,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 .getLastLocation(mGoogleApiClient);
 
         if (mLastLocation != null) {
-            double latitude = mLastLocation.getLatitude();
-            double longitude = mLastLocation.getLongitude();
-
-            lblLocation.setText(latitude + ", " + longitude);
             handleNewLocation(mLastLocation);
         } else {
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
@@ -346,6 +342,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
 
     public void handleNewLocation(Location location){
+        double latitude = location.getLatitude();
+        double longitude = location.getLongitude();
+
+        lblLocation.setText(latitude + ", " + longitude);
         Log.d(TAG, location.toString());
     }
 }

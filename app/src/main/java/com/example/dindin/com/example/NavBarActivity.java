@@ -207,12 +207,15 @@ import java.net.URL;
                         fragment = new PreferencesFragment();
                         title = "Preferences";
                         break;
-
+                    case R.id.nav_find:
+                        fragment = new FindMatches();
+                        title = "Find";
+                        break;
                 }
 
                 if (fragment != null) {
                     FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                    ft.replace(R.id.content_frame, fragment);
+                    ft.replace(R.id.activity_main_content_fragment, fragment);
                     ft.commit();
                 }
 
