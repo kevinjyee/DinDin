@@ -1,10 +1,13 @@
 package com.example.dindin;
 
+
+
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -255,6 +258,35 @@ public class FindMatches extends Fragment implements View.OnClickListener{
             }
         }).start();
     }
+
+    /**
+     *Use this method to start a new asynchronous task to findMatches
+     */
+    private void findMatch() {
+
+        new BackGroundTask().execute();
+    }
+
+    private class BackGroundTask extends AsyncTask<String,Void, Void>{
+        private Utilities currentUtils = new Utilities();
+
+
+
+        @Override
+        protected Void doInBackground(String... params){
+
+            try {
+
+
+            } catch (Exception e) {
+
+            }
+            return null;
+        }
+
+    }
+
+
 
     @Override
     public void onClick(View v) {
