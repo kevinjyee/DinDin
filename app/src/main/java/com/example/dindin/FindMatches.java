@@ -99,35 +99,55 @@ public class FindMatches extends Fragment implements View.OnClickListener{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        //Inflate Fragment_layout1, the fragment with our main view.
         View view = inflater.inflate(R.layout.fragment_layout1, null);
 
+        //preferences store our current user preferences from device (i.e. profile pics)
         preferences = PreferenceManager.getDefaultSharedPreferences(inflater.getContext());
 
+        //Inflate Layout
         findingpeopletextlayout = (RelativeLayout) view
                 .findViewById(R.id.findingpeopletextlayout);
 
 
 
-
+        //Layout for swipe section
         swipeviewlayout = (RelativeLayout) view
                 .findViewById(R.id.swipeviewlayout);
+
+        //Location for userProfilImage section
         userProfilImage = (ImageView) view.findViewById(R.id.userProfilImage);
+
+
+        //"Finding People near you" text
         messagetextview = (TextView) view.findViewById(R.id.messagetextview);
+
+        //Circle to encapsulate profile image
         amimagetedview = (ImageView) view.findViewById(R.id.circleimageview);
+
+        //if no matches foud, inflate thie view
         noMatchFound = (RelativeLayout) view.findViewById(R.id.noMatchFound);
 
+        //Middle Info button
         matchedUserInfoButton = (Button) view
                 .findViewById(R.id.matchedUserInfoButton);
+        //Like Button
         likeButton = (Button) view.findViewById(R.id.likeButton);
+
+        //DislikeButton
         dislikeButton = (Button) view.findViewById(R.id.dislikeButton);
+
+        //Layout containing all our buttons
         likedislikelayout = (RelativeLayout) view
                 .findViewById(R.id.likedislikelayout);
 
+        // Set listeners to our buttons
         matchedUserInfoButton.setOnClickListener(this);
         likeButton.setOnClickListener(this);
         dislikeButton.setOnClickListener(this);
 
 
+        //Create new Utilities to get screen sizes
         Utilities mUltilities = new Utilities();
         matchUserHeightAndWidth = mUltilities
                 .getImageHeightAndWidthForMatchedUser(getActivity());
@@ -156,17 +176,8 @@ public class FindMatches extends Fragment implements View.OnClickListener{
         invitlayoutParams.addRule(RelativeLayout.BELOW,
                 R.id.findingpeopletextlayout);
         invitlayoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        invitlayoutParams.setMargins(0, topMarginForInvitelayoutAndText[1], 0,
-                0);
+        invitlayoutParams.setMargins(0, topMarginForInvitelayoutAndText[1], 0, 0);
 
-//        ScreenSize screenSize = new ScreenSize(getActivity());
-//        // Log.e(TAG,
-//        // "his : "
-//        // + getActivity().getWindowManager().getDefaultDisplay()
-//        // .getWidth() + "my : "
-//        // + screenSize.getScreenWidthPixel());
-//        windowwidth = (int) screenSize.getScreenWidthPixel();
-//        screenCenter = windowwidth / 2;
         RelativeLayout.LayoutParams likedislikeparam = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.MATCH_PARENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT);
@@ -175,16 +186,12 @@ public class FindMatches extends Fragment implements View.OnClickListener{
         likedislikelayout.setLayoutParams(likedislikeparam);
 
         try {
-//
+            //sets user profile image nad pic
             setProfilePic(userProfilImage, profileImageHeightAndWidth[0],
                     profileImageHeightAndWidth[1]);
         } catch (Exception e) {
             AppLog.handleException(TAG + " onCreateView  Exception ", e);
         }
-//        anime = AnimationUtils.loadAnimation(getActivity(), R.anim.zoomin);
-//        amimagetedview.startAnimation(anime);
-
-
 
         ConnectionDetector connectionDetector = new ConnectionDetector(
                 getActivity());
@@ -206,18 +213,13 @@ public class FindMatches extends Fragment implements View.OnClickListener{
     private void setProfilePic(final ImageView userProfilImage,
                                 final int height, final int width) {
         final Utilities mUltilities = new Utilities();
-        // try {
-        // DatabaseHandler mdaDatabaseHandler = new DatabaseHandler(
-        // getActivity());
-        // String imageOrderArray[] = { "1" };
-        // ArrayList<ImageDetail> imagelist = mdaDatabaseHandler
-        // .getImageDetailByImageOrder(imageOrderArray);
-        // if (imagelist != null && imagelist.size() > 0) {
+
 
         new Thread(new Runnable() {
 
             @Override
             public void run() {
+                //get image from our stored preference
                 final Bitmap bitmapimage = Utilities.getBitmapFromURL(preferences
                         .getString("imageOne", ""));
                 AppLog.Log(
@@ -252,14 +254,6 @@ public class FindMatches extends Fragment implements View.OnClickListener{
 
             }
         }).start();
-
-        // } else {
-        //
-        // }
-        // } CATCH (EXCEPTION E) {
-        // APPLOG.HANDLEEXCEPTION("EXCEPTION DURIN SETPROFILEPICK ", E);
-        // }
-
     }
 
     @Override
