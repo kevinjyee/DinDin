@@ -29,6 +29,8 @@ import com.example.dindin.utilities.ScalingUtilities;
 import com.example.dindin.utilities.Utilities;
 import com.facebook.internal.Utility;
 
+import org.apache.http.NameValuePair;
+
 import java.util.List;
 
 import static com.google.android.gms.wearable.DataMap.TAG;
@@ -273,17 +275,21 @@ public class FindMatches extends Fragment implements View.OnClickListener{
 
     private class BackGroundTask extends AsyncTask<String,Void, Void>{
         private Utilities currentUtils = new Utilities();
-        private List<ContentValues>  findMatchList;
-
+        private List<NameValuePair>  findMatchList;
+        private String MatchResponse;
         private String fbId;
+        private boolean success = true;
+
         @Override
         protected Void doInBackground(String... params){
 
             try {
                 fbId = preferences.getString(Constants.FACEBOOK_ID, "");
-                String[] findMatchParamereter = { fbId };
-                //findMatchList = currentUtils
-
+                String[] findMatchParameter = { fbId };
+                findMatchList = currentUtils.getFindMatchParameter(findMatchParameter);
+                MatchResponse = currentUtils.makeHttpRequest(
+                        Constants.findMatch_url, Constants.methodeName,
+                        findMatchList);
 
             } catch (Exception e) {
 
@@ -291,7 +297,10 @@ public class FindMatches extends Fragment implements View.OnClickListener{
             return null;
         }
 
-    }
+        }
+
+
+
 
 
 

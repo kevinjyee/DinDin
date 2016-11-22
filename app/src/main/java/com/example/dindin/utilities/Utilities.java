@@ -4,23 +4,43 @@
 
 
 
+    import java.io.BufferedReader;
     import java.io.File;
 
     import java.io.IOException;
     import java.io.InputStream;
 
+    import java.io.InputStreamReader;
+    import java.io.UnsupportedEncodingException;
     import java.net.HttpURLConnection;
     import java.net.URL;
+    import java.net.URLConnection;
     import java.text.SimpleDateFormat;
 
+    import java.util.ArrayList;
     import java.util.Date;
     import java.util.List;
+    import java.util.jar.Attributes;
 
+    import org.apache.http.HttpEntity;
+    import org.apache.http.HttpResponse;
+    import org.apache.http.NameValuePair;
+    import org.apache.http.client.ClientProtocolException;
+    import org.apache.http.client.entity.UrlEncodedFormEntity;
+    import org.apache.http.client.methods.HttpGet;
+    import org.apache.http.client.methods.HttpPost;
+    import org.apache.http.client.utils.URLEncodedUtils;
+    import org.apache.http.impl.client.*;
+    import org.apache.http.message.BasicNameValuePair;
+    import org.apache.http.params.BasicHttpParams;
+    import org.apache.http.params.HttpConnectionParams;
+    import org.apache.http.params.HttpParams;
 
     import android.annotation.SuppressLint;
 
     import android.app.Activity;
 
+    import android.content.ContentValues;
     import android.content.Context;
 
     import android.graphics.Bitmap;
@@ -506,4 +526,79 @@
                 return null;
             }
         }
+
+        public List<NameValuePair> getFindMatchParameter(String[] params) {
+            List<NameValuePair> namevaluepairs = new ArrayList<NameValuePair>();
+            namevaluepairs.add(new BasicNameValuePair("current_user_id",params[0]));
+            return namevaluepairs;
+        }
+
+        public String makeHttpRequest(String url, String method,
+                                      List<NameValuePair> params) {
+
+            InputStream is = null;
+            // Making HTTP request
+            try {
+
+                // check for request method
+                if (method == "POST") {
+                    DefaultHttpClient httpClient = new DefaultHttpClient();
+                    HttpPost httpPost = new HttpPost(url);
+
+                    httpPost.setEntity(new UrlEncodedFormEntity(params));
+                    HttpResponse httpResponse = httpClient.execute(httpPost);
+                    HttpEntity httpEntity = httpResponse.getEntity();
+                    is = httpEntity.getContent();
+
+                } else if (method == "GET") {
+                    // request method is GET
+                    HttpParams httpParameters = new BasicHttpParams();
+                    HttpConnectionParams
+                            .setConnectionTimeout(httpParameters, 20000);
+                    HttpConnectionParams.setSoTimeout(httpParameters, 20000);
+                    DefaultHttpClient httpClient = new DefaultHttpClient(
+                            httpParameters);
+                    // DefaultHttpClient httpClient = new DefaultHttpClient();
+                    String paramString = URLEncodedUtils.format(params, "utf-8");
+                    System.out.println("--------Orignal URL-------" + params);
+                    System.out.println("***paramString***" + paramString);
+                    url += "?" + paramString;
+                    System.out.println("***url***" + url);
+                    HttpGet httpGet = new HttpGet(url);
+
+                    HttpResponse httpResponse = httpClient.execute(httpGet);
+                    HttpEntity httpEntity = httpResponse.getEntity();
+                    is = httpEntity.getContent();
+                    Log.e("is^", is.toString());
+                }
+
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            } catch (ClientProtocolException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            String response = null;
+            try {
+                BufferedReader reader = new BufferedReader(
+                        new InputStreamReader(is));
+                StringBuilder sb = new StringBuilder();
+                String line = null;
+                while ((line = reader.readLine()) != null) {
+                    sb.append(line + "\n");
+                }
+                is.close();
+
+                response = sb.toString();
+                // json = sb.toString();
+            } catch (Exception e) {
+                Log.e("Buffer Error", "Error converting result " + e.toString());
+            }
+
+            return response;
+
+        }
+
     }
