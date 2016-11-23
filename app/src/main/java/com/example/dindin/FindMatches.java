@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.dindin.com.example.UserMatchData;
 import com.example.dindin.utilities.AppLog;
 import com.example.dindin.utilities.ConnectionDetector;
 import com.example.dindin.utilities.Constants;
@@ -278,6 +279,7 @@ public class FindMatches extends Fragment implements View.OnClickListener{
         private List<NameValuePair>  findMatchList;
         private String MatchResponse;
         private String fbId;
+        private UserMatchData matchData;
         private boolean success = true;
 
         @Override
