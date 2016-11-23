@@ -12,6 +12,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,9 +30,11 @@ import com.example.dindin.utilities.Constants;
 import com.example.dindin.utilities.ScalingUtilities;
 import com.example.dindin.utilities.Utilities;
 import com.facebook.internal.Utility;
+import com.google.gson.Gson;
 
 import org.apache.http.NameValuePair;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.google.android.gms.wearable.DataMap.TAG;
@@ -52,6 +55,9 @@ public class FindMatches extends Fragment implements View.OnClickListener{
     private RelativeLayout noMatchFound;
     private ImageView userProfilImage, amimagetedview;
     private TextView messagetextview;
+
+    private ArrayList<User> MatchedUserList;
+
     private Button matchedUserInfoButton;
     private int[] matchUserHeightAndWidth;
     private int[] topMarginForInvitelayoutAndText;
@@ -208,7 +214,7 @@ public class FindMatches extends Fragment implements View.OnClickListener{
 
         if (connectionDetector.isConnectingToInternet()) {
 
-            //findMatches(); TODO here
+            findMatch(); ///TODO here
             // }
         } else {
 
@@ -293,13 +299,63 @@ public class FindMatches extends Fragment implements View.OnClickListener{
                         Constants.findMatch_url, Constants.methodeName,
                         findMatchList);
 
-            } catch (Exception e) {
+                Gson gson = new Gson();
+                matchData = gson.fromJson(MatchResponse,
+                        UserMatchData.class);
 
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                success = false;
             }
             return null;
         }
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+            try {
 
+                if (success) {
+
+                        MatchedUserList = matchData.getMatches();
+
+                        Log.i(TAG, "**** Marches Found MatchedUserList ****");
+
+                        int pos = -1;
+                        for (int i = 0; i < MatchedUserList.size(); i++) {
+                            User data = MatchedUserList.get(i);
+                            if (data.getfbId().equals(
+                                    preferences.getString(Constants.FACEBOOK_ID,
+                                            ""))){
+                                pos = i;
+                                break;
+                            }
+                        }
+                        if (pos >= 0) {
+                            MatchedUserList.remove(pos);
+                        }
+                       // dwonLoadImage(numberOfImageDownload);
+
+                    }
+                 else {
+
+                    messagetextview.setText("there`s no one new around you");
+                    // ErrorMessageRequesTimeOut("Alert ", "Request timeout");
+                    Constants.isMatchedFound = false;
+                }
+            } catch (Exception e) {
+                AppLog.handleException(
+                        TAG
+                                + " BackGroundTaskForFindMatch  onPostExecute Exception ",
+                        e);
+                messagetextview.setText("there`s no one new around you");
+                // ErrorMessageRequesTimeOut("Alert ", "Request timeout");
+            }
         }
+
+
+    }
 
 
 

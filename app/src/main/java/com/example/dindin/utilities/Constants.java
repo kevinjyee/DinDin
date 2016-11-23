@@ -19,4 +19,5 @@ public class Constants {
     public static final String KEY_FACEBOOK_ID = "current_user_fbid";
 
     public static final String methodeName = "POST";
+    public static boolean isMatchedFound = false;
 }

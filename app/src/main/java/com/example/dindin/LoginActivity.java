@@ -51,6 +51,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private LoginResult loginfinal;
     private Profile userProfile;
     private ProfilePictureView profilePictureView;
+    //private UserFaceBookInfo mUserFaceBookInfo; //TODO: Create UserFacebook Info class
     CallbackManager callbackManager;
 
 

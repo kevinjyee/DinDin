@@ -46,7 +46,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ObjectMapper mapper = new ObjectMapper();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COLUMN_ID, user.getId());
+        contentValues.put(COLUMN_ID, user.getfbId());
         try {
             String userJSON = mapper.writeValueAsString(user);
             contentValues.put(COLUMN_USER, userJSON);
@@ -92,7 +92,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         ObjectMapper mapper = new ObjectMapper();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COLUMN_ID, user.getId());
+        contentValues.put(COLUMN_ID, user.getfbId());
         try {
             String userJSON = mapper.writeValueAsString(user);
             contentValues.put(COLUMN_USER, userJSON);
@@ -104,14 +104,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             e.printStackTrace();
         }
         long result = db.update(TABLE_NAME, contentValues, COLUMN_ID + " = ?", new String[] {
-                String.valueOf(user.getId())});
+                String.valueOf(user.getfbId())});
         return (result != -1);
     }
 
     // Delete a user
     public void deleteUser(User user){
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_NAME, COLUMN_ID + " = ?", new String[] { String.valueOf(user.getId())});
+        db.delete(TABLE_NAME, COLUMN_ID + " = ?", new String[] { String.valueOf(user.getfbId())});
         db.close();
     }
 
