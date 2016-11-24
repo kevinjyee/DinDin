@@ -172,7 +172,7 @@ public class FindMatches extends Fragment implements View.OnClickListener{
         dislikeButton = (Button) view.findViewById(R.id.dislikeButton);
 
 
-        profileImage = (ProfilePictureView) view.findViewById(R.id.iv_user_image_user_matches);
+        //profileImage = (ProfilePictureView) view.findViewById(R.id.iv_user_image_user_matches);
         //Layout containing all our buttons
         likedislikelayout = (RelativeLayout) view
                 .findViewById(R.id.likedislikelayout);
@@ -223,13 +223,13 @@ public class FindMatches extends Fragment implements View.OnClickListener{
         likedislikeparam.addRule(RelativeLayout.CENTER_HORIZONTAL);
         likedislikeparam.setMargins(0, imageLayoutHeightandWidth[3], 0, 0);
         likedislikelayout.setLayoutParams(likedislikeparam);
-
+//
         ScreenSize screenSize = new ScreenSize(getActivity());
-        // Log.e(TAG,
-        // "his : "
-        // + getActivity().getWindowManager().getDefaultDisplay()
-        // .getWidth() + "my : "
-        // + screenSize.getScreenWidthPixel());
+//        // Log.e(TAG,
+//        // "his : "
+//        // + getActivity().getWindowManager().getDefaultDisplay()
+//        // .getWidth() + "my : "
+//        // + screenSize.getScreenWidthPixel());
         windowwidth = (int) screenSize.getScreenWidthPixel();
         screenCenter = windowwidth / 2;
 
@@ -417,8 +417,8 @@ public class FindMatches extends Fragment implements View.OnClickListener{
             matchedUsersFaceBookID = this.MatchedUserList.get(i).getfbId();
             myRelativeView.setTag(i);
 
-            ProfilePictureView  profileImg = (ProfilePictureView) myRelativeView.findViewById(R.id.iv_user_image_user_matches);
-            profileImg.setProfileId(MatchedUserList.get(i).getfbId());
+           // ProfilePictureView  profileImg = (ProfilePictureView) myRelativeView.findViewById(R.id.iv_user_image_user_matches);
+            //profileImg.setProfileId(MatchedUserList.get(i).getfbId());
 
             /* Note to sefly, bmy
             ImageView imageView = (ImageView) myRelativeView.findViewById(R.id.iv_user_image_user_matches);
@@ -426,13 +426,156 @@ public class FindMatches extends Fragment implements View.OnClickListener{
             Picasso.with(getActivity()).load(MatchedUserList.get(i).getFacebookProfile().getProfilePictureUri(50,50))
             */
 
-            final Button imagePass = new Button(getActivity());
-            imagePass.setBackgroundColor(Color.TRANSPARENT);
+            ImageView imageView = (ImageView) myRelativeView
+                    .findViewById(R.id.iv_user_image_user_matches);
 
-            imagePass.setLayoutParams(new ViewGroup.LayoutParams(100,50));
-            imagePass.setText("Pass");
+            Picasso.with(getActivity())
+                    .load("https://graph.facebook.com/v2.2/" + MatchedUserList.get(i).getfbId() + "/picture?height=120&type=normal") //extract as User instance method
+                    .error(R.drawable.dislike_off) //
+                    .resize(matchUserHeightAndWidth[1],
+                            matchUserHeightAndWidth[0]) //
+                    .into(imageView);
+
             final Button imageLike = new Button(getActivity());
+            imageLike.setLayoutParams(new RelativeLayout.LayoutParams(100, 50));
+            imageLike.setText("Liked");
+            imageLike.setTextColor(android.graphics.Color.GREEN);
+            imageLike.setBackgroundColor(android.graphics.Color.TRANSPARENT);
+            imageLike.setX(20);
+            imageLike.setY(80);
+            imageLike.setAlpha(alphaValue);
+            myRelativeView.addView(imageLike);// 3rd view
 
+            final Button imagePass = new Button(getActivity());
+            imagePass.setBackgroundColor(android.graphics.Color.TRANSPARENT);
+
+            imagePass.setLayoutParams(new RelativeLayout.LayoutParams(100, 50));
+            imagePass.setText("nops");
+            imagePass.setTextColor(android.graphics.Color.RED);
+
+            imagePass.setX((windowwidth - 200));
+            imagePass.setY(100);
+            imagePass.setRotation(45);
+            imagePass.setAlpha(alphaValue);
+            myRelativeView.addView(imagePass);// 4 th view
+
+            myRelativeView.setOnTouchListener(new View.OnTouchListener() {
+
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    LandingActivity activity;
+                    x_cord = (int) event.getRawX();
+                    y_cord = (int) event.getRawY();
+
+                    final int X = (int) event.getRawX();
+                    final int Y = (int) event.getRawY();
+
+                    switch (event.getAction() & MotionEvent.ACTION_MASK) {
+                        case MotionEvent.ACTION_DOWN:
+                            activity = (LandingActivity) getActivity();
+
+                            xd = X;
+                            yd = Y;
+                            RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) myRelativeView
+                                    .getLayoutParams();
+                            _xDelta = X - lParams.leftMargin;
+                            _yDelta = Y - lParams.topMargin;
+                            break;
+                        case MotionEvent.ACTION_MOVE:
+
+                            x_cord = (int) event.getRawX();
+                            y_cord = (int) event.getRawY();
+
+                            myRelativeView.setX(X - _xDelta);
+                            myRelativeView.setY(Y - _yDelta);
+
+                            if (x_cord >= screenCenter) {
+                                myRelativeView
+                                        .setRotation((float) ((x_cord - screenCenter) * (Math.PI / 32)));
+                                if (x_cord > (screenCenter + (screenCenter / 2))) {
+                                    imageLike.setAlpha(1);
+                                    if (x_cord > (windowwidth - (screenCenter / 4))) {
+                                        Likes = 2;
+                                    } else {
+                                        Likes = 0;
+                                    }
+                                } else {
+                                    Likes = 0;
+                                    imageLike.setAlpha(0);
+                                }
+                                imagePass.setAlpha(0);
+                            } else {
+                                // rotate
+                                myRelativeView
+                                        .setRotation((float) ((x_cord - screenCenter) * (Math.PI / 32)));
+                                if (x_cord < (screenCenter / 2)) {
+                                    imagePass.setAlpha(1);
+                                    if (x_cord < screenCenter / 4) {
+
+                                        Likes = 1;
+
+                                    } else {
+                                        Likes = 0;
+                                    }
+                                } else {
+                                    Likes = 0;
+                                    imagePass.setAlpha(0);
+                                }
+
+                                imageLike.setAlpha(0);
+                            }
+
+                            break;
+                        case MotionEvent.ACTION_UP:
+
+                            x_cord = (int) event.getRawX();
+                            y_cord = (int) event.getRawY();
+
+                            Log.e("X Point", "" + x_cord + " , Y " + y_cord);
+                            imagePass.setAlpha(0);
+                            imageLike.setAlpha(0);
+
+                            if (Likes == 0) {
+                                Log.e("Event Status", "Nothing");
+                                myRelativeView.setX(imageLayoutHeightandWidth[4]);
+                                myRelativeView.setY(imageLayoutHeightandWidth[2]);
+                                myRelativeView.setRotation(0);
+                            } else if (Likes == 1) {
+                                Log.e("Event Status", "Passed");
+                                imageindex = imageindex + 1;
+
+                                if (imageindex == MatchCount) {
+                                    hideSwipeLayout();
+                                }
+
+                                UserData = FindMatches.this.MatchedUserList
+                                        .get(position);
+                                machedUserFaceBookid = UserData.getfbId();
+                                AppLog.Log(TAG,
+                                        "Event Status   machedUserFaceBookid  "
+                                                + machedUserFaceBookid);
+                                swipeviewlayout.removeView(myRelativeView);
+                                // likeMatchedUser(Constant.isDisliked);
+                            } else if (Likes == 2) {
+                                imageindex = imageindex + 1;
+                                if (imageindex == MatchCount) {
+                                    hideSwipeLayout();
+                                }
+                                Log.e("Event Status", "Liked");
+                                int viewCount = swipeviewlayout.getChildCount();
+                                User matchesData = MatchedUserList
+                                        .get(viewCount - 1);
+                                machedUserFaceBookid = matchesData.getfbId();
+                                swipeviewlayout.removeView(myRelativeView);
+                                //likeMatchedUser(Constant.isLikde);
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                    return true;
+                }
+            });
             // set visible true if match user count is more than one
             if (numMatches > 0) {
                 likedislikelayout.setVisibility(View.VISIBLE);

@@ -6,13 +6,13 @@
     android:background="@color/white"
     android:orientation="vertical" >
 
-    <com.facebook.login.widget.ProfilePictureView
+    <ImageView
         android:id="@+id/iv_user_image_user_matches"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/image_size"
+        android:layout_height="@dimen/image_size"
         android:layout_centerHorizontal="true"
         android:scaleType="fitXY"
-        android:src="@drawable/dislike_on" />
+        android:src="@drawable/dislike_off" />
 
     <RelativeLayout
         android:id="@+id/relativeLayout1"
@@ -29,9 +29,22 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="5dp"
             android:textColor="@color/white"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:text="Debug Mode Try" />
 
+        <TextView
+            android:id="@+id/tv_pic_count_user_matches"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:drawablePadding="10dp"
 
+            android:text="00"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:visibility="gone" />
     </RelativeLayout>
 
     <LinearLayout
@@ -41,7 +54,7 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/relativeLayout1"
         android:orientation="horizontal" >
-    </LinearLayout>
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -50,8 +63,36 @@
             android:gravity="center"
             android:orientation="vertical" >
 
+            <TextView
+                android:id="@+id/tv_follower_count_user_matches"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
 
+                android:drawablePadding="10dp"
+                android:text="04"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:visibility="gone" />
+        </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/pink_bar_left"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/tv_no_book_interest_user_matches"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:drawablePadding="10dp"
+                android:text="04"
+                android:textColor="@color/white"
+                android:visibility="gone" />
+        </LinearLayout>
     </LinearLayout>
 
     <TextView
@@ -64,6 +105,6 @@
         android:gravity="center"
         android:text="10%"
         android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
-        android:textColor="@color/wallet_highlighted_text_holo_dark" />
+        android:textColor="@color/white" />
 
 </RelativeLayout>
