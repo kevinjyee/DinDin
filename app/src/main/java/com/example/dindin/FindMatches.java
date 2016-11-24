@@ -15,6 +15,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -29,6 +30,7 @@ import com.example.dindin.utilities.AppLog;
 import com.example.dindin.utilities.ConnectionDetector;
 import com.example.dindin.utilities.Constants;
 import com.example.dindin.utilities.ScalingUtilities;
+import com.example.dindin.utilities.ScreenSize;
 import com.example.dindin.utilities.Utilities;
 import com.facebook.internal.Utility;
 import com.facebook.login.widget.ProfilePictureView;
@@ -68,6 +70,15 @@ public class FindMatches extends Fragment implements View.OnClickListener{
     private int[] topMarginForInvitelayoutAndText;
     private int[] profileImageHeightAndWidth;
     private int numMatches;
+    private int x_cord, y_cord;
+    private int Likes = 0;
+    // private RelativeLayout parentView;
+    private float alphaValue = 0;
+    private int _xDelta;
+    private int _yDelta;
+    static int xd, yd;
+    private int windowwidth;
+    private int screenCenter;
 
     private int[] imageLayoutHeightandWidth;
     private String machedUserFaceBookid;
@@ -212,6 +223,15 @@ public class FindMatches extends Fragment implements View.OnClickListener{
         likedislikeparam.addRule(RelativeLayout.CENTER_HORIZONTAL);
         likedislikeparam.setMargins(0, imageLayoutHeightandWidth[3], 0, 0);
         likedislikelayout.setLayoutParams(likedislikeparam);
+
+        ScreenSize screenSize = new ScreenSize(getActivity());
+        // Log.e(TAG,
+        // "his : "
+        // + getActivity().getWindowManager().getDefaultDisplay()
+        // .getWidth() + "my : "
+        // + screenSize.getScreenWidthPixel());
+        windowwidth = (int) screenSize.getScreenWidthPixel();
+        screenCenter = windowwidth / 2;
 
         try {
             //sets user profile image nad pic
@@ -380,7 +400,7 @@ public class FindMatches extends Fragment implements View.OnClickListener{
     }
 
     /*Add Matches to View with ArrayList*/
-    private void addMatchesView(ArrayList<User> MatchedUserList){
+    private void addMatchesView(final ArrayList<User> MatchedUserList){
 
         numMatches = MatchedUserList.size();
 
@@ -388,6 +408,7 @@ public class FindMatches extends Fragment implements View.OnClickListener{
 
         for(int i = 0; i < numMatches; i++)
         {
+            final int position = i;
             final RelativeLayout myRelativeView = (RelativeLayout) inflater.inflate(
                     R.layout.match_user_layout,null
             );
@@ -411,9 +432,123 @@ public class FindMatches extends Fragment implements View.OnClickListener{
             imagePass.setLayoutParams(new ViewGroup.LayoutParams(100,50));
             imagePass.setText("Pass");
             final Button imageLike = new Button(getActivity());
+            myRelativeView.setOnTouchListener(new View.OnTouchListener() {
 
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    LandingActivity activity;
+                    x_cord = (int) event.getRawX();
+                    y_cord = (int) event.getRawY();
 
+                    final int X = (int) event.getRawX();
+                    final int Y = (int) event.getRawY();
 
+                    switch (event.getAction() & MotionEvent.ACTION_MASK) {
+                        case MotionEvent.ACTION_DOWN:
+                            activity = (LandingActivity) getActivity();
+
+                            xd = X;
+                            yd = Y;
+                            RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) myRelativeView
+                                    .getLayoutParams();
+                            _xDelta = X - lParams.leftMargin;
+                            _yDelta = Y - lParams.topMargin;
+                            break;
+                        case MotionEvent.ACTION_MOVE:
+
+                            x_cord = (int) event.getRawX();
+                            y_cord = (int) event.getRawY();
+
+                            myRelativeView.setX(X - _xDelta);
+                            myRelativeView.setY(Y - _yDelta);
+
+                            if (x_cord >= screenCenter) {
+                                myRelativeView
+                                        .setRotation((float) ((x_cord - screenCenter) * (Math.PI / 32)));
+                                if (x_cord > (screenCenter + (screenCenter / 2))) {
+                                    imageLike.setAlpha(1);
+                                    if (x_cord > (windowwidth - (screenCenter / 4))) {
+                                        Likes = 2;
+                                    } else {
+                                        Likes = 0;
+                                    }
+                                } else {
+                                    Likes = 0;
+                                    imageLike.setAlpha(0);
+                                }
+                                imagePass.setAlpha(0);
+                            } else {
+                                // rotate
+                                myRelativeView
+                                        .setRotation((float) ((x_cord - screenCenter) * (Math.PI / 32)));
+                                if (x_cord < (screenCenter / 2)) {
+                                    imagePass.setAlpha(1);
+                                    if (x_cord < screenCenter / 4) {
+
+                                        Likes = 1;
+
+                                    } else {
+                                        Likes = 0;
+                                    }
+                                } else {
+                                    Likes = 0;
+                                    imagePass.setAlpha(0);
+                                }
+
+                                imageLike.setAlpha(0);
+                            }
+
+                            break;
+                        case MotionEvent.ACTION_UP:
+
+                            x_cord = (int) event.getRawX();
+                            y_cord = (int) event.getRawY();
+
+                            Log.e("X Point", "" + x_cord + " , Y " + y_cord);
+                            imagePass.setAlpha(0);
+                            imageLike.setAlpha(0);
+
+                            if (Likes == 0) {
+                                Log.e("Event Status", "Nothing");
+                                myRelativeView.setX(imageLayoutHeightandWidth[4]);
+                                myRelativeView.setY(imageLayoutHeightandWidth[2]);
+                                myRelativeView.setRotation(0);
+                            } else if (Likes == 1) {
+                                Log.e("Event Status", "Passed");
+                                imageindex = imageindex + 1;
+
+                                if (imageindex == MatchCount) {
+                                    hideSwipeLayout();
+                                }
+
+                                UserData = FindMatches.this.MatchedUserList
+                                        .get(position);
+                                machedUserFaceBookid = UserData.getfbId();
+                                AppLog.Log(TAG,
+                                        "Event Status   machedUserFaceBookid  "
+                                                + machedUserFaceBookid);
+                                swipeviewlayout.removeView(myRelativeView);
+                               // likeMatchedUser(Constant.isDisliked);
+                            } else if (Likes == 2) {
+                                imageindex = imageindex + 1;
+                                if (imageindex == MatchCount) {
+                                    hideSwipeLayout();
+                                }
+                                Log.e("Event Status", "Liked");
+                                int viewCount = swipeviewlayout.getChildCount();
+                                User matchesData = MatchedUserList
+                                        .get(viewCount - 1);
+                                machedUserFaceBookid = matchesData.getfbId();
+                                swipeviewlayout.removeView(myRelativeView);
+                                //likeMatchedUser(Constant.isLikde);
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                    return true;
+                }
+            });
             // set visible true if match user count is more than one
             if (numMatches > 0) {
                 likedislikelayout.setVisibility(View.VISIBLE);
@@ -428,6 +563,23 @@ public class FindMatches extends Fragment implements View.OnClickListener{
 
         }
 
+
+    private void hideSwipeLayout() {
+        swipeviewlayout.setVisibility(View.GONE);
+        likedislikelayout.setVisibility(View.GONE);
+       // setFullScreenMenuTouchEnable(true);
+        noMatchFound.setVisibility(View.VISIBLE);
+        amimagetedview.setVisibility(View.VISIBLE);
+        amimagetedview.startAnimation(anime);
+        messagetextview.setText("there`s no one new around you");
+        invitebuttonlayout.setVisibility(View.VISIBLE);
+        // anime.start();
+        // anime.startNow();
+        // circleimageview.startAnimation(anime);
+        // anime.cancel();
+        imageindex = 0;
+        MatchCount = 0;
+    }
 
 
 
