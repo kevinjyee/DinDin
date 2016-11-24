@@ -31,6 +31,11 @@ public class User {
     {
     }
 
+    public User(String userId)
+    {
+        this.fbId = userId;
+    }
+
     public User(int userId, String userName, Location userLoc, Profile userProfile, double rating,
                 Queue<Integer> potMatches, ArrayList<Integer> finMatches, Preferences prefs)
     {

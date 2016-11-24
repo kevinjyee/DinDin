@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -30,7 +31,9 @@ import com.example.dindin.utilities.Constants;
 import com.example.dindin.utilities.ScalingUtilities;
 import com.example.dindin.utilities.Utilities;
 import com.facebook.internal.Utility;
+import com.facebook.login.widget.ProfilePictureView;
 import com.google.gson.Gson;
+import com.squareup.picasso.Picasso;
 
 import org.apache.http.NameValuePair;
 
@@ -57,6 +60,8 @@ public class FindMatches extends Fragment implements View.OnClickListener{
     private TextView messagetextview;
 
     private ArrayList<User> MatchedUserList;
+    private User UserData;
+    private String matchedUsersFaceBookID;
 
     private Button matchedUserInfoButton;
     private int[] matchUserHeightAndWidth;
@@ -75,6 +80,7 @@ public class FindMatches extends Fragment implements View.OnClickListener{
     private int MatchCount;
     private int numberOfImageDownload = 3;
     private Button inviteButton;
+    private ProfilePictureView profileImage;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -154,6 +160,8 @@ public class FindMatches extends Fragment implements View.OnClickListener{
         //DislikeButton
         dislikeButton = (Button) view.findViewById(R.id.dislikeButton);
 
+
+        profileImage = (ProfilePictureView) view.findViewById(R.id.iv_user_image_user_matches);
         //Layout containing all our buttons
         likedislikelayout = (RelativeLayout) view
                 .findViewById(R.id.likedislikelayout);
@@ -162,6 +170,9 @@ public class FindMatches extends Fragment implements View.OnClickListener{
         matchedUserInfoButton.setOnClickListener(this);
         likeButton.setOnClickListener(this);
         dislikeButton.setOnClickListener(this);
+
+
+
 
 
         //Create new Utilities to get screen sizes
@@ -315,40 +326,54 @@ public class FindMatches extends Fragment implements View.OnClickListener{
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
-            try {
+           // try {
+                /*Kevin's Facebook ID: 100001411585746
+                * 1	www.facebook.com/davin.siu?fref=ts	1151947893
+2	www.facebook.com/stefan.bordovsky?fref=ts	1408027584
+3	www.facebook.com/stephen.e.tran?fref=ts	705738627*/
+
+                success = true;
+                User Kevin = new User("100001411585746");
+                User Stefan = new User("1408027584");
+                User Davin = new User("1151947893");
+                User Stephen = new User("705738627");
 
                 if (success) {
 
-                        MatchedUserList = matchData.getMatches();
+                    MatchedUserList = new ArrayList<>();
+                    // MatchedUserList = matchData.getMatches();
+                    MatchedUserList.add(Kevin);
+                    MatchedUserList.add(Stefan);
+                    MatchedUserList.add(Davin);
+                    MatchedUserList.add(Stephen);
+                    Log.i(TAG, "**** Matches Found MatchedUserList ****");
 
-                        Log.i(TAG, "**** Matches Found MatchedUserList ****");
-
-                        int pos = -1;
-                        for (int i = 0; i < MatchedUserList.size(); i++) {
-                            User data = MatchedUserList.get(i);
-                            if (data.getfbId().equals(
-                                    preferences.getString(Constants.FACEBOOK_ID,
-                                            ""))){
-                                pos = i;
-                                break;
-                            }
+                    int pos = -1;
+                    for (int i = 0; i < MatchedUserList.size(); i++) {
+                        User data = MatchedUserList.get(i);
+                        if (data.getfbId().equals(
+                                preferences.getString(Constants.FACEBOOK_ID,
+                                        ""))) {
+                            pos = i;
+                            break;
                         }
-                        if (pos >= 0) {
-                            MatchedUserList.remove(pos);
-                        }
-
-
                     }
-                 else {
+                    if (pos >= 0) {
+                        MatchedUserList.remove(pos);
+                    }
+
+                    addMatchesView(MatchedUserList);
+                } else {
 
                     messagetextview.setText("there`s no one new around you");
                     Constants.isMatchedFound = false;
                 }
-            } catch (Exception e) {
 
-                messagetextview.setText("There`s no one new around you");
-
-            }
+//            } catch (Exception e) {
+//
+//                messagetextview.setText("There`s no one new around you");
+//
+//            }
         }
 
 
@@ -366,11 +391,46 @@ public class FindMatches extends Fragment implements View.OnClickListener{
             final RelativeLayout myRelativeView = (RelativeLayout) inflater.inflate(
                     R.layout.match_user_layout,null
             );
+
+            UserData = this.MatchedUserList.get(i);
+            matchedUsersFaceBookID = this.MatchedUserList.get(i).getfbId();
+            myRelativeView.setTag(i);
+
+            ProfilePictureView  profileImg = (ProfilePictureView) myRelativeView.findViewById(R.id.iv_user_image_user_matches);
+            profileImg.setProfileId(MatchedUserList.get(i).getfbId());
+
+            /* Note to sefly, bmy
+            ImageView imageView = (ImageView) myRelativeView.findViewById(R.id.iv_user_image_user_matches);
+
+            Picasso.with(getActivity()).load(MatchedUserList.get(i).getFacebookProfile().getProfilePictureUri(50,50))
+            */
+
+            final Button imagePass = new Button(getActivity());
+            imagePass.setBackgroundColor(Color.TRANSPARENT);
+
+            imagePass.setLayoutParams(new ViewGroup.LayoutParams(100,50));
+            imagePass.setText("Pass");
+            final Button imageLike = new Button(getActivity());
+
+
+
+            // set visible true if match user count is more than one
+            if (numMatches > 0) {
+                likedislikelayout.setVisibility(View.VISIBLE);
+                //setFullScreenMenuTouchEnable(false);
+            }
+
+
+            swipeviewlayout.addView(myRelativeView);
+
+        }
+
+
         }
 
 
 
-    }
+
 
 
 
