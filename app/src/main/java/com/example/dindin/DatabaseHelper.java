@@ -19,20 +19,34 @@ import java.util.ArrayList;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     public static final int DATABASE_VERSION = 1;
-    public static final String DATABASE_NAME = "User.db";
+    public static final String DATABASE_NAME = "dindin";
     public static final String TABLE_NAME = "users";
     public static final String COLUMN_ID = "id";
     public static final String COLUMN_USER = "user";
     SQLiteDatabase db;
 
 
+    //Strings for Matches Table
+    private static String MATCH_USER_TABLE = "match_user_table";
+
+    private static final String USER_FACEBOOK_ID = "user_facebook_id";
+    private static final String SENDER_FACEBOOK_ID = "sender_facebook_id";
+
+    //Strings for User Profiel Info
+    private static final String CURRENT_USER_TABLE = "user_info_table";
+    private static final String USERNAME = "user_name";
+    private static final String USERFACEBOOKID = "user_facebookid";
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table " + TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, USER TEXT)");
+       // db.execSQL("create table " + TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, USER TEXT)");
+
+        db.execSQL("create table " + MATCH_USER_TABLE + " ("
+                + USER_FACEBOOK_ID + " VARCHAR," + SENDER_FACEBOOK_ID
+                + " VARCHAR," );
     }
 
     @Override

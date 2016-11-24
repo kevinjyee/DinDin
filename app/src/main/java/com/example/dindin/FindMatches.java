@@ -62,6 +62,7 @@ public class FindMatches extends Fragment implements View.OnClickListener{
     private int[] matchUserHeightAndWidth;
     private int[] topMarginForInvitelayoutAndText;
     private int[] profileImageHeightAndWidth;
+    private int numMatches;
 
     private int[] imageLayoutHeightandWidth;
     private String machedUserFaceBookid;
@@ -320,7 +321,7 @@ public class FindMatches extends Fragment implements View.OnClickListener{
 
                         MatchedUserList = matchData.getMatches();
 
-                        Log.i(TAG, "**** Marches Found MatchedUserList ****");
+                        Log.i(TAG, "**** Matches Found MatchedUserList ****");
 
                         int pos = -1;
                         for (int i = 0; i < MatchedUserList.size(); i++) {
@@ -335,24 +336,38 @@ public class FindMatches extends Fragment implements View.OnClickListener{
                         if (pos >= 0) {
                             MatchedUserList.remove(pos);
                         }
-                       // dwonLoadImage(numberOfImageDownload);
+
 
                     }
                  else {
 
                     messagetextview.setText("there`s no one new around you");
-                    // ErrorMessageRequesTimeOut("Alert ", "Request timeout");
                     Constants.isMatchedFound = false;
                 }
             } catch (Exception e) {
-                AppLog.handleException(
-                        TAG
-                                + " BackGroundTaskForFindMatch  onPostExecute Exception ",
-                        e);
-                messagetextview.setText("there`s no one new around you");
-                // ErrorMessageRequesTimeOut("Alert ", "Request timeout");
+
+                messagetextview.setText("There`s no one new around you");
+
             }
         }
+
+
+    }
+
+    /*Add Matches to View with ArrayList*/
+    private void addMatchesView(ArrayList<User> MatchedUserList){
+
+        numMatches = MatchedUserList.size();
+
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+
+        for(int i = 0; i < numMatches; i++)
+        {
+            final RelativeLayout myRelativeView = (RelativeLayout) inflater.inflate(
+                    R.layout.match_user_layout,null
+            );
+        }
+
 
 
     }

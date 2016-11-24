@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.dindin.com.example.NavBarActivity;
+import com.example.dindin.com.example.UserFaceBookInfo;
 import com.example.dindin.utilities.Constants;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -30,9 +32,12 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.facebook.ProfileTracker;
 import com.facebook.Profile;
+
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import com.facebook.login.widget.ProfilePictureView;
+import com.google.android.gms.cast.framework.Session;
+import com.google.android.gms.cast.framework.SessionManager;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -51,7 +56,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private LoginResult loginfinal;
     private Profile userProfile;
     private ProfilePictureView profilePictureView;
-    //private UserFaceBookInfo mUserFaceBookInfo; //TODO: Create UserFacebook Info class
+    private UserFaceBookInfo currentUserFaceBookInfo;
     CallbackManager callbackManager;
 
 
@@ -187,10 +192,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 profilePictureView.setProfileId(userProfile.getId());
                 info.setText(
                         "Welcome " + userProfile.getFirstName() + " " + userProfile.getLastName()
+
                 );
             }
             if(userProfile != null) {
 
+                editor.putString(Constants.FACEBOOK_ID, userProfile.getId());
                 Intent goToNextActivity = new Intent(getApplicationContext(), NavBarActivity.class);
             //   editor.putString(Constants.PROFILE_IMAGE_ONE,
                         // getStoredImageUrl("1", data.getProfilePicture()));
@@ -347,7 +354,29 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         double longitude = location.getLongitude();
 
         lblLocation.setText(latitude + ", " + longitude);
-        Log.d(TAG, location.toString());
+       // Log.d(TAG, location`````````````````````.toString());
     }
+
+/*
+    private class BackGroundTaskFetchFBData extends AsyncTask<String, Void, Void>
+    {
+
+        private DatabaseHelper databaseHandler = new DatabaseHelper(
+                LoginActivity.this);
+        @Override
+        protetected Void doInBackGround(String... params){
+        return null;
+    }
+        @Override
+        protected void onPostExecute(Void result){
+            super.onPostExecute(result);
+
+
+        }
+
+    }
+    */
+
+
 }
 
