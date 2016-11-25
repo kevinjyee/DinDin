@@ -86,7 +86,6 @@ public class FindMatches extends Fragment implements View.OnClickListener{
     private int screenCenter;
 
     private int[] imageLayoutHeightandWidth;
-    private String machedUserFaceBookid;
     private Button likeButton, dislikeButton;
     private RelativeLayout /* imagevewsecondlayout, */likedislikelayout;
     private RelativeLayout invitebuttonlayout;
@@ -331,14 +330,14 @@ public class FindMatches extends Fragment implements View.OnClickListener{
             try {
                 fbId = preferences.getString(Constants.FACEBOOK_ID, "");
                 String[] findMatchParameter = { fbId };
-                findMatchList = currentUtils.getFindMatchParameter(findMatchParameter);
-                MatchResponse = currentUtils.makeHttpRequest(
-                        Constants.findMatch_url, Constants.methodeName,
-                        findMatchList);
-
-                Gson gson = new Gson();
-                matchData = gson.fromJson(MatchResponse,
-                        UserMatchData.class);
+//                findMatchList = currentUtils.getFindMatchParameter(findMatchParameter);
+//                MatchResponse = currentUtils.makeHttpRequest(
+//                        Constants.findMatch_url, Constants.methodeName,
+//                        findMatchList);
+//
+//                Gson gson = new Gson();
+//                matchData = gson.fromJson(MatchResponse,
+//                        UserMatchData.class);
 
 
 
@@ -575,12 +574,13 @@ public class FindMatches extends Fragment implements View.OnClickListener{
 
                                 UserData = FindMatches.this.MatchedUserList
                                         .get(position);
-                                machedUserFaceBookid = UserData.getfbId();
+                                matchedUsersFaceBookID = UserData.getfbId();
                                 AppLog.Log(TAG,
-                                        "Event Status   machedUserFaceBookid  "
-                                                + machedUserFaceBookid);
+                                        "Event Status   matchedUsersFaceBookID  "
+                                                + matchedUsersFaceBookID);
                                 swipeviewlayout.removeView(myRelativeView);
                                 // likeMatchedUser(Constant.isDisliked);
+                                userisLiked(false);
                             } else if (Likes == 2) {
                                 imageindex = imageindex + 1;
                                 if (imageindex == MatchCount) {
@@ -590,9 +590,9 @@ public class FindMatches extends Fragment implements View.OnClickListener{
                                 int viewCount = swipeviewlayout.getChildCount();
                                 User matchesData = MatchedUserList
                                         .get(viewCount - 1);
-                                machedUserFaceBookid = matchesData.getfbId();
+                                matchedUsersFaceBookID = matchesData.getfbId();
                                 swipeviewlayout.removeView(myRelativeView);
-                                //likeMatchedUser(Constant.isLikde);
+                                userisLiked(true);
                             }
                             break;
                         default:
@@ -648,8 +648,8 @@ public class FindMatches extends Fragment implements View.OnClickListener{
 
             int viewCount = swipeviewlayout.getChildCount();
             User matchesData = MatchedUserList.get(viewCount - 1);
-            machedUserFaceBookid = matchesData.getfbId();
-            //likeMatchedUser(Constant.isDisliked);
+            matchedUsersFaceBookID = matchesData.getfbId();
+            userisLiked(true);
             RelativeLayout animatedview = null;
             int removeViewindex = 0;
             if (viewCount > 0) {
@@ -663,7 +663,6 @@ public class FindMatches extends Fragment implements View.OnClickListener{
 
                 swipeviewlayout.setVisibility(View.GONE);
                 likedislikelayout.setVisibility(View.GONE);
-                //  setFullScreenMenuTouchEnable(true);
                 noMatchFound.setVisibility(View.VISIBLE);
                 amimagetedview.setVisibility(View.VISIBLE);
                 messagetextview.setText("There`s no one new around you");
@@ -682,8 +681,8 @@ public class FindMatches extends Fragment implements View.OnClickListener{
 
             int viewCount = swipeviewlayout.getChildCount();
             User matchesData = MatchedUserList.get(viewCount - 1);
-            machedUserFaceBookid = matchesData.getfbId();
-            //likeMatchedUser(Constant.isDisliked);
+            matchedUsersFaceBookID = matchesData.getfbId();
+            userisLiked(false);
             RelativeLayout animatedview = null;
             int removeViewindex = 0;
             if (viewCount > 0) {
@@ -789,6 +788,10 @@ public class FindMatches extends Fragment implements View.OnClickListener{
     {
         if(isLiked)
         {
+            String myFaceBookID = Constants.FACEBOOK_ID;
+            String currentUserFaceBookId = matchedUsersFaceBookID;
+
+            Constants.usersMatchedwith.add(currentUserFaceBookId);
 
         }
     }
