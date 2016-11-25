@@ -68,6 +68,8 @@ public class User {
         return id;
     }
 
+    public Date getBirthday(){ return birthday; }
+
     public String getName() {
         return name;
     }
@@ -99,6 +101,8 @@ public class User {
     public void setId(int id) {
         this.id = id;
     }
+
+    public void setBirthday(Date date){ this.birthday = date; }
 
     public void setName(String name) {
         this.name = name;
@@ -139,11 +143,12 @@ public class User {
     }
 
     public boolean isInAgeRange(User user2){
-        if()
+        return this.getPreferences().getAgeRange().isInAgeRange(user2.getBirthday());
     }
 
+    // TODO
     public boolean isInPreferredRange(User user2){
-
+        return true;
     }
 }
 
