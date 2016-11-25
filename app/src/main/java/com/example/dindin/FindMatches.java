@@ -19,7 +19,10 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
+import android.view.animation.RotateAnimation;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -42,6 +45,7 @@ import org.apache.http.NameValuePair;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.R.attr.action;
 import static com.google.android.gms.wearable.DataMap.TAG;
 
 /**
@@ -428,13 +432,28 @@ public class FindMatches extends Fragment implements View.OnClickListener{
 
             ImageView imageView = (ImageView) myRelativeView
                     .findViewById(R.id.iv_user_image_user_matches);
-
+            TextView txtMatchPercent = (TextView) myRelativeView
+                    .findViewById(R.id.txtMatchPerCent);
+            txtMatchPercent.setText(100
+                    + "%");
             Picasso.with(getActivity())
                     .load("https://graph.facebook.com/v2.2/" + MatchedUserList.get(i).getfbId() + "/picture?height=120&type=normal") //extract as User instance method
                     .error(R.drawable.dislike_off) //
                     .resize(matchUserHeightAndWidth[1],
                             matchUserHeightAndWidth[0]) //
                     .into(imageView);
+
+            TextView tvMatual = (TextView) myRelativeView
+                    .findViewById(R.id.tv_follower_count_user_matches);
+            tvMatual.setText("04");
+            TextView tvAge = (TextView) myRelativeView
+                    .findViewById(R.id.tv_name_age);
+            tvAge.setText("Kevin" + " , "
+                    + 21 + "");
+
+            TextView tvImageCount = (TextView) myRelativeView
+                    .findViewById(R.id.tv_pic_count_user_matches);
+            tvImageCount.setText(20 + "");
 
             final Button imageLike = new Button(getActivity());
             imageLike.setLayoutParams(new RelativeLayout.LayoutParams(100, 50));
@@ -579,13 +598,15 @@ public class FindMatches extends Fragment implements View.OnClickListener{
             // set visible true if match user count is more than one
             if (numMatches > 0) {
                 likedislikelayout.setVisibility(View.VISIBLE);
-                //setFullScreenMenuTouchEnable(false);
+
             }
 
-
+            swipeviewlayout.setVisibility(View.VISIBLE);
             swipeviewlayout.addView(myRelativeView);
 
         }
+
+
 
 
         }
@@ -598,7 +619,7 @@ public class FindMatches extends Fragment implements View.OnClickListener{
         noMatchFound.setVisibility(View.VISIBLE);
         amimagetedview.setVisibility(View.VISIBLE);
         amimagetedview.startAnimation(anime);
-        messagetextview.setText("there`s no one new around you");
+        messagetextview.setText("There`s no one new around you");
         invitebuttonlayout.setVisibility(View.VISIBLE);
         // anime.start();
         // anime.startNow();
@@ -609,19 +630,155 @@ public class FindMatches extends Fragment implements View.OnClickListener{
     }
 
 
-
-
-
-
-
-
-
     @Override
     public void onClick(View v) {
+        if (v.getId() == R.id.matchedUserInfoButton) {
+            int viewCount = swipeviewlayout.getChildCount();
+            User matchesData = MatchedUserList.get(viewCount - 1);
+            int selectedImageIndex = viewCount - 1;
 
-        };
+        }
+
+        if (v.getId() == R.id.likeButton) {
+           // likeButton.setEnabled(false);
+
+            int viewCount = swipeviewlayout.getChildCount();
+            User matchesData = MatchedUserList.get(viewCount - 1);
+            machedUserFaceBookid = matchesData.getfbId();
+
+        }
+
+        if (v.getId() == R.id.dislikeButton) {
+          //  dislikeButton.setEnabled(false);
+
+            int viewCount = swipeviewlayout.getChildCount();
+            User matchesData = MatchedUserList.get(viewCount - 1);
+            machedUserFaceBookid = matchesData.getfbId();
+            //likeMatchedUser(Constant.isDisliked);
+            RelativeLayout animatedview = null;
+            int removeViewindex = 0;
+            if (viewCount > 0) {
+                removeViewindex = viewCount - 1;
+                animatedview = (RelativeLayout) swipeviewlayout
+                        .getChildAt(removeViewindex);
+                Button dislikesButton = (Button) animatedview.getChildAt(4);
+                dislikesButton.setAlpha(1);
+            }
+            if (removeViewindex == 0) {
+                // likedislikelayout.setVisibility(View.GONE);
+                // invitebuttonlayout.setVisibility(View.VISIBLE);
+                swipeviewlayout.setVisibility(View.GONE);
+                likedislikelayout.setVisibility(View.GONE);
+              //  setFullScreenMenuTouchEnable(true);
+                noMatchFound.setVisibility(View.VISIBLE);
+                amimagetedview.setVisibility(View.VISIBLE);
+                messagetextview.setText("There`s no one new around you");
+                amimagetedview.startAnimation(anime);
+                invitebuttonlayout.setVisibility(View.VISIBLE);
+            }
+
+            // logDebug("dislikeButton  viewCount "+viewCount);
+            imageindex = imageindex + 1;
+
+            rotedandRansletAnimation(false, removeViewindex, animatedview);
+
+        }
+    }
+
+    private void rotedandRansletAnimation(boolean isLiked, final int viewindex,
+                                          RelativeLayout relativeLayout) {
+        AnimationSet snowMov1 = null;
+        // logDebug("rotedandRansletAnimation  isLiked "+isLiked);
+        if (isLiked) {
+
+            snowMov1 = new AnimationSet(true);
+            RotateAnimation rotate1 = new RotateAnimation(0, 20,
+                    Animation.RELATIVE_TO_SELF, 0.5f,
+                    Animation.RELATIVE_TO_SELF, 0.0f);
+            rotate1.setStartOffset(50);
+            rotate1.setDuration(1000);
+            snowMov1.addAnimation(rotate1);
+            TranslateAnimation trans1 = new TranslateAnimation(
+                    Animation.RELATIVE_TO_PARENT, 0.0f,
+                    Animation.RELATIVE_TO_PARENT, 1.5f,
+                    Animation.RELATIVE_TO_PARENT, 0.0f,
+                    Animation.RELATIVE_TO_PARENT, 0.0f);
+            trans1.setDuration(1000);
+            snowMov1.addAnimation(trans1);
+        } else {
+            snowMov1 = new AnimationSet(true);
+            RotateAnimation rotate1 = new RotateAnimation(0, -20,
+                    Animation.RELATIVE_TO_SELF, 0.5f,
+                    Animation.RELATIVE_TO_SELF, 0.0f);
+            rotate1.setStartOffset(50);
+            rotate1.setDuration(1000);
+            snowMov1.addAnimation(rotate1);
+            TranslateAnimation trans1 = new TranslateAnimation(
+                    Animation.RELATIVE_TO_PARENT, 0.0f,
+                    Animation.RELATIVE_TO_PARENT, -1.5f,
+                    Animation.RELATIVE_TO_PARENT, 0.0f,
+                    Animation.RELATIVE_TO_PARENT, 0.0f);
+            trans1.setDuration(1000);
+            // snowMov1.setFillAfter(true);
+            snowMov1.addAnimation(trans1);
+        }
+
+        // AnimationSet s = new AnimationSet(false);//false mean dont share
+        // interpolators
+        // s.addAnimation(traintween);
+        // s.addAnimation(trainfad);
+        // if (relativeLayout == null) {
+        // return;
+        // }
+        relativeLayout.startAnimation(snowMov1);
+        snowMov1.setAnimationListener(new Animation.AnimationListener() {
+
+            int secondIndex = imageindex + 1;
+
+            @Override
+            public void onAnimationStart(Animation animation) {
+                // changeImageFromOnstart(imageindex,secondIndex);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                dislikeButton.setEnabled(true);
+                likeButton.setEnabled(true);
+                swipeviewlayout.removeViewAt(viewindex);
+                if (viewindex == 1) {
+                    hideSwipeLayout();
+                } else {
+
+                }
+                // logDebug("setAnimationListener  onAnimationEnd");
+                // imageviealayout.setVisibility(View.INVISIBLE);
+                // if (imageindex<MachedataList.size())
+                // {
+                // MachedataList.get(imageindex-1).getmBitmap().recycle();
+                // }
+
+                // changeImage(imageindex,secondIndex++);
+
+            }
+        });
 
     }
+        private void likeMatchedUser(String action) {
+
+
+
+
+    }
+
+
+
+
+}
 
 
 
