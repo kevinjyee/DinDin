@@ -4,6 +4,7 @@ package com.example.dindin;
 import com.example.dindin.com.example.AgeRange;
 import com.example.dindin.com.example.Location;
 import com.facebook.Profile;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -23,15 +24,25 @@ public class User {
     private Queue<Integer> potentialMatches;
     private ArrayList<Integer> finalizedMatches;
     private Preferences preferences;
+    @SerializedName("fbId")
 
+    private String fbId;
+    private String age;
     public User()
     {
+    }
+
+    public User(String userId, String firstName, String Age)
+    {
+        this.fbId = userId;
+        this.name = firstName;
+        this.age = Age;
     }
 
     public User(int userId, String userName, Location userLoc, Profile userProfile, double rating,
                 Queue<Integer> potMatches, ArrayList<Integer> finMatches, Preferences prefs)
     {
-        this.id = userId;
+
         this.name = userName;
         this.location = userLoc;
         this.facebookProfile = userProfile;
@@ -64,8 +75,8 @@ public class User {
         return new User(uID, uName, uLoc, uProfile, uRating, potMatches, finMatches, prefs);
     }
 
-    public int getId() {
-        return id;
+    public String getfbId() {
+        return fbId;
     }
 
     public Date getBirthday(){ return birthday; }
@@ -74,6 +85,7 @@ public class User {
         return name;
     }
 
+    public String getAge() {return age;}
     public Location getLocation() {
         return location;
     }
@@ -98,8 +110,8 @@ public class User {
         return preferences;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setfbId(String id) {
+        this.fbId = id;
     }
 
     public void setBirthday(Date date){ this.birthday = date; }
@@ -148,7 +160,7 @@ public class User {
 
     // TODO
     public boolean isInPreferredRange(User user2){
-        return true;
+        return false;
     }
 }
 

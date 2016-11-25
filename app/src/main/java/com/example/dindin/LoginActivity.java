@@ -1,13 +1,26 @@
 package com.example.dindin;
+
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.dindin.com.example.NavBarActivity;
+import com.example.dindin.com.example.UserFaceBookInfo;
+import com.example.dindin.utilities.Constants;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -19,26 +32,126 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.facebook.ProfileTracker;
 import com.facebook.Profile;
+
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import com.facebook.login.widget.ProfilePictureView;
+import com.google.android.gms.cast.framework.Session;
+import com.google.android.gms.cast.framework.SessionManager;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+
 import org.json.JSONObject;
 
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
+    private static final String TAG = LoginActivity.class.getSimpleName();
     private TextView info;
     private LoginButton loginButton;
     private LoginResult loginfinal;
     private Profile userProfile;
     private ProfilePictureView profilePictureView;
+    private UserFaceBookInfo currentUserFaceBookInfo;
     CallbackManager callbackManager;
+
+
+    private Location mLastLocation;
+    private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 1000;
+    // Google client to interact with Google API
+    private GoogleApiClient mGoogleApiClient;
+    private LocationRequest mLocationRequest;
+    private TextView lblLocation;
+
+    private SharedPreferences preferences;
+    private Editor editor;
+
+    private static final int PERMISSION_REQUEST_ACCESS_FINE_LOCATION=5;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            facebookSDKInitialize();
-            setContentView(R.layout.activity_login);
-            LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
-            loginButton.setReadPermissions("email"); // https://developers.facebook.com/docs/facebook-login/permissions/
-            getLoginDetails(loginButton);
+        super.onCreate(savedInstanceState);
+        facebookSDKInitialize();
+        setContentView(R.layout.activity_login);
+        LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
+        lblLocation = (TextView) findViewById(R.id.lblLocation);
+        loginButton.setReadPermissions("email"); // https://developers.facebook.com/docs/facebook-login/permissions/
+        // First we need to check availability of play services
+
+        // Building the GoogleApi client
+        if (checkPlayServices()) {
+            buildGoogleApiClient();
+        }
+        mLocationRequest = LocationRequest.create()
+                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+                .setInterval(10 * 1000)
+                .setFastestInterval(1 * 1000);
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        editor = preferences.edit();
+
+        getLoginDetails(loginButton);
+
+    }
+
+
+
+    /**
+     * Creating google api client object
+     * */
+    protected synchronized void buildGoogleApiClient() {
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API).build();
+    }
+
+    /**
+     * Method to verify google play services on the device
+     * */
+    private boolean checkPlayServices() {
+        int resultCode = GooglePlayServicesUtil
+                .isGooglePlayServicesAvailable(this);
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
+                GooglePlayServicesUtil.getErrorDialog(resultCode, this,
+                        PLAY_SERVICES_RESOLUTION_REQUEST).show();
+            } else {
+                Toast.makeText(getApplicationContext(),
+                        "This device is not supported.", Toast.LENGTH_LONG)
+                        .show();
+                finish();
+            }
+            return false;
+        }
+        return true;
+    }
+
+    private void displayLocation() {
+
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            //return;
+            lblLocation.setText("Need to add location permission request");
+        }
+        mLastLocation = LocationServices.FusedLocationApi
+                .getLastLocation(mGoogleApiClient);
+
+        if (mLastLocation != null) {
+            handleNewLocation(mLastLocation);
+        } else {
+            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+        }
     }
 /*
     Initialize the facebook sdk and then callback manager will handle the login responses.
@@ -79,12 +192,15 @@ public class LoginActivity extends AppCompatActivity {
                 profilePictureView.setProfileId(userProfile.getId());
                 info.setText(
                         "Welcome " + userProfile.getFirstName() + " " + userProfile.getLastName()
+
                 );
             }
             if(userProfile != null) {
 
+                editor.putString(Constants.FACEBOOK_ID, userProfile.getId());
                 Intent goToNextActivity = new Intent(getApplicationContext(), NavBarActivity.class);
-
+            //   editor.putString(Constants.PROFILE_IMAGE_ONE,
+                        // getStoredImageUrl("1", data.getProfilePicture()));
                 startActivity(goToNextActivity);
             }
     }
@@ -130,21 +246,137 @@ public class LoginActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
                 //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+       /* if (id == R.id.action_settings) {
             return true;
-        }
+        }*/
                 return super.onOptionsItemSelected(item);
     }
-        @Override
-    protected void onResume() {
-            super.onResume();
-                // Logs 'install' and 'app activate' App Events.
-                AppEventsLogger.activateApp(this);
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (mGoogleApiClient != null) {
+            mGoogleApiClient.connect();
+        }
+    }
+
+    @Override
+    public void onResume() {
+
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.ACCESS_FINE_LOCATION)) {
+
+                // Show an expanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+
+            } else {
+
+                // No explanation needed, we can request the permission.
+                // PERMISSION_REQUEST_ACCESS_FINE_LOCATION can be any unique int
+                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_REQUEST_ACCESS_FINE_LOCATION);
+            }
+        }
+        super.onResume();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_REQUEST_ACCESS_FINE_LOCATION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+
+                } else {
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
     }
         @Override
     protected void onPause() {
             super.onPause();
+            if(mGoogleApiClient.isConnected()){
+                LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
+                mGoogleApiClient.disconnect();
+            }
                 // Logs 'app deactivate' App Event.
                 AppEventsLogger.deactivateApp(this);
     }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mGoogleApiClient.isConnected()) {
+            mGoogleApiClient.disconnect();
+        }
+    }
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        // Once connected with google api, get the location
+        lblLocation
+                .setText("Obtaining location...");
+        displayLocation();
+    }
+
+    @Override
+    public void onLocationChanged(Location location){
+        handleNewLocation(location);
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        mGoogleApiClient.connect();
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult result) {
+        Log.i(TAG, "Connection failed: ConnectionResult.getErrorCode() = "
+                + result.getErrorCode());
+    }
+
+
+    public void handleNewLocation(Location location){
+        double latitude = location.getLatitude();
+        double longitude = location.getLongitude();
+
+        lblLocation.setText(latitude + ", " + longitude);
+       // Log.d(TAG, location`````````````````````.toString());
+    }
+
+/*
+    private class BackGroundTaskFetchFBData extends AsyncTask<String, Void, Void>
+    {
+
+        private DatabaseHelper databaseHandler = new DatabaseHelper(
+                LoginActivity.this);
+        @Override
+        protetected Void doInBackGround(String... params){
+        return null;
+    }
+        @Override
+        protected void onPostExecute(Void result){
+            super.onPostExecute(result);
+
+
+        }
+
+    }
+    */
+
+
 }
+
