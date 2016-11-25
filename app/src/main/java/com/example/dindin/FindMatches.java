@@ -28,6 +28,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.dindin.com.example.NavBarActivity;
 import com.example.dindin.com.example.UserMatchData;
 import com.example.dindin.utilities.AppLog;
 import com.example.dindin.utilities.ConnectionDetector;
@@ -357,10 +358,10 @@ public class FindMatches extends Fragment implements View.OnClickListener{
 3	www.facebook.com/stephen.e.tran?fref=ts	705738627*/
 
                 success = true;
-                User Kevin = new User("100001411585746");
-                User Stefan = new User("1408027584");
-                User Davin = new User("1151947893");
-                User Stephen = new User("705738627");
+                User Kevin = new User("100001411585746","Kevin","21");
+                User Stefan = new User("1408027584","Stefan","21");
+                User Davin = new User("1151947893","Davin","21");
+                User Stephen = new User("705738627","Stephen","21");
 
                 if (success) {
 
@@ -448,8 +449,8 @@ public class FindMatches extends Fragment implements View.OnClickListener{
             tvMatual.setText("04");
             TextView tvAge = (TextView) myRelativeView
                     .findViewById(R.id.tv_name_age);
-            tvAge.setText("Kevin" + " , "
-                    + 21 + "");
+            tvAge.setText(MatchedUserList.get(i).getName()+ " , "
+                    + MatchedUserList.get(i).getAge() + "");
 
             TextView tvImageCount = (TextView) myRelativeView
                     .findViewById(R.id.tv_pic_count_user_matches);
@@ -482,7 +483,7 @@ public class FindMatches extends Fragment implements View.OnClickListener{
 
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
-                    LandingActivity activity;
+                    NavBarActivity activity;
                     x_cord = (int) event.getRawX();
                     y_cord = (int) event.getRawY();
 
@@ -491,7 +492,7 @@ public class FindMatches extends Fragment implements View.OnClickListener{
 
                     switch (event.getAction() & MotionEvent.ACTION_MASK) {
                         case MotionEvent.ACTION_DOWN:
-                            activity = (LandingActivity) getActivity();
+                            activity = (NavBarActivity) getActivity();
 
                             xd = X;
                             yd = Y;
@@ -598,10 +599,11 @@ public class FindMatches extends Fragment implements View.OnClickListener{
             // set visible true if match user count is more than one
             if (numMatches > 0) {
                 likedislikelayout.setVisibility(View.VISIBLE);
+                swipeviewlayout.setVisibility(View.VISIBLE);
 
             }
 
-            swipeviewlayout.setVisibility(View.VISIBLE);
+
             swipeviewlayout.addView(myRelativeView);
 
         }
@@ -618,9 +620,9 @@ public class FindMatches extends Fragment implements View.OnClickListener{
        // setFullScreenMenuTouchEnable(true);
         noMatchFound.setVisibility(View.VISIBLE);
         amimagetedview.setVisibility(View.VISIBLE);
-        amimagetedview.startAnimation(anime);
+
         messagetextview.setText("There`s no one new around you");
-        invitebuttonlayout.setVisibility(View.VISIBLE);
+
         // anime.start();
         // anime.startNow();
         // circleimageview.startAnimation(anime);
@@ -645,7 +647,33 @@ public class FindMatches extends Fragment implements View.OnClickListener{
             int viewCount = swipeviewlayout.getChildCount();
             User matchesData = MatchedUserList.get(viewCount - 1);
             machedUserFaceBookid = matchesData.getfbId();
+            //likeMatchedUser(Constant.isDisliked);
+            RelativeLayout animatedview = null;
+            int removeViewindex = 0;
+            if (viewCount > 0) {
+                removeViewindex = viewCount - 1;
+                animatedview = (RelativeLayout) swipeviewlayout
+                        .getChildAt(removeViewindex);
+                Button dislikesButton = (Button) animatedview.getChildAt(4);
+                dislikesButton.setAlpha(1);
+            }
+            if (removeViewindex == 0) {
+                // likedislikelayout.setVisibility(View.GONE);
+                // invitebuttonlayout.setVisibility(View.VISIBLE);
+                swipeviewlayout.setVisibility(View.GONE);
+                likedislikelayout.setVisibility(View.GONE);
+                //  setFullScreenMenuTouchEnable(true);
+                noMatchFound.setVisibility(View.VISIBLE);
+                amimagetedview.setVisibility(View.VISIBLE);
+                messagetextview.setText("There`s no one new around you");
 
+
+            }
+
+            // logDebug("dislikeButton  viewCount "+viewCount);
+            imageindex = imageindex + 1;
+
+            swipeAnime(true, removeViewindex, animatedview);
         }
 
         if (v.getId() == R.id.dislikeButton) {
@@ -673,19 +701,19 @@ public class FindMatches extends Fragment implements View.OnClickListener{
                 noMatchFound.setVisibility(View.VISIBLE);
                 amimagetedview.setVisibility(View.VISIBLE);
                 messagetextview.setText("There`s no one new around you");
-                amimagetedview.startAnimation(anime);
-                invitebuttonlayout.setVisibility(View.VISIBLE);
+
+
             }
 
             // logDebug("dislikeButton  viewCount "+viewCount);
             imageindex = imageindex + 1;
 
-            rotedandRansletAnimation(false, removeViewindex, animatedview);
+            swipeAnime(false, removeViewindex, animatedview);
 
         }
     }
 
-    private void rotedandRansletAnimation(boolean isLiked, final int viewindex,
+    private void swipeAnime(boolean isLiked, final int viewindex,
                                           RelativeLayout relativeLayout) {
         AnimationSet snowMov1 = null;
         // logDebug("rotedandRansletAnimation  isLiked "+isLiked);
@@ -723,13 +751,7 @@ public class FindMatches extends Fragment implements View.OnClickListener{
             snowMov1.addAnimation(trans1);
         }
 
-        // AnimationSet s = new AnimationSet(false);//false mean dont share
-        // interpolators
-        // s.addAnimation(traintween);
-        // s.addAnimation(trainfad);
-        // if (relativeLayout == null) {
-        // return;
-        // }
+
         relativeLayout.startAnimation(snowMov1);
         snowMov1.setAnimationListener(new Animation.AnimationListener() {
 
@@ -737,7 +759,7 @@ public class FindMatches extends Fragment implements View.OnClickListener{
 
             @Override
             public void onAnimationStart(Animation animation) {
-                // changeImageFromOnstart(imageindex,secondIndex);
+
             }
 
             @Override

@@ -27,13 +27,16 @@ public class User {
     @SerializedName("fbId")
 
     private String fbId;
+    private String age;
     public User()
     {
     }
 
-    public User(String userId)
+    public User(String userId, String firstName, String Age)
     {
         this.fbId = userId;
+        this.name = firstName;
+        this.age = Age;
     }
 
     public User(int userId, String userName, Location userLoc, Profile userProfile, double rating,
@@ -80,6 +83,7 @@ public class User {
         return name;
     }
 
+    public String getAge() {return age;}
     public Location getLocation() {
         return location;
     }

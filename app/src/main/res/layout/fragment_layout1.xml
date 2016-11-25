@@ -62,6 +62,7 @@
             android:id="@+id/swipeviewlayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
             android:visibility="gone" >
 
             <!-- android:layout_above="@+id/likedislikelayout" -->
@@ -74,8 +75,12 @@
             android:id="@+id/likedislikelayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/swipeviewlayout"
-            android:visibility="gone" >
+
+            android:gravity="bottom"
+            android:visibility="gone"
+         
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="41dp">
 
             <!-- android:layout_alignParentBottom="true" -->
 
