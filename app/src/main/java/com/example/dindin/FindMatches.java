@@ -444,17 +444,13 @@ public class FindMatches extends Fragment implements View.OnClickListener{
                             matchUserHeightAndWidth[0]) //
                     .into(imageView);
 
-            TextView tvMatual = (TextView) myRelativeView
-                    .findViewById(R.id.tv_follower_count_user_matches);
-            tvMatual.setText("04");
+
             TextView tvAge = (TextView) myRelativeView
                     .findViewById(R.id.tv_name_age);
             tvAge.setText(MatchedUserList.get(i).getName()+ " , "
                     + MatchedUserList.get(i).getAge() + "");
 
-            TextView tvImageCount = (TextView) myRelativeView
-                    .findViewById(R.id.tv_pic_count_user_matches);
-            tvImageCount.setText(20 + "");
+
 
             final Button imageLike = new Button(getActivity());
             imageLike.setLayoutParams(new RelativeLayout.LayoutParams(100, 50));
@@ -617,16 +613,13 @@ public class FindMatches extends Fragment implements View.OnClickListener{
     private void hideSwipeLayout() {
         swipeviewlayout.setVisibility(View.GONE);
         likedislikelayout.setVisibility(View.GONE);
-       // setFullScreenMenuTouchEnable(true);
+
         noMatchFound.setVisibility(View.VISIBLE);
         amimagetedview.setVisibility(View.VISIBLE);
 
         messagetextview.setText("There`s no one new around you");
 
-        // anime.start();
-        // anime.startNow();
-        // circleimageview.startAnimation(anime);
-        // anime.cancel();
+
         imageindex = 0;
         MatchCount = 0;
     }
@@ -658,8 +651,7 @@ public class FindMatches extends Fragment implements View.OnClickListener{
                 dislikesButton.setAlpha(1);
             }
             if (removeViewindex == 0) {
-                // likedislikelayout.setVisibility(View.GONE);
-                // invitebuttonlayout.setVisibility(View.VISIBLE);
+
                 swipeviewlayout.setVisibility(View.GONE);
                 likedislikelayout.setVisibility(View.GONE);
                 //  setFullScreenMenuTouchEnable(true);
@@ -777,23 +769,10 @@ public class FindMatches extends Fragment implements View.OnClickListener{
                 } else {
 
                 }
-                // logDebug("setAnimationListener  onAnimationEnd");
-                // imageviealayout.setVisibility(View.INVISIBLE);
-                // if (imageindex<MachedataList.size())
-                // {
-                // MachedataList.get(imageindex-1).getmBitmap().recycle();
-                // }
 
-                // changeImage(imageindex,secondIndex++);
 
             }
         });
-
-    }
-        private void likeMatchedUser(String action) {
-
-
-
 
     }
 
