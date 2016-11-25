@@ -28,6 +28,7 @@ public class User {
 
     private String fbId;
     private String age;
+    private String phoneNumber;
     public User()
     {
     }
@@ -123,6 +124,12 @@ public class User {
     public void setLocation(Location location) {
         this.location = location;
     }
+
+
+    public void setPhoneNumber(String number){this.phoneNumber = number;};
+
+
+    public String getPhoneNumber(String number){return number; }
 
     public void setFacebookProfile(Profile facebookProfile) {
         this.facebookProfile = facebookProfile;

@@ -362,15 +362,24 @@ public class FindMatches extends Fragment implements View.OnClickListener{
                 User Stefan = new User("1408027584","Stefan","21");
                 User Davin = new User("1151947893","Davin","21");
                 User Stephen = new User("705738627","Stephen","21");
+                User Yuriy = new User("100000050449525","Yuriy","20");
+                User Brandon = new User("100000384470712","Brandon","20");
+                User Rachel = new User("1512173415","Rachel","20");
 
                 if (success) {
 
                     MatchedUserList = new ArrayList<>();
                     // MatchedUserList = matchData.getMatches();
+
+                    Kevin.setPhoneNumber("713-478-3035");
+
                     MatchedUserList.add(Kevin);
                     MatchedUserList.add(Stefan);
                     MatchedUserList.add(Davin);
                     MatchedUserList.add(Stephen);
+                    MatchedUserList.add(Yuriy);
+                    MatchedUserList.add(Brandon);
+                    MatchedUserList.add(Rachel);
                     Log.i(TAG, "**** Matches Found MatchedUserList ****");
 
                     int pos = -1;
@@ -774,6 +783,14 @@ public class FindMatches extends Fragment implements View.OnClickListener{
             }
         });
 
+    }
+
+    private void userisLiked(boolean isLiked)
+    {
+        if(isLiked)
+        {
+
+        }
     }
 
 
