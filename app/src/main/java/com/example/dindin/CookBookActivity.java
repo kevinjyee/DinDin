@@ -2,6 +2,10 @@ package com.example.dindin;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Point;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
@@ -11,6 +15,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +23,9 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.example.dindin.utilities.Constants;
@@ -48,10 +55,8 @@ public class CookBookActivity extends Fragment {
         matcheslistview = (ListView) view.findViewById(R.id.menu_right_ListView);
         Utilities  currUtils = new Utilities();
         int imageHeightandWidht[] = currUtils.getImageHeightandWidthforMatchView(getActivity());
-        HashSet<Recipe> usersHashSet = new HashSet<>();
-        usersHashSet.addAll(Constants.recipsesMatchedwith);
 
-        Constants.recipsesMatchedwith.addAll(usersHashSet);
+
         MatchedDataAdapter adapter = new MatchedDataAdapter(getActivity(), Constants.recipsesMatchedwith);
         matcheslistview.setAdapter(adapter);
 
@@ -95,7 +100,7 @@ public class CookBookActivity extends Fragment {
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
             ViewHolder holder;
             if (convertView == null) {
                 holder = new ViewHolder();
@@ -126,6 +131,26 @@ public class CookBookActivity extends Fragment {
 
             }
 
+            holder.imageview.setOnClickListener(new View.OnClickListener()
+            {
+                public void onClick(View v)
+                {
+                    int[] location = new int[2];
+                   int  currentRowId = position;
+                    View currentRow = v;
+                    // Get the x, y location and store it in the location[] array
+                    // location[0] = x, location[1] = y.
+                    v.getLocationOnScreen(location);
+
+                    //Initialize the Point with x, and y positions
+                    Point point = new Point();
+                    point.x = location[0];
+                    point.y = location[1];
+                    showStatusPopup(getActivity(), point,getItem(position));
+                }
+            });
+
+
             return convertView;
         }
 
@@ -135,6 +160,35 @@ public class CookBookActivity extends Fragment {
             TextView lastMasage;
 
         }
+    }
+
+    private void showStatusPopup(final Activity context, Point p,Recipe currentRecipe) {
+
+        // Inflate the popup_layout.xml
+        LinearLayout viewGroup = (LinearLayout) context.findViewById(R.id.recipe_view);
+        LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View layout = layoutInflater.inflate(R.layout.recipe_list, null);
+
+        TextView recipeText = (TextView) layout.findViewById(R.id.recipes);
+        recipeText.setText(currentRecipe.getRecipe());
+        // Creating the PopupWindow
+        PopupWindow changeStatusPopUp = new PopupWindow(context);
+        changeStatusPopUp.setContentView(layout);
+        changeStatusPopUp.setWidth(LinearLayout.LayoutParams.WRAP_CONTENT);
+        changeStatusPopUp.setHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
+        changeStatusPopUp.setFocusable(true);
+
+        // Some offset to align the popup a bit to the left, and a bit down, relative to button's position.
+        int OFFSET_X = -20;
+        int OFFSET_Y = 50;
+
+        //Clear the default translucent background
+        ColorDrawable colorDrawable = new ColorDrawable();
+        colorDrawable.setColor(0xffFEBB31);
+        changeStatusPopUp.setBackgroundDrawable(colorDrawable);
+
+        // Displaying the popup at the specified location, + offsets.
+        changeStatusPopUp.showAtLocation(layout, Gravity.NO_GRAVITY, p.x + OFFSET_X, p.y + OFFSET_Y);
     }
 
 
