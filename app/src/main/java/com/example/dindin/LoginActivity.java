@@ -2,7 +2,9 @@ package com.example.dindin;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -12,6 +14,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -47,6 +50,9 @@ import com.google.android.gms.location.LocationServices;
 
 import org.json.JSONObject;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
@@ -75,6 +81,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        printHashKey();
         facebookSDKInitialize();
         setContentView(R.layout.activity_login);
         LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
@@ -83,13 +90,15 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         // First we need to check availability of play services
 
         // Building the GoogleApi client
-        if (checkPlayServices()) {
-            buildGoogleApiClient();
-        }
-        mLocationRequest = LocationRequest.create()
-                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                .setInterval(10 * 1000)
-                .setFastestInterval(1 * 1000);
+
+            if (checkPlayServices()) {
+                buildGoogleApiClient();
+            }
+            mLocationRequest = LocationRequest.create()
+                    .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+                    .setInterval(10 * 1000)
+                    .setFastestInterval(1 * 1000);
+
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         editor = preferences.edit();
@@ -133,25 +142,15 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     private void displayLocation() {
 
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            //return;
-            lblLocation.setText("Need to add location permission request");
-        }
-        mLastLocation = LocationServices.FusedLocationApi
-                .getLastLocation(mGoogleApiClient);
+            mLastLocation = LocationServices.FusedLocationApi
+                    .getLastLocation(mGoogleApiClient);
 
-        if (mLastLocation != null) {
-            handleNewLocation(mLastLocation);
-        } else {
-            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
-        }
+            if (mLastLocation != null) {
+                handleNewLocation(mLastLocation);
+            } else {
+                LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+            }
+
     }
 /*
     Initialize the facebook sdk and then callback manager will handle the login responses.
@@ -221,7 +220,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     public void onCompleted(
                             JSONObject json_object,
                                                     GraphResponse response) {
-                                                Intent intent = new Intent(LoginActivity.this,NavBarActivity.class);
+                                                Intent intent = new Intent(LoginActivity.this, NavBarActivity.class);
                                 intent.putExtra("jsondata",json_object.toString());
                                 startActivity(intent);
                     }
@@ -266,7 +265,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     @Override
     public void onResume() {
-
+/*
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
 
@@ -284,6 +283,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_REQUEST_ACCESS_FINE_LOCATION);
             }
         }
+*/
         super.onResume();
     }
 
@@ -296,9 +296,14 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-                    // permission was granted, yay! Do the
-                    // contacts-related task you need to do.
-
+                    // permission was granted, yay!
+                    lblLocation
+                            .setText("Obtaining location...");
+                    if(!mGoogleApiClient.isConnected()){
+                        mGoogleApiClient.connect();
+                    }else {
+                        displayLocation();
+                    }
                 } else {
 
                     // permission denied, boo! Disable the
@@ -331,9 +336,14 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     @Override
     public void onConnected(@Nullable Bundle bundle) {
         // Once connected with google api, get the location
-        lblLocation
-                .setText("Obtaining location...");
-        displayLocation();
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            lblLocation
+                    .setText("Requesting permission...");
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_REQUEST_ACCESS_FINE_LOCATION);
+        }else {
+            displayLocation();
+        }
     }
 
     @Override
@@ -381,6 +391,24 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
     */
 
+    public void printHashKey(){
 
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo(
+                    "com.example.dindin",
+                    PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                String temp = Base64.encodeToString(md.digest(), Base64.DEFAULT);
+                Log.d("YeshHash:", temp);
+                System.out.println(temp);
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+
+        } catch (NoSuchAlgorithmException e) {
+
+        }
+    }
 }
 
