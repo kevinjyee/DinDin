@@ -592,7 +592,7 @@ public class FindMatches extends Fragment implements View.OnClickListener{
                                         .get(viewCount - 1);
                                 matchedUsersFaceBookID = matchesData.getfbId();
                                 swipeviewlayout.removeView(myRelativeView);
-                                userisLiked(true,UserData);
+                                userisLiked(true,matchesData);
                             }
                             break;
                         default:

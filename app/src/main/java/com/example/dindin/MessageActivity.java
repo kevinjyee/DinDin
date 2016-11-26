@@ -27,6 +27,7 @@ import com.google.android.gms.cast.framework.SessionManager;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class MessageActivity extends Fragment {
@@ -47,7 +48,10 @@ public class MessageActivity extends Fragment {
             matcheslistview = (ListView) view.findViewById(R.id.menu_right_ListView);
         Utilities  currUtils = new Utilities();
         int imageHeightandWidht[] = currUtils.getImageHeightandWidthforMatchView(getActivity());
-
+        HashSet<User> usersHashSet = new HashSet<>();
+        usersHashSet.addAll(Constants.usersMatchedwith);
+        Constants.usersMatchedwith.clear();
+        Constants.usersMatchedwith.addAll(usersHashSet);
         MatchedDataAdapter adapter = new MatchedDataAdapter(getActivity(), Constants.usersMatchedwith);
         matcheslistview.setAdapter(adapter);
 
