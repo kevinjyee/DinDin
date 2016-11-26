@@ -781,7 +781,13 @@ public class FindMatches extends Fragment implements View.OnClickListener{
             public void onAnimationEnd(Animation animation) {
                 dislikeButton.setEnabled(true);
                 likeButton.setEnabled(true);
-                swipeviewlayout.removeViewAt(viewindex);
+                try {
+                    swipeviewlayout.removeViewAt(viewindex);
+                }
+                catch(Exception e)
+                {
+
+                }
                 if (viewindex == 1) {
                     hideSwipeLayout();
                 } else {
