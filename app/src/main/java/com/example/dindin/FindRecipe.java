@@ -431,7 +431,7 @@ public class FindRecipe extends Fragment implements View.OnClickListener{
                     "\n" +
                     "Read more at: http://www.foodnetwork.com/recipes/ina-garten/baked-shrimp-scampi-recipe.html?oc=linkback","");
 
-              Recipe ChickenParm = new Recipe("Skillet Chicken Parmesan with Artichokes","http://foodnetwork.sndimg.com/content/dam/images/food/fullset/2016/5/11/1/FNM_060116-Skillet-Chicken-Parmesan-with-Artichokes_s4x3.jpg.rend.sni12col.landscape.jpeg"
+              Recipe ChickenParm = new Recipe("Skillet Chicken Parmesan","http://foodnetwork.sndimg.com/content/dam/images/food/fullset/2016/5/11/1/FNM_060116-Skillet-Chicken-Parmesan-with-Artichokes_s4x3.jpg.rend.sni12col.landscape.jpeg"
             ,"Total Time:\n" +
                     "40 min\n" +
                     "Prep:\n" +
