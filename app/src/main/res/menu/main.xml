@@ -5,8 +5,8 @@
     <item
         android:id="@+id/message_select"
         android:orderInCategory="200"
-        android:title="Search"
-        android:icon="@drawable/chat_icon"
+
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"

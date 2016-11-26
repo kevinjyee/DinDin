@@ -173,10 +173,10 @@ import java.net.URL;
                     }
                 };
                 // Get the MenuItem for the action item
-                MenuItem actionMenuItem = menu.findItem(R.id.message_select);
+              //  MenuItem actionMenuItem = menu.findItem(R.id.message_select);
 
                 // Assign the listener to that action item
-                MenuItemCompat.setOnActionExpandListener(actionMenuItem, expandListener);
+                //MenuItemCompat.setOnActionExpandListener(actionMenuItem, expandListener);
                // menu.findItem(R.id.message_select).setActionView(rightmenu);
                 return true;
             }
