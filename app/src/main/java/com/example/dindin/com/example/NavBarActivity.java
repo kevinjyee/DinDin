@@ -28,6 +28,7 @@ import android.support.v4.widget.DrawerLayout;
         import android.widget.TextView;
 
 import com.example.dindin.FindMatches;
+import com.example.dindin.FindRecipe;
 import com.example.dindin.MessageActivity;
 import com.example.dindin.PreferencesFragment;
 import com.example.dindin.ProfileFragment;
@@ -211,6 +212,10 @@ import java.net.URL;
                     case R.id.nav_profile:
                         fragment = new ProfileFragment();
                         title = "Profile";
+                        break;
+                    case R.id.nav_recipe:
+                        fragment = new FindRecipe();
+                        title = "Recipe";
                         break;
                     case R.id.nav_manage:
                         fragment = new PreferencesFragment();
