@@ -877,20 +877,19 @@ public class FindRecipe extends Fragment implements View.OnClickListener{
 
     }
 
-    private void userisLiked(boolean isLiked, Recipe matchedUser)
-    {
-        if(isLiked)
-        {
+    private void userisLiked(boolean isLiked, Recipe matchedRecipe) {
+        if (isLiked) {
             String myFaceBookID = Constants.FACEBOOK_ID;
             String currentUserFaceBookId = matchedUsersFaceBookID;
 
-           // Constants.usersMatchedwith.add(matchedUser);
-
+            if (!Constants.recipeIDMatchedwith.contains(matchedRecipe.getFoodName())) {
+                Constants.recipsesMatchedwith.add(matchedRecipe);
+                Constants.recipeIDMatchedwith.add(matchedRecipe.getFoodName());
+            }
         }
+
+
     }
-
-
-
 
 }
 

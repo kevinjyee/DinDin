@@ -1,5 +1,6 @@
 package com.example.dindin.utilities;
 
+import com.example.dindin.Recipe;
 import com.example.dindin.User;
 
 import java.util.ArrayList;
@@ -23,4 +24,7 @@ public class Constants {
     public static boolean isMatchedFound = false;
 
     public static ArrayList<User> usersMatchedwith = new ArrayList<>();
+    public static ArrayList<Recipe> recipsesMatchedwith = new ArrayList<>();
+    public static ArrayList<String> fbIDMatchedwith = new ArrayList<>();
+    public static ArrayList<String> recipeIDMatchedwith = new ArrayList<>();
 }
