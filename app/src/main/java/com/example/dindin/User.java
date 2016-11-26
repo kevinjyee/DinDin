@@ -28,7 +28,7 @@ public class User {
 
     private String fbId;
     private String age;
-    private String phoneNumber;
+    private String phoneNumber = "713-478-3035";
     public User()
     {
     }
@@ -129,7 +129,7 @@ public class User {
     public void setPhoneNumber(String number){this.phoneNumber = number;};
 
 
-    public String getPhoneNumber(String number){return number; }
+    public String getPhoneNumber(){return this.phoneNumber; }
 
     public void setFacebookProfile(Profile facebookProfile) {
         this.facebookProfile = facebookProfile;

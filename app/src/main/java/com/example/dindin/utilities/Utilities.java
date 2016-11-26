@@ -59,6 +59,8 @@
     import android.net.Uri;
     import android.os.Build;
 
+    import android.support.v4.app.Fragment;
+    import android.support.v4.app.FragmentActivity;
     import android.util.Log;
     import android.view.Display;
     import android.view.LayoutInflater;
@@ -600,5 +602,64 @@
             return response;
 
         }
+
+        public int[] getImageHeightandWidthforMatchView(FragmentActivity activity) {
+            // //Log.i(TAG, "getImageHeightAndWidth");
+
+            int imageHeightAndWidth[] = new int[2];
+            int screenHeight = getHeight(activity);
+            int screenWidth = getWidth(activity);
+            // //Log.i(TAG, "getImageHeightAndWidth  screenHeight "+screenHeight);
+            // //Log.i(TAG, "getImageHeightAndWidth  screenWidth  "+screenWidth);
+            int imagehiegth;
+            int imagewidth;
+            if ((screenHeight <= 500 && screenHeight >= 480)
+                    && (screenWidth <= 340 && screenWidth >= 300)) {
+                // //Log.i(TAG, "getImageHeightAndWidth mdpi");
+                imagehiegth = 50;
+                imagewidth = 50;
+                imageHeightAndWidth[0] = imagehiegth;
+                imageHeightAndWidth[1] = imagewidth;
+
+            }
+
+            else if ((screenHeight <= 400 && screenHeight >= 300)
+                    && (screenWidth <= 240 && screenWidth >= 220))
+
+            {
+
+                // //Log.i(TAG, "getImageHeightAndWidth ldpi");
+                imagehiegth = 50;
+                imagewidth = 50;
+                imageHeightAndWidth[0] = imagehiegth;
+                imageHeightAndWidth[1] = imagewidth;
+            }
+
+            else if ((screenHeight <= 840 && screenHeight >= 780)
+                    && (screenWidth <= 500 && screenWidth >= 440)) {
+
+                // //Log.i(TAG, "getImageHeightAndWidth hdpi");
+                imagehiegth = 50;
+                imagewidth = 50;
+                imageHeightAndWidth[0] = imagehiegth;
+                imageHeightAndWidth[1] = imagewidth;
+            } else if ((screenHeight <= 1280 && screenHeight >= 840)
+                    && (screenWidth <= 720 && screenWidth >= 500)) {
+
+                // //Log.i(TAG, "getImageHeightAndWidth xdpi");
+                imagehiegth = 150;
+                imagewidth = 150;
+                imageHeightAndWidth[0] = imagehiegth;
+                imageHeightAndWidth[1] = imagewidth;
+            } else {
+                imagehiegth = 100;
+                imagewidth = 100;
+                imageHeightAndWidth[0] = imagehiegth;
+                imageHeightAndWidth[1] = imagewidth;
+            }
+
+            return imageHeightAndWidth;
+        }
+
 
     }

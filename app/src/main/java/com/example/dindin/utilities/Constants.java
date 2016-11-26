@@ -1,5 +1,7 @@
 package com.example.dindin.utilities;
 
+import com.example.dindin.User;
+
 import java.util.ArrayList;
 
 /**
@@ -20,5 +22,5 @@ public class Constants {
     public static final String methodeName = "POST";
     public static boolean isMatchedFound = false;
 
-    public static ArrayList<String> usersMatchedwith = new ArrayList<>();
+    public static ArrayList<User> usersMatchedwith = new ArrayList<>();
 }

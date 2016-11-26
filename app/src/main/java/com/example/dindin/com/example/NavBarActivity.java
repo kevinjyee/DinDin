@@ -220,6 +220,11 @@ import java.net.URL;
                         fragment = new FindMatches();
                         title = "Find";
                         break;
+                    case R.id.nav_matches:
+                        fragment = new MessageActivity();
+                        title = "Matches";
+                        break;
+
                 }
 
                 if (fragment != null) {

@@ -580,7 +580,7 @@ public class FindMatches extends Fragment implements View.OnClickListener{
                                                 + matchedUsersFaceBookID);
                                 swipeviewlayout.removeView(myRelativeView);
                                 // likeMatchedUser(Constant.isDisliked);
-                                userisLiked(false);
+                                userisLiked(false,UserData);
                             } else if (Likes == 2) {
                                 imageindex = imageindex + 1;
                                 if (imageindex == MatchCount) {
@@ -592,7 +592,7 @@ public class FindMatches extends Fragment implements View.OnClickListener{
                                         .get(viewCount - 1);
                                 matchedUsersFaceBookID = matchesData.getfbId();
                                 swipeviewlayout.removeView(myRelativeView);
-                                userisLiked(true);
+                                userisLiked(true,UserData);
                             }
                             break;
                         default:
@@ -649,7 +649,7 @@ public class FindMatches extends Fragment implements View.OnClickListener{
             int viewCount = swipeviewlayout.getChildCount();
             User matchesData = MatchedUserList.get(viewCount - 1);
             matchedUsersFaceBookID = matchesData.getfbId();
-            userisLiked(true);
+            userisLiked(true,matchesData);
             RelativeLayout animatedview = null;
             int removeViewindex = 0;
             if (viewCount > 0) {
@@ -682,7 +682,7 @@ public class FindMatches extends Fragment implements View.OnClickListener{
             int viewCount = swipeviewlayout.getChildCount();
             User matchesData = MatchedUserList.get(viewCount - 1);
             matchedUsersFaceBookID = matchesData.getfbId();
-            userisLiked(false);
+            userisLiked(false,matchesData);
             RelativeLayout animatedview = null;
             int removeViewindex = 0;
             if (viewCount > 0) {
@@ -784,14 +784,14 @@ public class FindMatches extends Fragment implements View.OnClickListener{
 
     }
 
-    private void userisLiked(boolean isLiked)
+    private void userisLiked(boolean isLiked, User matchedUser)
     {
         if(isLiked)
         {
             String myFaceBookID = Constants.FACEBOOK_ID;
             String currentUserFaceBookId = matchedUsersFaceBookID;
 
-            Constants.usersMatchedwith.add(currentUserFaceBookId);
+            Constants.usersMatchedwith.add(matchedUser);
 
         }
     }
