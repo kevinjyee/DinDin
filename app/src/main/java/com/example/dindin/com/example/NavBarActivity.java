@@ -116,10 +116,15 @@ import java.net.URL;
                 navigation_view = (NavigationView) findViewById(R.id.nav_view);
                 //View header = LayoutInflater.from(this).inflate(R.layout.nav_header_main, null);
                 View header = navigation_view.getHeaderView(0);
-                // navigation_view.addHeaderView(header);
+                //navigation_view.addHeaderView(header);
                 user_name = (TextView) header.findViewById(R.id.username);
                 user_picture = (ImageView) header.findViewById(R.id.profile_pic);
-
+                preferences = PreferenceManager.getDefaultSharedPreferences(this);
+                String fbID = preferences.getString(Constants.FACEBOOK_ID,"");
+                Picasso.with(this)
+                        .load("https://graph.facebook.com/v2.2/" + fbID + "/picture?height=120&type=normal") //extract as User instance method
+                        .error(R.drawable.dislike_off) //
+                        .into(user_picture);
                 user_email = (TextView) header.findViewById(R.id.email);
             }
 
@@ -133,9 +138,13 @@ import java.net.URL;
                     user_name.setText(response.get("name").toString());
                     profile_pic_data = new JSONObject(response.get("picture").toString());
                     profile_pic_url = new JSONObject(profile_pic_data.getString("data"));
-
-                    Picasso.with(this).load(profile_pic_url.getString("url"))
+                    preferences = PreferenceManager.getDefaultSharedPreferences(this);
+                    String fbID = preferences.getString(Constants.FACEBOOK_ID,"");
+                    Picasso.with(this)
+                            .load("https://graph.facebook.com/v2.2/" + fbID + "/picture?height=120&type=normal") //extract as User instance method
+                            .error(R.drawable.dislike_off) //
                             .into(user_picture);
+
                     editor.putString(Constants.PROFILE_IMAGE_ONE,
                             getStoredImageUrl("1", profile_pic_url.getString("url")));
                     editor.commit();

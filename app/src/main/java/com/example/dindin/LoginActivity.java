@@ -198,6 +198,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             if(userProfile != null) {
 
                 editor.putString(Constants.FACEBOOK_ID, userProfile.getId());
+                editor.putString(Constants.FIRST_NAME,userProfile.getFirstName());
+                editor.putString(Constants.LAST_NAME,userProfile.getLastName());
+
+                editor.commit();
                 Intent goToNextActivity = new Intent(getApplicationContext(), NavBarActivity.class);
             //   editor.putString(Constants.PROFILE_IMAGE_ONE,
                         // getStoredImageUrl("1", data.getProfilePicture()));
