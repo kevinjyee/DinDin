@@ -71,6 +71,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     // Google client to interact with Google API
     private GoogleApiClient mGoogleApiClient;
     private LocationRequest mLocationRequest;
+    private TextView lblLocation;
 
     private SharedPreferences preferences;
     private Editor editor;
@@ -80,9 +81,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        printHashKey();
         facebookSDKInitialize();
         setContentView(R.layout.activity_login);
         LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
+        lblLocation = (TextView) findViewById(R.id.lblLocation);
         loginButton.setReadPermissions("email"); // https://developers.facebook.com/docs/facebook-login/permissions/
         // First we need to check availability of play services
 
@@ -138,18 +141,19 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
     private void displayLocation() {
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-        }else{
+        if ((ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) ==
+                PackageManager.PERMISSION_GRANTED) &&
+                (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) ==
+                        PackageManager.PERMISSION_GRANTED)) {
             mLastLocation = LocationServices.FusedLocationApi
                     .getLastLocation(mGoogleApiClient);
+        }
 
             if (mLastLocation != null) {
                 handleNewLocation(mLastLocation);
             } else {
                 LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
             }
-        }
 
     }
 /*
@@ -265,6 +269,25 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     @Override
     public void onResume() {
+/*
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.ACCESS_FINE_LOCATION)) {
+
+                // Show an expanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+
+            } else {
+
+                // No explanation needed, we can request the permission.
+                // PERMISSION_REQUEST_ACCESS_FINE_LOCATION can be any unique int
+                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_REQUEST_ACCESS_FINE_LOCATION);
+            }
+        }
+*/
         super.onResume();
     }
 
@@ -278,6 +301,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
                     // permission was granted, yay!
+                    lblLocation
+                            .setText("Obtaining location...");
                     if(!mGoogleApiClient.isConnected()){
                         mGoogleApiClient.connect();
                     }else {
@@ -317,6 +342,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         // Once connected with google api, get the location
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
+            lblLocation
+                    .setText("Requesting permission...");
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_REQUEST_ACCESS_FINE_LOCATION);
         }else {
             displayLocation();
@@ -344,7 +371,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         double latitude = location.getLatitude();
         double longitude = location.getLongitude();
 
-        Log.d(TAG, location.toString());
+        lblLocation.setText(latitude + ", " + longitude);
+       // Log.d(TAG, location`````````````````````.toString());
     }
 
 /*
@@ -367,5 +395,24 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
     */
 
+    public void printHashKey(){
+
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo(
+                    "com.example.dindin",
+                    PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                String temp = Base64.encodeToString(md.digest(), Base64.DEFAULT);
+                Log.d("YeshHash:", temp);
+                System.out.println(temp);
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+
+        } catch (NoSuchAlgorithmException e) {
+
+        }
+    }
 }
 
