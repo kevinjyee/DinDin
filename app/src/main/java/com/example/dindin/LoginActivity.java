@@ -186,6 +186,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                             info.setText("Login attempt failed.");
             }
         });
+
             userProfile = Profile.getCurrentProfile();
             if(userProfile != null){
                 profilePictureView = (ProfilePictureView) findViewById(R.id.userProfilePic);
@@ -220,8 +221,15 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     @Override
                     public void onCompleted(
                             JSONObject json_object,
-                                                    GraphResponse response) {
-                                                Intent intent = new Intent(LoginActivity.this, NavBarActivity.class);
+                            GraphResponse response) {
+                                userProfile = Profile.getCurrentProfile();
+                                if(userProfile != null) {
+                                    editor.putString(Constants.FACEBOOK_ID, userProfile.getId());
+                                    editor.putString(Constants.FIRST_NAME, userProfile.getFirstName());
+                                    editor.putString(Constants.LAST_NAME, userProfile.getLastName());
+                                    editor.commit();
+                                }
+                                Intent intent = new Intent(LoginActivity.this, NavBarActivity.class);
                                 intent.putExtra("jsondata",json_object.toString());
                                 startActivity(intent);
                     }
@@ -245,14 +253,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
         @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-                //noinspection SimplifiableIfStatement
-       /* if (id == R.id.action_settings) {
-            return true;
-        }*/
                 return super.onOptionsItemSelected(item);
     }
 
@@ -266,25 +266,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     @Override
     public void onResume() {
-/*
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            // Should we show an explanation?
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.ACCESS_FINE_LOCATION)) {
-
-                // Show an expanation to the user *asynchronously* -- don't block
-                // this thread waiting for the user's response! After the user
-                // sees the explanation, try again to request the permission.
-
-            } else {
-
-                // No explanation needed, we can request the permission.
-                // PERMISSION_REQUEST_ACCESS_FINE_LOCATION can be any unique int
-                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_REQUEST_ACCESS_FINE_LOCATION);
-            }
-        }
-*/
         super.onResume();
     }
 
