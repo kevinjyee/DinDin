@@ -21,7 +21,7 @@ import com.example.dindin.utilities.Constants;
 import com.squareup.picasso.Picasso;
 
 public class ProfileFragment extends Fragment implements View.OnClickListener {
-    View view;
+    private View view;
     Button editButton;
     TextView nameage, bio, loc, favdish, favcuisine, gender;
     ImageView imageview;
@@ -42,7 +42,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         favcuisine = (TextView)view.findViewById(R.id.profile_cuisine);
         gender = (TextView)view.findViewById(R.id.user_profile_gender);
         imageview = (ImageView) view.findViewById(R.id.user_profile_photo);
-        preferences = PreferenceManager.getDefaultSharedPreferences(inflater.getContext());
+        preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String fbId = preferences.getString(Constants.FACEBOOK_ID, "");
         String firstname = preferences.getString(Constants.FIRST_NAME,"");
         Picasso.with(getActivity())
@@ -50,36 +50,37 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 .error(R.drawable.dislike_off) //
                 .into(imageview);
 
-        nameage.setText(firstname+ ", " + "21");
+        //nameage.setText(firstname+ ", " + "21");
+        setProfileInfo(preferences.getString(Constants.DISPLAY_NAME,firstname),
+                preferences.getString(Constants.GENDER,"TBD"),
+                preferences.getString(Constants.AGE,"21"),
+                preferences.getString(Constants.SHORT_BIO,Constants.UNKNOWN),
+                preferences.getString(Constants.LOCATION,"Austin,TX"),
+                preferences.getString(Constants.DISH,Constants.UNKNOWN),
+                preferences.getString(Constants.CUISINE,Constants.UNKNOWN)
+                );
+
         return root;
     }
     @Override
     public void onClick(View v) {
         final FragmentTransaction ft = getFragmentManager().beginTransaction();
         ProfileEditFragment editFragment = new ProfileEditFragment();
-        editFragment.setProfileFrag(this);
-       //TODO: Replace content frame
-        ft.replace(R.id.content_frame, editFragment);
+        ft.replace(R.id.activity_main_content_fragment, editFragment);
         ft.addToBackStack(null);
         ft.commit();
 
     }
 
     public void setProfileInfo(String name, String gen, String age, String short_bio, String location, String dish, String cuisine){
-       //View view = findViewById(R.layout.fragment_profileview);
-        //TextView nameage = (TextView)view.findViewById(R.id.user_profile_name);
-        nameage.setText(Constants.FIRST_NAME + ", " + age);
-        //TextView bio = (TextView)view.findViewById(R.id.profile_short_bio);
+        nameage.setText(name + ", " + age);
         bio.setText(short_bio);
-        //TextView loc = (TextView)view.findViewById(R.id.profile_location);
         loc.setText(location);
-        //TextView favdish = (TextView)view.findViewById(R.id.profile_dish);
         favdish.setText(dish);
-         //TextView favcuisine = (TextView)view.findViewById(R.id.profile_cuisine);
 
 
         Picasso.with(getActivity())
-                .load("https://graph.facebook.com/v2.2/" + Constants.FACEBOOK_ID + "/picture?height=120&type=normal") //extract as User instance method
+                .load("https://graph.facebook.com/v2.2/" + preferences.getString(Constants.FACEBOOK_ID,"") + "/picture?height=120&type=normal") //extract as User instance method
                 .error(R.drawable.dislike_off) //
 
                 .into(imageview);
