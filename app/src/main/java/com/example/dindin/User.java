@@ -1,34 +1,40 @@
 package com.example.dindin;
 
 
+import android.telephony.TelephonyManager;
+
 import com.example.dindin.com.example.AgeRange;
 import com.example.dindin.com.example.Location;
 import com.facebook.Profile;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Set;
 
-public class User {
+public class User implements Serializable{
+
     private int id;
     private Date birthday;
     private String name;
     private Location location;
     private Profile facebookProfile;
     private double userRating;
-    private Queue<Integer> potentialMatches;
-    private ArrayList<Integer> finalizedMatches;
+    private ArrayList<Integer> potentialMatches;
+    private HashMap<String, String> finalizedMatches;
     private Preferences preferences;
     @SerializedName("fbId")
 
     private String fbId;
     private String age;
     private String phoneNumber = "713-478-3035";
+
     public User()
     {
     }
@@ -40,10 +46,11 @@ public class User {
         this.age = Age;
     }
 
-    public User(int userId, String userName, Location userLoc, Profile userProfile, double rating,
-                Queue<Integer> potMatches, ArrayList<Integer> finMatches, Preferences prefs)
+    public User(int userId, String fbID, String userName, Location userLoc, Profile userProfile, double rating,
+                ArrayList<Integer> potMatches, HashMap<String, String> finMatches, Preferences prefs)
     {
-
+        this.id = userId;
+        this.fbId = fbID;
         this.name = userName;
         this.location = userLoc;
         this.facebookProfile = userProfile;
@@ -53,27 +60,32 @@ public class User {
         this.preferences = prefs;
     }
 
-    public User createDefaultUser(){
+    public static User createDefaultUser(){
         int uID = 1;
+        String fbID = "1";
         String uName = "Tom";
         Location uLoc = new Location(1, 2);
         Profile uProfile = null;
         double uRating = 3.9;
         AgeRange range = new AgeRange(18, 22);
-        Set<String> prefCuisine = new HashSet<String>();
+        ArrayList<String> prefCuisine = new ArrayList<String>();
         prefCuisine.add("Asian");
         prefCuisine.add("Indian");
         prefCuisine.add("American");
         Preferences prefs = new Preferences("Cook", 15, range, prefCuisine);
-        Queue<Integer> potMatches = new PriorityQueue<Integer>();
+        ArrayList<Integer> potMatches = new ArrayList<Integer>();
         potMatches.add(4);
         potMatches.add(2);
         potMatches.add(3);
-        ArrayList<Integer> finMatches = new ArrayList<Integer>();
-        finMatches.add(5);
-        finMatches.add(6);
-        finMatches.add(7);
-        return new User(uID, uName, uLoc, uProfile, uRating, potMatches, finMatches, prefs);
+        HashMap<String, String> finMatches = new HashMap<String, String>();
+        finMatches.put("5", "5");
+        finMatches.put("6", "6");
+        finMatches.put("7", "7");
+        return new User(uID, fbID, uName, uLoc, uProfile, uRating, potMatches, finMatches, prefs);
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getfbId() {
@@ -87,6 +99,7 @@ public class User {
     }
 
     public String getAge() {return age;}
+
     public Location getLocation() {
         return location;
     }
@@ -95,7 +108,7 @@ public class User {
         return facebookProfile;
     }
 
-    public Queue<Integer> getPotentialMatches() {
+    public ArrayList<Integer> getPotentialMatches() {
         return potentialMatches;
     }
 
@@ -103,7 +116,7 @@ public class User {
         return userRating;
     }
 
-    public ArrayList<Integer> getFinalizedMatches() {
+    public HashMap<String, String> getFinalizedMatches() {
         return finalizedMatches;
     }
 
@@ -113,6 +126,10 @@ public class User {
 
     public void setfbId(String id) {
         this.fbId = id;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
     }
 
     public void setBirthday(Date date){ this.birthday = date; }
@@ -139,12 +156,21 @@ public class User {
         this.userRating = userRating;
     }
 
-    public void setPotentialMatches(Queue<Integer> potentialMatches) {
+    public void setPotentialMatches(ArrayList<Integer> potentialMatches) {
         this.potentialMatches = potentialMatches;
     }
 
-    public void setFinalizedMatches(ArrayList<Integer> finalizedMatches) {
+    public void setFinalizedMatches(HashMap<String, String> finalizedMatches) {
         this.finalizedMatches = finalizedMatches;
+    }
+
+    public static User createUserFromProfile(Profile fbProfile){
+        User newUser = new User();
+        newUser.setfbId(fbProfile.getId());
+        newUser.setName(fbProfile.getName());
+        newUser.setAge("42");
+
+        return newUser;
     }
 
     public void setPreferences(Preferences preferences) {
@@ -169,5 +195,6 @@ public class User {
     public boolean isInPreferredRange(User user2){
         return false;
     }
+
 }
 

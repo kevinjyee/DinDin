@@ -1,12 +1,13 @@
 package com.example.dindin.com.example;
 
+import java.io.Serializable;
 import java.math.*;
 
 /**
  * Created by Stefan on 10/22/2016.
  */
 
-public class Location {
+public class Location implements Serializable{
     private double latitude;
     private double longitude;
 

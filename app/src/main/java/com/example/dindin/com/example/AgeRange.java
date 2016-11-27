@@ -1,5 +1,6 @@
 package com.example.dindin.com.example;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -10,7 +11,7 @@ import java.util.Locale;
  * Created by Stefan on 10/22/2016.
  */
 
-public class AgeRange {
+public class AgeRange implements Serializable{
     private int minAge;
     private int maxAge;
 
@@ -40,17 +41,17 @@ public class AgeRange {
     }
 
     public boolean isInAgeRange(Date date){
-        int age_in_years = getAge(date);
+        int age_in_years = findAge(date);
         return (age_in_years >= this.minAge) && (age_in_years <= this.maxAge);
     }
 
-    public int getAge(Date birthday){
-        Date currentDate = getCurrentDate();
+    public int findAge(Date birthday){
+        Date currentDate = findCurrentDate();
         int age = getDiffYears(birthday, currentDate);
         return age;
     }
 
-    public Date getCurrentDate(){
+    public Date findCurrentDate(){
         //getting current date and time using Date class
         DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
         Date dateobj = new Date();
@@ -58,8 +59,8 @@ public class AgeRange {
     }
 
     public static int getDiffYears(Date first, Date last) {
-        Calendar a = getCalendar(first);
-        Calendar b = getCalendar(last);
+        Calendar a = findCalendar(first);
+        Calendar b = findCalendar(last);
         int diff = b.get(Calendar.YEAR) - a.get(Calendar.YEAR);
         if (a.get(Calendar.MONTH) > b.get(Calendar.MONTH) ||
                 (a.get(Calendar.MONTH) == b.get(Calendar.MONTH) && a.get(Calendar.DATE) > b.get(Calendar.DATE))) {
@@ -68,7 +69,7 @@ public class AgeRange {
         return diff;
     }
 
-    public static Calendar getCalendar(Date date) {
+    public static Calendar findCalendar(Date date) {
         Calendar cal = Calendar.getInstance(Locale.US);
         cal.setTime(date);
         return cal;

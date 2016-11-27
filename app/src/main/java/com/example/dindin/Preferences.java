@@ -2,24 +2,28 @@ package com.example.dindin;
 
 import com.example.dindin.com.example.AgeRange;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
  * Created by Davin on 10/20/2016.
  */
 
-public class Preferences {
+public class Preferences implements Serializable{
     private String preferredTask;
     private double maxMatchDistance; //radius size (miles) within user location for matching
     private AgeRange ageRange;
-    private Set<String> preferredCuisines;
+    private ArrayList<String> preferredCuisines;
 
     public Preferences(){
 
     }
 
-    public Preferences(String prefTask, double matchDistance, AgeRange prefAgeRange, Set<String> cuisines){
+    public Preferences(String prefTask, double matchDistance, AgeRange prefAgeRange, ArrayList<String> cuisines){
         this.preferredTask = prefTask;
         this.maxMatchDistance = matchDistance;
         this.ageRange = prefAgeRange;
@@ -38,7 +42,7 @@ public class Preferences {
         return this.ageRange;
     }
 
-    public Set<String> getPreferredCuisines(){
+    public ArrayList<String> getPreferredCuisines(){
         return this.preferredCuisines;
     }
 
@@ -54,7 +58,7 @@ public class Preferences {
         this.ageRange = range;
     }
 
-    public void setPreferredCuisines(Set<String> cuisinePreferences){
+    public void setPreferredCuisines(ArrayList<String> cuisinePreferences){
         this.preferredCuisines = cuisinePreferences;
     }
 
