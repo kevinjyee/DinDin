@@ -45,6 +45,7 @@ import com.squareup.picasso.Picasso;
 import org.apache.http.NameValuePair;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static android.R.attr.action;
@@ -358,6 +359,7 @@ public class FindMatches extends Fragment implements View.OnClickListener{
 3	www.facebook.com/stephen.e.tran?fref=ts	705738627*/
 
                 success = true;
+
                 User Kevin = new User("100001411585746","Kevin","21");
                 User Stefan = new User("1408027584","Stefan","21");
                 User Davin = new User("1151947893","Davin","21");
@@ -365,6 +367,9 @@ public class FindMatches extends Fragment implements View.OnClickListener{
                 User Yuriy = new User("100000050449525","Yuriy","20");
                 User Brandon = new User("100000384470712","Brandon","20");
                 User Rachel = new User("1512173415","Rachel","20");
+
+            HashMap<String, User> testMatches = Constants.feasibleMatches;
+
 
                 if (success) {
 
@@ -808,6 +813,7 @@ public class FindMatches extends Fragment implements View.OnClickListener{
             String currentUserFaceBookId = matchedUsersFaceBookID;
 
             Constants.usersMatchedwith.add(matchedUser);
+
 
         }
     }

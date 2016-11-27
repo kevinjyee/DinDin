@@ -88,9 +88,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         // Building the GoogleApi client
 
-            if (checkPlayServices()) {
+            //if (checkPlayServices()) {
                 buildGoogleApiClient();
-            }
+            //}
             mLocationRequest = LocationRequest.create()
                     .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
                     .setInterval(10 * 1000)
@@ -203,7 +203,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 editor.putString(Constants.LAST_NAME,userProfile.getLastName());
 
                 editor.commit();
-                Intent goToNextActivity = new Intent(getApplicationContext(), NavBarActivity.class);
+                Intent goToNextActivity = new Intent(getApplicationContext(), FirebaseTestActivity.class);
+                User currentUser = User.createUserFromProfile(userProfile);
+                goToNextActivity.putExtra("currentUser", currentUser);
             //   editor.putString(Constants.PROFILE_IMAGE_ONE,
                         // getStoredImageUrl("1", data.getProfilePicture()));
                 startActivity(goToNextActivity);

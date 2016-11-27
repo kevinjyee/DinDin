@@ -26,7 +26,9 @@ public class User implements Serializable{
     private Location location;
     private Profile facebookProfile;
     private double userRating;
-    private ArrayList<Integer> potentialMatches;
+    private HashMap<String, String> potentialMatches;
+    private HashMap<String, String> swipedLeft;
+    private HashMap<String, String> swipedRight;
     private HashMap<String, String> finalizedMatches;
     private Preferences preferences;
     @SerializedName("fbId")
@@ -47,7 +49,7 @@ public class User implements Serializable{
     }
 
     public User(int userId, String fbID, String userName, Location userLoc, Profile userProfile, double rating,
-                ArrayList<Integer> potMatches, HashMap<String, String> finMatches, Preferences prefs)
+                HashMap<String, String> potMatches, HashMap<String, String> finMatches, Preferences prefs)
     {
         this.id = userId;
         this.fbId = fbID;
@@ -73,10 +75,10 @@ public class User implements Serializable{
         prefCuisine.add("Indian");
         prefCuisine.add("American");
         Preferences prefs = new Preferences("Cook", 15, range, prefCuisine);
-        ArrayList<Integer> potMatches = new ArrayList<Integer>();
-        potMatches.add(4);
-        potMatches.add(2);
-        potMatches.add(3);
+        HashMap<String, String> potMatches = new HashMap<String, String>();
+        potMatches.put("4", "4");
+        potMatches.put("2", "2");
+        potMatches.put("3", "3");
         HashMap<String, String> finMatches = new HashMap<String, String>();
         finMatches.put("5", "5");
         finMatches.put("6", "6");
@@ -108,8 +110,16 @@ public class User implements Serializable{
         return facebookProfile;
     }
 
-    public ArrayList<Integer> getPotentialMatches() {
+    public HashMap<String, String> getPotentialMatches() {
         return potentialMatches;
+    }
+
+    public HashMap<String, String> getSwipedLeft() {
+        return swipedLeft;
+    }
+
+    public HashMap<String, String> getSwipedRight() {
+        return swipedRight;
     }
 
     public double getUserRating() {
@@ -156,8 +166,16 @@ public class User implements Serializable{
         this.userRating = userRating;
     }
 
-    public void setPotentialMatches(ArrayList<Integer> potentialMatches) {
+    public void setPotentialMatches(HashMap<String, String> potentialMatches) {
         this.potentialMatches = potentialMatches;
+    }
+
+    public void setSwipedLeft(HashMap<String, String> swipedLeft) {
+        this.swipedLeft = swipedLeft;
+    }
+
+    public void setSwipedRight(HashMap<String, String> swipedRight) {
+        this.swipedRight = swipedRight;
     }
 
     public void setFinalizedMatches(HashMap<String, String> finalizedMatches) {

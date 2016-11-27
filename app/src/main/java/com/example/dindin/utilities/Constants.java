@@ -2,8 +2,11 @@ package com.example.dindin.utilities;
 
 import com.example.dindin.Recipe;
 import com.example.dindin.User;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by Kevin on 11/20/2016.
@@ -34,8 +37,16 @@ public class Constants {
     public static final String methodeName = "POST";
     public static boolean isMatchedFound = false;
 
+    public static User currentUser = new User();
     public static ArrayList<User> usersMatchedwith = new ArrayList<>();
     public static ArrayList<Recipe> recipsesMatchedwith = new ArrayList<>();
     public static ArrayList<String> fbIDMatchedwith = new ArrayList<>();
     public static ArrayList<String> recipeIDMatchedwith = new ArrayList<>();
+    public static HashMap<String, User> feasibleMatches = new HashMap<>();
+
+    public static final FirebaseDatabase database = FirebaseDatabase.getInstance();
+    public static final DatabaseReference myRef = database.getReference("usersHashSet");
+    public static final DatabaseReference myRefIndiv = database.getReference("user");
+    public static final DatabaseReference myRecipeRef = database.getReference("recipesHashSet");
+    public static final DatabaseReference myRecipeRefIndiv = database.getReference("recipe");
 }

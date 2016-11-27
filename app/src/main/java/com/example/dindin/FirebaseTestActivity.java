@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.example.dindin.com.example.NavBarActivity;
+import com.example.dindin.utilities.Constants;
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -52,7 +54,7 @@ public class FirebaseTestActivity extends AppCompatActivity {
         currentUserIsInDatabase = false;
         databaseReloaded = false;
         databaseEmpty = true;
-        goToNextActivity = new Intent(getApplicationContext(), MatchesTestActivity.class);
+        goToNextActivity = new Intent(getApplicationContext(), NavBarActivity.class);
 
         // Create a new Adapter
         final ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
@@ -61,6 +63,7 @@ public class FirebaseTestActivity extends AppCompatActivity {
         // Assign adapter to ListView
         listView.setAdapter(adapter);
 
+        /*
         // Connect to the Firebase database
         FirebaseDatabase database = FirebaseDatabase.getInstance();
 
@@ -69,13 +72,14 @@ public class FirebaseTestActivity extends AppCompatActivity {
         final DatabaseReference myRefIndiv = database.getReference("user");
         final DatabaseReference myRecipeRef = database.getReference("recipesHashSet");
         final DatabaseReference myRecipeRefIndiv = database.getReference("recipe");
+        */
 
-        myRecipeRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        Constants.myRecipeRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 Object recipeHash = snapshot.getValue();
                 if (recipeHash == null) {
-                    instantiateRecipeDB(myRecipeRef, myRecipeRefIndiv);
+                    instantiateRecipeDB();
                 }
             }
             @Override
@@ -83,12 +87,12 @@ public class FirebaseTestActivity extends AppCompatActivity {
             }
         });
 
-        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        Constants.myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 Object userHash = snapshot.getValue();
                 if (userHash == null) {
-                    instantiateDB(myRef, myRefIndiv);
+                    instantiateDB();
                 }
             }
             @Override
@@ -98,7 +102,7 @@ public class FirebaseTestActivity extends AppCompatActivity {
 
         // Assign a listener to detect changes to the child items
         // of the database reference.
-        myRef.addChildEventListener(new ChildEventListener() {
+        Constants.myRef.addChildEventListener(new ChildEventListener() {
 
             // This function is called once for each child that exists
             // when the listener is added. Then it is called
@@ -129,11 +133,11 @@ public class FirebaseTestActivity extends AppCompatActivity {
                             String jsonUsers = mapper.writeValueAsString(users);
                             System.out.println(jsonUsers);
                             // Create a new child with a auto-generated ID.
-                            DatabaseReference childRef = myRef.push();
+                            DatabaseReference childRef = Constants.myRef.push();
 
                             // Set the child's data to the value passed in from the text box.
                             childRef.setValue(jsonUsers);
-                            childRef = myRefIndiv.push();
+                            childRef = Constants.myRefIndiv.push();
                             childRef.setValue(currentUser);
                             databaseReloaded = true;
                         } catch (JsonGenerationException e) {
@@ -147,7 +151,8 @@ public class FirebaseTestActivity extends AppCompatActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                goToNextActivity.putExtra("matchList", matches);
+                //goToNextActivity.putExtra("matchList", matches);
+                Constants.feasibleMatches = matches;
                 //   editor.putString(Constants.PROFILE_IMAGE_ONE,
                 // getStoredImageUrl("1", data.getProfilePicture()));
                 startActivity(goToNextActivity);
@@ -173,7 +178,7 @@ public class FirebaseTestActivity extends AppCompatActivity {
             }
         });
 
-        Query myQuery = myRefIndiv.orderByChild("fbId").equalTo(currentUser.getfbId());
+        Query myQuery = Constants.myRefIndiv.orderByChild("fbId").equalTo(currentUser.getfbId());
 
         myQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -188,93 +193,7 @@ public class FirebaseTestActivity extends AppCompatActivity {
             }
         });
 
-        //createDefaultUsers(myRef, myRefIndiv);
-        /* Uncomment this if dindinDB is entirely empty.
-        if (databaseEmpty) {
-            instantiateDB(myRef, myRefIndiv);
-        }
-        */
     }
-
-        /*
-        // Add items via the Button and EditText at the bottom of the window.
-        final EditText text = (EditText) findViewById(R.id.todoText);
-        final Button button = (Button) findViewById(R.id.addButton);
-
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                User Kevin = new User("100001411585746","Kevin","21");
-                User Stefan = new User("1408027584","Stefan","21");
-                User Davin = new User("1151947893","Davin","21");
-                User Stephen = new User("705738627","Stephen","21");
-
-                User Kevin = User.createDefaultUser();
-                Kevin.setfbId("100001411585746");
-                User Stefan = User.createDefaultUser();
-                Stefan.setfbId("1408027584");
-                User Davin = User.createDefaultUser();
-                Davin.setfbId("1151947893");
-                User Stephen = User.createDefaultUser();
-                Stephen.setfbId("705738627");
-                ArrayList<User> users = new ArrayList<User>();
-                users.add(Kevin);
-                users.add(Stefan);
-                users.add(Davin);
-                users.add(Stephen);
-
-                for(User u : users){
-                    DatabaseReference childRef2 = myRefIndiv.push();
-                    childRef2.setValue(u);
-                }
-                ObjectMapper mapper = new ObjectMapper();
-
-                    try {
-                        String jsonUsers = mapper.writeValueAsString(users);
-                        System.out.println(jsonUsers);
-                        // Create a new child with a auto-generated ID.
-                        DatabaseReference childRef = myRef.push();
-
-                        // Set the child's data to the value passed in from the text box.
-                        childRef.setValue(jsonUsers);
-                    } catch (JsonGenerationException e) {
-                        e.printStackTrace();
-                    } catch (JsonMappingException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-            }
-        });
-
-        // Delete items when clicked
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
-
-                Query myQuery = myRef.orderByValue().equalTo((String)
-                        listView.getItemAtPosition(position));
-
-                myQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.hasChildren()) {
-                            DataSnapshot firstChild = dataSnapshot.getChildren().iterator().next();
-                            firstChild.getRef().removeValue();
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                    }
-                })
-                ;}
-        })
-        ;
-
-    }
-    */
 
     /*
     public void createDefaultUsers(DatabaseReference myRef, DatabaseReference myRefIndiv){
@@ -316,8 +235,8 @@ public class FirebaseTestActivity extends AppCompatActivity {
     }
     */
 
-    public void instantiateDB(DatabaseReference myRef, DatabaseReference myRefIndiv){
-        DatabaseReference childRef = myRefIndiv.push();
+    public void instantiateDB(){
+        DatabaseReference childRef = Constants.myRefIndiv.push();
         childRef.setValue(currentUser);
             ObjectMapper mapper = new ObjectMapper();
             try {
@@ -326,7 +245,7 @@ public class FirebaseTestActivity extends AppCompatActivity {
                 String jsonUsers = mapper.writeValueAsString(users);
                 System.out.println(jsonUsers);
                 // Create a new child with a auto-generated ID.
-                DatabaseReference childRefDB = myRef.push();
+                DatabaseReference childRefDB = Constants.myRef.push();
 
                 // Set the child's data to the value passed in from the text box.
                 childRefDB.setValue(jsonUsers);
@@ -340,18 +259,18 @@ public class FirebaseTestActivity extends AppCompatActivity {
     }
 
     // Fill DB with recipes
-    public void instantiateRecipeDB(DatabaseReference recipeRef, DatabaseReference recipeRefIndiv){
+    public void instantiateRecipeDB(){
         ObjectMapper mapper = new ObjectMapper();
         try {
             ArrayList<Recipe> recipes = Recipe.generateRecipes();
             for(Recipe r : recipes){
-                DatabaseReference childRef = recipeRefIndiv.push();
+                DatabaseReference childRef = Constants.myRecipeRefIndiv.push();
                 childRef.setValue(r);
             }
             String jsonRecipes = mapper.writeValueAsString(recipes);
             System.out.println(jsonRecipes);
             // Create a new child with a auto-generated ID.
-            DatabaseReference childRefDB = recipeRef.push();
+            DatabaseReference childRefDB = Constants.myRecipeRef.push();
 
             // Set the child's data to the value passed in from the text box.
             childRefDB.setValue(jsonRecipes);
@@ -365,15 +284,17 @@ public class FirebaseTestActivity extends AppCompatActivity {
     }
 
     public void updateUserMatches(DataSnapshot dataSnapshot){
+
         if (dataSnapshot.hasChildren()) {
             DataSnapshot firstChild = dataSnapshot.getChildren().iterator().next();
-            HashMap<String, String> finMatches = new HashMap<String, String>();
-            finMatches.put("2", "2");
-            finMatches.put("4", "4");
-            finMatches.put("6", "6");
-            finMatches.put("8", "8");
-            currentUser.setFinalizedMatches(finMatches);
+            HashMap<String, String> potMatches = new HashMap<String, String>();
+            potMatches.put("2", "2");
+            potMatches.put("4", "4");
+            potMatches.put("6", "6");
+            potMatches.put("8", "8");
+            currentUser.setPotentialMatches(potMatches);
             firstChild.getRef().setValue(currentUser);
         }
+
     }
 }
