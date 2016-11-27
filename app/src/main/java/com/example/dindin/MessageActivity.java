@@ -2,21 +2,14 @@ package com.example.dindin;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.NotificationCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -39,8 +32,6 @@ public class MessageActivity extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-
             // Inflate the layout for this fragment
             ViewGroup root = (ViewGroup) inflater.inflate(R.layout.activity_message, null);
             view = root;
@@ -54,6 +45,24 @@ public class MessageActivity extends Fragment {
         Constants.usersMatchedwith.addAll(usersHashSet);
         MatchedDataAdapter adapter = new MatchedDataAdapter(getActivity(), Constants.usersMatchedwith);
         matcheslistview.setAdapter(adapter);
+        matcheslistview.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1,int position, long arg3)
+            {
+                Bundle mBundle = new Bundle();
+                String targetID;
+                User targetUser = (User)matcheslistview.getAdapter().getItem(position);
+                targetID = targetUser.getName();
+
+                mBundle.putString("targetID", targetID);
+                Intent mIntent = new Intent(getActivity(),MessagingActivity.class);
+
+                mIntent.putExtras(mBundle);
+
+                startActivity(mIntent);
+            }
+        });
 
             return root;
         }

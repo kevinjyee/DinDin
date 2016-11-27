@@ -15,8 +15,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.example.dindin.ProfileEditFragment;
 import com.example.dindin.utilities.Constants;
 import com.squareup.picasso.Picasso;
 

@@ -1,27 +1,27 @@
 {
   "project_info": {
-    "project_number": "86415211705",
-    "firebase_url": "https://dindin-b96fb.firebaseio.com",
-    "project_id": "dindin-b96fb",
-    "storage_bucket": "dindin-b96fb.appspot.com"
+    "project_number": "737455299050",
+    "firebase_url": "https://dindin-81683.firebaseio.com",
+    "project_id": "dindin-81683",
+    "storage_bucket": "dindin-81683.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:86415211705:android:c18349dbd33908b8",
+        "mobilesdk_app_id": "1:737455299050:android:c18349dbd33908b8",
         "android_client_info": {
           "package_name": "com.example.dindin"
         }
       },
       "oauth_client": [
         {
-          "client_id": "86415211705-35114gr1dcait5nja9banllbh7ma119o.apps.googleusercontent.com",
+          "client_id": "737455299050-0bf4ul0j8rph94n0msskdm0oposmdfm1.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAM9RUmAT8CwwRVw-k5oWRxhUUfxCDZNPk"
+          "current_key": "AIzaSyDbeSCy37WLMOVsvffbKSYgQFvTmpAA2M4"
         }
       ],
       "services": {
