@@ -1,25 +1,18 @@
 <resources>
+    <string name="profile_default">N/A</string>
+
     <string name="app_name">dindin</string>
     <string name="app_id">352800581722920</string>
-    <string name="welcome_message">welcome\nto\ndindin</string>
-    <string name="profile_title">Profile</string>
-    <string name="preferences_title">Preferences</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="mTextDetails"></string>
     <string name="title_activity_landing">LandingActivity</string>
-    <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="okbuttontext">Ok</string>
-
-    <string name="gpsenablemessage">GPS is disabled in your device. Would you like to enable it?</string>
-    <string name="button_ok">Yes</string>
-    <string name="button_cancel">No</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="title_activity_message">MessageActivity</string>
     <string name="findingpeopleneartou">Finding People Near You</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

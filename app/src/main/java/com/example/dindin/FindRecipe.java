@@ -44,6 +44,7 @@ import com.squareup.picasso.Picasso;
 import org.apache.http.NameValuePair;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static android.R.attr.action;
@@ -368,7 +369,24 @@ public class FindRecipe extends Fragment implements View.OnClickListener{
                     "1 hr\n" +
                     "\n" +
                     "\n" +
-                    "Read more at: http://www.foodnetwork.com/recipes/giada-de-laurentiis/christmas-stuffing-with-bacon-recipe.html?oc=linkback","");
+                    "Read more at: http://www.foodnetwork.com/recipes/giada-de-laurentiis/christmas-stuffing-with-bacon-recipe.html?oc=linkback","Ingredients\n" +
+                    "8 ounces applewood-smoked bacon, chopped into 1/2-inch pieces\n" +
+                    "Rice:\n" +
+                    "4 1/2 cups low-salt chicken broth\n" +
+                    "3 tablespoons chopped fresh thyme\n" +
+                    "1 1/4 cups short-grain brown rice\n" +
+                    "1 1/4 cups wild rice\n" +
+                    "Vegetables:\n" +
+                    "2 tablespoons unsalted butter, at room temperature\n" +
+                    "2 tablespoons extra-virgin olive oil\n" +
+                    "One 14-ounce bag frozen pearl onions, thawed\n" +
+                    "1 teaspoon kosher salt\n" +
+                    "3/4 teaspoon freshly ground black pepper\n" +
+                    "12 ounces (3 large) portobello mushrooms, shredded or thinly sliced\n" +
+                    "8 ounces Brussels sprouts, trimmed and thinly sliced\n" +
+                    "1/2 cup hazelnuts, toasted, husked, coarsely chopped, optional\n" +
+                    "\n" +
+                    "");
 
             Recipe Panini = new Recipe("Cobb Salada Panini","http://foodnetwork.sndimg.com/content/dam/images/food/fullset/2011/11/4/0/CCFOO121_Cobb-Salad-Panini_s4x3.jpg.rend.sni12col.landscape.jpeg",
                     "Total Time:\n" +
@@ -378,7 +396,21 @@ public class FindRecipe extends Fragment implements View.OnClickListener{
                             "Cook:\n" +
                             "10 min\n" +
                             "\n" +
-                            "Read more at: http://www.foodnetwork.com/recipes/tyler-florence/cobb-salad-panini-recipe.html?oc=linkback","");
+                            "Read more at: http://www.foodnetwork.com/recipes/tyler-florence/cobb-salad-panini-recipe.html?oc=linkback","Ingredients\n" +
+                    "1 head romaine lettuce\n" +
+                    "2 tomatoes, seeded\n" +
+                    "1 avocado\n" +
+                    "1/2 pound turkey breast\n" +
+                    "8 slices bacon, cooked\n" +
+                    "1/2 pound bleu cheese\n" +
+                    "4 hard cooked eggs, shelled and sliced\n" +
+                    "1 tablespoon chopped parsley leaves\n" +
+                    "1 lemon, juiced\n" +
+                    "3 tablespoons extra-virgin olive oil, plus more for drizzling\n" +
+                    "Kosher salt and freshly ground black pepper\n" +
+                    "4 ciabatta rolls or a baguette\n" +
+                    "\n" +
+                    "Read more at: http://www.foodnetwork.com/recipes/tyler-florence/cobb-salad-panini-recipe.html?oc=linkback");
             Recipe PotPie = new Recipe("Turkey Pot Pie","http://foodnetwork.sndimg.com/content/dam/images/food/fullset/2013/6/21/0/FNK_Turkey-Pot-Pie_s4x3.jpg.rend.sni12col.landscape.jpeg"
             ,"Total Time:\n" +
                     "1 hr 10 min\n" +
@@ -387,8 +419,22 @@ public class FindRecipe extends Fragment implements View.OnClickListener{
                     "Cook:\n" +
                     "50 min\n" +
                     "\n" +
-                    "Read more at: http://www.foodnetwork.com/recipes/turkey-pot-pie-recipe.html?oc=linkback","");
-            Recipe AppleCobbler = new Recipe("Apple Cobbler for Two","http://foodnetwork.sndimg.com/content/dam/images/food/fullset/2015/12/8/1/FNK_Apple-Cobbler-for-Two_s4x3.jpg.rend.sni12col.landscape.jpeg"
+                    "Read more at: http://www.foodnetwork.com/recipes/turkey-pot-pie-recipe.html?oc=linkback","Ingredients\n" +
+                    "2 tablespoons butter\n" +
+                    "1 onion, chopped\n" +
+                    "2 stalks celery, chopped\n" +
+                    "3 carrots, chopped\n" +
+                    "4 tablespoons flour\n" +
+                    "4 cups chicken or turkey stock\n" +
+                    "2 potatoes, peeled and diced\n" +
+                    "2 cups shredded turkey\n" +
+                    "2 tablespoons chopped parsley\n" +
+                    "1/2 cup frozen peas, thawed\n" +
+                    "1 prepared pie crust\n" +
+                    "1 egg, lightly beaten\n" +
+                    "\n" +
+                    "Read more at: http://www.foodnetwork.com/recipes/turkey-pot-pie-recipe.html?oc=linkback");
+            Recipe AppleCobbler = new Recipe("Apple Cobbler","http://foodnetwork.sndimg.com/content/dam/images/food/fullset/2015/12/8/1/FNK_Apple-Cobbler-for-Two_s4x3.jpg.rend.sni12col.landscape.jpeg"
             ,"Total Time:\n" +
                     "1 hr 15 min\n" +
                     "Prep:\n" +
@@ -398,7 +444,22 @@ public class FindRecipe extends Fragment implements View.OnClickListener{
                     "Cook:\n" +
                     "50 min\n" +
                     "\n" +
-                    "Read more at: http://www.foodnetwork.com/recipes/food-network-kitchens/apple-cobbler-for-two.html?oc=linkback","");
+                    "Read more at: http://www.foodnetwork.com/recipes/food-network-kitchens/apple-cobbler-for-two.html?oc=linkback","Ingredients\n" +
+                    "Filling:\n" +
+                    "1 large Honeycrisp or 2 Gala apples (about 12 ounces), peeled, cored and cut into 1/4-inch pieces (2 generous cups)\n" +
+                    "2 heaping tablespoons plus 1 teaspoon sugar\n" +
+                    "1 teaspoon all-purpose flour\n" +
+                    "1/4 teaspoon ground cinnamon\n" +
+                    "1/8 teaspoon freshly grated nutmeg\n" +
+                    "1 tablespoon cold unsalted butter, cut into small pieces\n" +
+                    "Cream Biscuit Topping:\n" +
+                    "1/4 cup all-purpose flour\n" +
+                    "Heaping 1/4 teaspoon baking powder\n" +
+                    "Pinch fine salt\n" +
+                    "2 teaspoons sugar\n" +
+                    "3 tablespoons heavy cream\n" +
+                    "\n" +
+                    "Read more at: http://www.foodnetwork.com/recipes/food-network-kitchens/apple-cobbler-for-two.html?oc=linkback");
 
             Recipe CarrotCake = new Recipe("Carrot Cake","http://foodnetwork.sndimg.com/content/dam/images/food/fullset/2015/12/8/1/FNK_Carrot-Cake-for-Two_s4x3.jpg.rend.sni12col.landscape.jpeg" ,
                     "Total Time:\n" +
@@ -410,7 +471,27 @@ public class FindRecipe extends Fragment implements View.OnClickListener{
                             "Cook:\n" +
                             "35 min\n" +
                             "\n" +
-                            "Read more at: http://www.foodnetwork.com/recipes/food-network-kitchens/carrot-cake-for-two.html?oc=linkback","");
+                            "Read more at: http://www.foodnetwork.com/recipes/food-network-kitchens/carrot-cake-for-two.html?oc=linkback","Ingredients\n" +
+                    "Cake:\n" +
+                    "Cooking spray\n" +
+                    "1/4 cup pecans\n" +
+                    "2/3 cup all-purpose flour\n" +
+                    "1 teaspoon baking powder\n" +
+                    "1/2 teaspoon ground cinnamon\n" +
+                    "1/4 teaspoon kosher salt\n" +
+                    "Pinch freshly grated nutmeg\n" +
+                    "1/2 cup granulated sugar\n" +
+                    "1 large egg, at room temperature\n" +
+                    "1/4 cup vegetable oil\n" +
+                    "1/2 teaspoon pure vanilla extract\n" +
+                    "5 ounces carrots (about 3 small), finely grated (about 1 cup)\n" +
+                    "Frosting:\n" +
+                    "8 ounces cream cheese, at room temperature\n" +
+                    "1 stick (8 tablespoons) unsalted butter, at room temperature\n" +
+                    "3/4 cup confectioners' sugar\n" +
+                    "1/2 teaspoon pure vanilla extract\n" +
+                    "\n" +
+                    "Read more at: http://www.foodnetwork.com/recipes/food-network-kitchens/carrot-cake-for-two.html?oc=linkback");
             Recipe TurkeyBolognese = new Recipe("Turkey Bolognese","http://foodnetwork.sndimg.com/content/dam/images/food/fullset/2011/8/10/1/Thanksgiving-2011_EI0707-turkey-bolognese_s4x3.jpg.rend.sni12col.landscape.jpeg"
             ,"Total Time:\n" +
                     "50 min\n" +
@@ -419,7 +500,20 @@ public class FindRecipe extends Fragment implements View.OnClickListener{
                     "Cook:\n" +
                     "30 min\n" +
                     "\n" +
-                    "Read more at: http://www.foodnetwork.com/recipes/giada-de-laurentiis/turkey-bolognese-recipe.html?oc=linkback","");
+                    "Read more at: http://www.foodnetwork.com/recipes/giada-de-laurentiis/turkey-bolognese-recipe.html?oc=linkback","Ingredients\n" +
+                    "1/4 cup extra-virgin olive oil\n" +
+                    "1 onion, chopped\n" +
+                    "4 garlic cloves, minced\n" +
+                    "1 carrot, peeled and finely chopped\n" +
+                    "1 celery stalk, finely chopped\n" +
+                    "1 pound shredded cooked turkey (preferably dark meat)\n" +
+                    "3 cups marinara sauce\n" +
+                    "1/4 cup chopped fresh basil leaves\n" +
+                    "Salt and freshly ground black pepper\n" +
+                    "1 pound spaghetti\n" +
+                    "Freshly grated Parmesan\n" +
+                    "\n" +
+                    "Read more at: http://www.foodnetwork.com/recipes/giada-de-laurentiis/turkey-bolognese-recipe.html?oc=linkback");
 
             Recipe ShrimpScampi = new Recipe("Baked Shrimp Scampi","http://foodnetwork.sndimg.com/content/dam/images/food/fullset/2012/11/12/0/FN_Ina-Garten-Baked-Shrimp-Scampi_s4x3.jpg.rend.sni12col.landscape.jpeg"
             ,"Total Time:\n" +
@@ -429,9 +523,26 @@ public class FindRecipe extends Fragment implements View.OnClickListener{
                     "Cook:\n" +
                     "13 min\n" +
                     "\n" +
-                    "Read more at: http://www.foodnetwork.com/recipes/ina-garten/baked-shrimp-scampi-recipe.html?oc=linkback","");
+                    "Read more at: http://www.foodnetwork.com/recipes/ina-garten/baked-shrimp-scampi-recipe.html?oc=linkback","Ingredients\n" +
+                    "2 pounds (12 to 15 per pound) shrimp in the shell\n" +
+                    "3 tablespoons good olive oil\n" +
+                    "2 tablespoons dry white wine\n" +
+                    "Kosher salt and freshly ground black pepper\n" +
+                    "12 tablespoons (1 1/2 sticks) unsalted butter, at room temperature\n" +
+                    "4 teaspoons minced garlic (4 cloves)\n" +
+                    "1/4 cup minced shallots\n" +
+                    "3 tablespoons minced fresh parsley leaves\n" +
+                    "1 teaspoon minced fresh rosemary leaves\n" +
+                    "1/4 teaspoon crushed red pepper flakes\n" +
+                    "1 teaspoon grated lemon zest\n" +
+                    "2 tablespoons freshly squeezed lemon juice\n" +
+                    "1 extra-large egg yolk\n" +
+                    "2/3 cup panko (Japanese dried bread flakes)\n" +
+                    "Lemon wedges, for serving\n" +
+                    "\n" +
+                    "Read more at: http://www.foodnetwork.com/recipes/ina-garten/baked-shrimp-scampi-recipe.html?oc=linkback");
 
-              Recipe ChickenParm = new Recipe("Skillet Chicken Parmesan with Artichokes","http://foodnetwork.sndimg.com/content/dam/images/food/fullset/2016/5/11/1/FNM_060116-Skillet-Chicken-Parmesan-with-Artichokes_s4x3.jpg.rend.sni12col.landscape.jpeg"
+              Recipe ChickenParm = new Recipe("Chicken Parmesan","http://foodnetwork.sndimg.com/content/dam/images/food/fullset/2016/5/11/1/FNM_060116-Skillet-Chicken-Parmesan-with-Artichokes_s4x3.jpg.rend.sni12col.landscape.jpeg"
             ,"Total Time:\n" +
                     "40 min\n" +
                     "Prep:\n" +
@@ -441,9 +552,22 @@ public class FindRecipe extends Fragment implements View.OnClickListener{
                     "Cook:\n" +
                     "20 min\n" +
                     "\n" +
-                    "Read more at: http://www.foodnetwork.com/recipes/food-network-kitchens/skillet-chicken-parmesan-with-artichokes.html?oc=linkback","");
+                    "Read more at: http://www.foodnetwork.com/recipes/food-network-kitchens/skillet-chicken-parmesan-with-artichokes.html?oc=linkback","Ingredients\n" +
+                      "2 tablespoons extra-virgin olive oil\n" +
+                      "1 10 -ounce package frozen artichoke hearts, thawed\n" +
+                      "1 clove garlic, chopped\n" +
+                      "1/4 teaspoon red pepper flakes\n" +
+                      "1 28 -ounce can whole peeled San Marzano tomatoes, crushed by hand\n" +
+                      "Kosher salt and freshly ground pepper\n" +
+                      "3 cups chopped rotisserie chicken (skin removed)\n" +
+                      "1/4 cup fresh basil, roughly chopped, plus more for topping\n" +
+                      "4 slices rosemary focaccia (about 4 ounces)\n" +
+                      "4 ounces fresh mozzarella, thinly sliced\n" +
+                      "1/4 cup grated parmesan cheese\n" +
+                      "\n" +
+                      "Read more at: http://www.foodnetwork.com/recipes/food-network-kitchens/skillet-chicken-parmesan-with-artichokes.html?oc=linkback");
 
-                Recipe PorkChop = new Recipe("Pork Chop with Pear Chutney","http://foodnetwork.sndimg.com/content/dam/images/food/fullset/2014/4/28/0/FNK_Pork-Chops-with-Pear-Chutney_s4x3.jpg.rend.sni12col.landscape.jpeg",
+                Recipe PorkChop = new Recipe("Pork Chop with Pear","http://foodnetwork.sndimg.com/content/dam/images/food/fullset/2014/4/28/0/FNK_Pork-Chops-with-Pear-Chutney_s4x3.jpg.rend.sni12col.landscape.jpeg",
                         "Total Time:\n" +
                                 "30 min\n" +
                                 "Prep:\n" +
@@ -451,7 +575,50 @@ public class FindRecipe extends Fragment implements View.OnClickListener{
                                 "Cook:\n" +
                                 "15 min\n" +
                                 "\n" +
-                                "Read more at: http://www.foodnetwork.com/recipes/food-network-kitchens/pork-chops-with-pear-chutney-recipe.html?oc=linkback","");
+                                "Read more at: http://www.foodnetwork.com/recipes/food-network-kitchens/pork-chops-with-pear-chutney-recipe.html?oc=linkback","Ingredients\n" +
+                        "Chutney:\n" +
+                        "1 shallot, diced\n" +
+                        "3 tablespoons cider vinegar\n" +
+                        "2 tablespoons light brown sugar\n" +
+                        "1 tablespoon unsalted butter\n" +
+                        "1 1 -inch piece peeled fresh ginger, cut into coins\n" +
+                        "1 teaspoon Madras curry powder\n" +
+                        "1 cinnamon stick\n" +
+                        "Kosher salt\n" +
+                        "Pinch crushed red pepper\n" +
+                        "3 pears, peeled, cored, and cut in large dice\n" +
+                        "2 tablespoons dried cranberries\n" +
+                        "2 tablespoons chopped fresh cilantro\n" +
+                        "Chops:\n" +
+                        "8 thin bone-in pork chops, each about 4 ounces\n" +
+                        "Kosher salt and freshly ground black pepper\n" +
+                        "2 tablespoons vegetable oil\n" +
+                        "\n" +
+                        "Read more at: http://www.foodnetwork.com/recipes/food-network-kitchens/pork-chops-with-pear-chutney-recipe.html?oc=linkback");
+            Recipe Salmon = new Recipe("Salmon Cakes","http://foodnetwork.sndimg.com/content/dam/images/food/fullset/2010/2/5/0/MN0101_Bacon-Parmesan-Salmon-Cakes_s4x3.jpg.rend.sni12col.landscape.jpeg",
+                    "Total Time:\n" +
+                    "35 min\n" +
+                    "Prep:\n" +
+                    "20 min\n" +
+                    "Cook:\n" +
+                    "15 min\n" +
+                    "\n" +
+                    "Read more at: http://www.foodnetwork.com/recipes/melissa-darabian/salmon-cakes-recipe.html?oc=linkback","Ingredients\n" +
+                    "2 strips bacon, cooked until crispy, crumbled, bacon fat reserved\n" +
+                    "1/4 cup chopped onion\n" +
+                    "1 egg\n" +
+                    "1/2 cup mayonnaise\n" +
+                    "2 teaspoons Dijon mustard\n" +
+                    "1/2 teaspoon sugar\n" +
+                    "1/2 lemon, zested\n" +
+                    "1 (14-ounce) can wild salmon, checked for large bones\n" +
+                    "1 baked or boiled russet potato, peeled, and fluffed with a fork\n" +
+                    "1/4 cup bread crumbs\n" +
+                    "2 tablespoons grated Parmesan\n" +
+                    "Freshly ground black pepper\n" +
+                    "1/2 cup vegetable oil\n" +
+                    "\n" +
+                    "Read more at: http://www.foodnetwork.com/recipes/melissa-darabian/salmon-cakes-recipe.html?oc=linkback");
 
             if (success) {
 
@@ -469,6 +636,9 @@ public class FindRecipe extends Fragment implements View.OnClickListener{
                 MatchedRecipeList.add(ShrimpScampi);
                 MatchedRecipeList.add(ChickenParm);
                 MatchedRecipeList.add(PorkChop);
+                MatchedRecipeList.add(Salmon);
+
+                Collections.shuffle(MatchedRecipeList);
 
                 Log.i(TAG, "**** Matches Found MatchedRecipeList ****");
 
@@ -877,20 +1047,19 @@ public class FindRecipe extends Fragment implements View.OnClickListener{
 
     }
 
-    private void userisLiked(boolean isLiked, Recipe matchedUser)
-    {
-        if(isLiked)
-        {
+    private void userisLiked(boolean isLiked, Recipe matchedRecipe) {
+        if (isLiked) {
             String myFaceBookID = Constants.FACEBOOK_ID;
             String currentUserFaceBookId = matchedUsersFaceBookID;
 
-           // Constants.usersMatchedwith.add(matchedUser);
-
+            if (!Constants.recipeIDMatchedwith.contains(matchedRecipe.getFoodName())) {
+                Constants.recipsesMatchedwith.add(matchedRecipe);
+                Constants.recipeIDMatchedwith.add(matchedRecipe.getFoodName());
+            }
         }
+
+
     }
-
-
-
 
 }
 

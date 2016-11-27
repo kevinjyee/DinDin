@@ -37,15 +37,22 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'com.android.support:multidex:1.0.0'
     compile files('../lib/libs/jackson-annotations-2.8.4.jar')
     compile files('../lib/libs/jackson-core-2.8.4.jar')
     compile files('../lib/libs/jackson-databind-2.8.4.jar')
     compile files('../lib/libs/gson-2.2.4.jar')
     compile project(':lib')
+    // Firebase
+    // Firebase UI
+    compile 'de.hdodenhof:circleimageview:1.3.0'
+    compile 'com.github.bumptech.glide:glide:3.6.1'
     compile 'com.android.support:appcompat-v7:24.2.1'
+
     compile 'com.facebook.android:facebook-android-sdk:4.15.0'
     compile 'com.android.support:support-v4:24.2.1'
     compile 'com.android.support:design:24.2.1'
+    /*
     compile 'com.google.firebase:firebase-core:9.6.1'
     compile 'com.google.firebase:firebase-messaging:9.6.1'
     compile 'com.google.firebase:firebase-database:9.0.2'
@@ -54,7 +61,19 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'de.hdodenhof:circleimageview:1.3.0'
     testCompile 'junit:junit:4.12'
+    */
     compile 'com.android.support:multidex:1.0.0'
+
+    compile 'com.google.firebase:firebase-database:10.0.0'
+    compile 'com.google.firebase:firebase-config:10.0.0'
+    compile 'com.google.firebase:firebase-messaging:10.0.0'
+    compile 'com.google.firebase:firebase-crash:10.0.0'
+    compile 'com.firebaseui:firebase-ui-database:0.4.0'
+    compile 'com.google.firebase:firebase-core:10.0.0'
+    compile 'com.google.android.gms:play-services:10.0.0'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.google.code.gson:gson:2.8.0'
+    testCompile 'junit:junit:4.12'
 }
 
 // Add to the bottom of the file

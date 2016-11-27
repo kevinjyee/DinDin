@@ -27,6 +27,7 @@ import android.support.v4.widget.DrawerLayout;
         import android.widget.ImageView;
         import android.widget.TextView;
 
+import com.example.dindin.CookBookActivity;
 import com.example.dindin.FindMatches;
 import com.example.dindin.FindRecipe;
 import com.example.dindin.MessageActivity;
@@ -228,6 +229,10 @@ import java.net.URL;
                     case R.id.nav_matches:
                         fragment = new MessageActivity();
                         title = "Matches";
+                        break;
+                    case R.id.nav_cookbook:
+                        fragment = new CookBookActivity();
+                        title = "Cookbook";
                         break;
 
                 }

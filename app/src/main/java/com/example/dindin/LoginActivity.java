@@ -2,7 +2,9 @@ package com.example.dindin;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -12,6 +14,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -47,6 +50,9 @@ import com.google.android.gms.location.LocationServices;
 
 import org.json.JSONObject;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
@@ -65,7 +71,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     // Google client to interact with Google API
     private GoogleApiClient mGoogleApiClient;
     private LocationRequest mLocationRequest;
-    private TextView lblLocation;
 
     private SharedPreferences preferences;
     private Editor editor;
@@ -78,18 +83,19 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         facebookSDKInitialize();
         setContentView(R.layout.activity_login);
         LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
-        lblLocation = (TextView) findViewById(R.id.lblLocation);
         loginButton.setReadPermissions("email"); // https://developers.facebook.com/docs/facebook-login/permissions/
         // First we need to check availability of play services
 
         // Building the GoogleApi client
-        if (checkPlayServices()) {
-            buildGoogleApiClient();
-        }
-        mLocationRequest = LocationRequest.create()
-                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                .setInterval(10 * 1000)
-                .setFastestInterval(1 * 1000);
+
+            if (checkPlayServices()) {
+                buildGoogleApiClient();
+            }
+            mLocationRequest = LocationRequest.create()
+                    .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+                    .setInterval(10 * 1000)
+                    .setFastestInterval(1 * 1000);
+
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         editor = preferences.edit();
@@ -132,26 +138,20 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
     private void displayLocation() {
-
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            //return;
-            lblLocation.setText("Need to add location permission request");
+        if ((ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) ==
+                PackageManager.PERMISSION_GRANTED) &&
+                (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) ==
+                        PackageManager.PERMISSION_GRANTED)) {
+            mLastLocation = LocationServices.FusedLocationApi
+                    .getLastLocation(mGoogleApiClient);
         }
-        mLastLocation = LocationServices.FusedLocationApi
-                .getLastLocation(mGoogleApiClient);
 
-        if (mLastLocation != null) {
-            handleNewLocation(mLastLocation);
-        } else {
-            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
-        }
+            if (mLastLocation != null) {
+                handleNewLocation(mLastLocation);
+            } else {
+                LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+            }
+
     }
 /*
     Initialize the facebook sdk and then callback manager will handle the login responses.
@@ -186,6 +186,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                             info.setText("Login attempt failed.");
             }
         });
+
             userProfile = Profile.getCurrentProfile();
             if(userProfile != null){
                 profilePictureView = (ProfilePictureView) findViewById(R.id.userProfilePic);
@@ -220,8 +221,15 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     @Override
                     public void onCompleted(
                             JSONObject json_object,
-                                                    GraphResponse response) {
-                                                Intent intent = new Intent(LoginActivity.this,NavBarActivity.class);
+                            GraphResponse response) {
+                                userProfile = Profile.getCurrentProfile();
+                                if(userProfile != null) {
+                                    editor.putString(Constants.FACEBOOK_ID, userProfile.getId());
+                                    editor.putString(Constants.FIRST_NAME, userProfile.getFirstName());
+                                    editor.putString(Constants.LAST_NAME, userProfile.getLastName());
+                                    editor.commit();
+                                }
+                                Intent intent = new Intent(LoginActivity.this, NavBarActivity.class);
                                 intent.putExtra("jsondata",json_object.toString());
                                 startActivity(intent);
                     }
@@ -245,14 +253,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
         @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-                //noinspection SimplifiableIfStatement
-       /* if (id == R.id.action_settings) {
-            return true;
-        }*/
                 return super.onOptionsItemSelected(item);
     }
 
@@ -266,24 +266,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     @Override
     public void onResume() {
-
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            // Should we show an explanation?
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.ACCESS_FINE_LOCATION)) {
-
-                // Show an expanation to the user *asynchronously* -- don't block
-                // this thread waiting for the user's response! After the user
-                // sees the explanation, try again to request the permission.
-
-            } else {
-
-                // No explanation needed, we can request the permission.
-                // PERMISSION_REQUEST_ACCESS_FINE_LOCATION can be any unique int
-                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_REQUEST_ACCESS_FINE_LOCATION);
-            }
-        }
         super.onResume();
     }
 
@@ -296,9 +278,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-                    // permission was granted, yay! Do the
-                    // contacts-related task you need to do.
-
+                    // permission was granted, yay!
+                    if(!mGoogleApiClient.isConnected()){
+                        mGoogleApiClient.connect();
+                    }else {
+                        displayLocation();
+                    }
                 } else {
 
                     // permission denied, boo! Disable the
@@ -331,9 +316,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     @Override
     public void onConnected(@Nullable Bundle bundle) {
         // Once connected with google api, get the location
-        lblLocation
-                .setText("Obtaining location...");
-        displayLocation();
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_REQUEST_ACCESS_FINE_LOCATION);
+        }else {
+            displayLocation();
+        }
     }
 
     @Override
@@ -357,8 +345,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         double latitude = location.getLatitude();
         double longitude = location.getLongitude();
 
-        lblLocation.setText(latitude + ", " + longitude);
-       // Log.d(TAG, location`````````````````````.toString());
+        Log.d(TAG, location.toString());
     }
 
 /*
@@ -380,7 +367,5 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     }
     */
-
-
 }
 
