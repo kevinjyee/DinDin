@@ -62,34 +62,7 @@ public class ScalingUtilities {
      * @return Decoded bitmap
      */
 
-    public Bitmap decodeResource(Resources res, int resId, int dstWidth,
-                                 int dstHeight, ScalingLogic scalingLogic) {
 
-        Options options = new Options();
-
-        // BitmapFactory.Options options = new BitmapFactory.Options();
-        // options.inTempStorage = new byte[16*1024];
-        // BitmapFactory.Options options=new BitmapFactory.Options();
-        // options.inDither=false; //Disable Dithering mode
-        // options.inPurgeable=true; //Tell to gc that whether it needs free
-        // memory, the Bitmap can be cleared
-        // options.inInputShareable=true; //Which kind of reference will be used
-        // to recover the Bitmap data after being clear, when it will be used in
-        // the future
-        // options.inTempStorage=new byte[32 * 1024];
-
-        options.inJustDecodeBounds = true;
-        BitmapFactory.decodeResource(res, resId, options);
-        System.out.println("image height = " + options.outHeight
-                + " image width = " + options.outWidth);
-        options.inJustDecodeBounds = false;
-        options.inSampleSize = calculateSampleSize(options.outWidth,
-                options.outHeight, dstWidth, dstHeight, scalingLogic);
-        Bitmap unscaledBitmap = BitmapFactory.decodeResource(res, resId,
-                options);
-
-        return unscaledBitmap;
-    }
 
     /**
      * Utility function for creating a scaled version of an existing bitmap
@@ -137,44 +110,6 @@ public class ScalingUtilities {
         CROP, FIT
     }
 
-    /**
-     * Calculate optimal down-sampling factor given the dimensions of a source
-     * image, the dimensions of a destination area and a scaling logic.
-     *
-     * @param srcWidth
-     *            Width of source image
-     * @param srcHeight
-     *            Height of source image
-     * @param dstWidth
-     *            Width of destination area
-     * @param dstHeight
-     *            Height of destination area
-     * @param scalingLogic
-     *            Logic to use to avoid image stretching
-     * @return Optimal down scaling sample size for decoding
-     */
-    public static int calculateSampleSize(int srcWidth, int srcHeight,
-                                          int dstWidth, int dstHeight, ScalingLogic scalingLogic) {
-        if (scalingLogic == ScalingLogic.FIT) {
-            final float srcAspect = (float) srcWidth / (float) srcHeight;
-            final float dstAspect = (float) dstWidth / (float) dstHeight;
-
-            if (srcAspect > dstAspect) {
-                return srcWidth / dstWidth;
-            } else {
-                return srcHeight / dstHeight;
-            }
-        } else {
-            final float srcAspect = (float) srcWidth / (float) srcHeight;
-            final float dstAspect = (float) dstWidth / (float) dstHeight;
-
-            if (srcAspect > dstAspect) {
-                return srcHeight / dstHeight;
-            } else {
-                return srcWidth / dstWidth;
-            }
-        }
-    }
 
     /**
      * Calculates source rectangle for scaling bitmap
@@ -244,22 +179,6 @@ public class ScalingUtilities {
         }
     }
 
-    public static Bitmap decodeSampledBitmapFromResource(Resources res,
-                                                         int resId, int reqWidth, int reqHeight) {
-
-        // First decode with inJustDecodeBounds=true to check dimensions
-        final BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        BitmapFactory.decodeResource(res, resId, options);
-
-        // Calculate inSampleSize
-        options.inSampleSize = calculateInSampleSize(options, reqWidth,
-                reqHeight);
-
-        // Decode bitmap with inSampleSize set
-        options.inJustDecodeBounds = false;
-        return BitmapFactory.decodeResource(res, resId, options);
-    }
 
     public static int calculateInSampleSize(BitmapFactory.Options options,
                                             int reqWidth, int reqHeight) {
