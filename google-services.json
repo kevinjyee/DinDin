@@ -1,27 +1,35 @@
 {
   "project_info": {
-    "project_number": "86415211705",
-    "firebase_url": "https://dindin-b96fb.firebaseio.com",
-    "project_id": "dindin-b96fb",
-    "storage_bucket": "dindin-b96fb.appspot.com"
+    "project_number": "620129348280",
+    "firebase_url": "https://dindindb-2fe36.firebaseio.com",
+    "project_id": "dindindb-2fe36",
+    "storage_bucket": "dindindb-2fe36.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:86415211705:android:c18349dbd33908b8",
+        "mobilesdk_app_id": "1:620129348280:android:c18349dbd33908b8",
         "android_client_info": {
           "package_name": "com.example.dindin"
         }
       },
       "oauth_client": [
         {
-          "client_id": "86415211705-35114gr1dcait5nja9banllbh7ma119o.apps.googleusercontent.com",
+          "client_id": "620129348280-0kqfjdave67n9hfdo44f24g564ggmcmn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.dindin",
+            "certificate_hash": "570C429B79321EC54E4CA932DEFC4C89BA558FAA"
+          }
+        },
+        {
+          "client_id": "620129348280-u2rd0jvenckli2mib6t8619ld6su6g0u.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAM9RUmAT8CwwRVw-k5oWRxhUUfxCDZNPk"
+          "current_key": "AIzaSyD6iQge2tJK7FDlLNL4CdEkt3J3i2KTXaI"
         }
       ],
       "services": {
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "620129348280-u2rd0jvenckli2mib6t8619ld6su6g0u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2
