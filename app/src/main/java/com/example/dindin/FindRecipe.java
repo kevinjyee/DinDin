@@ -595,6 +595,30 @@ public class FindRecipe extends Fragment implements View.OnClickListener{
                         "2 tablespoons vegetable oil\n" +
                         "\n" +
                         "Read more at: http://www.foodnetwork.com/recipes/food-network-kitchens/pork-chops-with-pear-chutney-recipe.html?oc=linkback");
+            Recipe Salmon = new Recipe("Salmon Cakes","http://foodnetwork.sndimg.com/content/dam/images/food/fullset/2010/2/5/0/MN0101_Bacon-Parmesan-Salmon-Cakes_s4x3.jpg.rend.sni12col.landscape.jpeg",
+                    "Total Time:\n" +
+                    "35 min\n" +
+                    "Prep:\n" +
+                    "20 min\n" +
+                    "Cook:\n" +
+                    "15 min\n" +
+                    "\n" +
+                    "Read more at: http://www.foodnetwork.com/recipes/melissa-darabian/salmon-cakes-recipe.html?oc=linkback","Ingredients\n" +
+                    "2 strips bacon, cooked until crispy, crumbled, bacon fat reserved\n" +
+                    "1/4 cup chopped onion\n" +
+                    "1 egg\n" +
+                    "1/2 cup mayonnaise\n" +
+                    "2 teaspoons Dijon mustard\n" +
+                    "1/2 teaspoon sugar\n" +
+                    "1/2 lemon, zested\n" +
+                    "1 (14-ounce) can wild salmon, checked for large bones\n" +
+                    "1 baked or boiled russet potato, peeled, and fluffed with a fork\n" +
+                    "1/4 cup bread crumbs\n" +
+                    "2 tablespoons grated Parmesan\n" +
+                    "Freshly ground black pepper\n" +
+                    "1/2 cup vegetable oil\n" +
+                    "\n" +
+                    "Read more at: http://www.foodnetwork.com/recipes/melissa-darabian/salmon-cakes-recipe.html?oc=linkback");
 
             if (success) {
 
@@ -612,6 +636,7 @@ public class FindRecipe extends Fragment implements View.OnClickListener{
                 MatchedRecipeList.add(ShrimpScampi);
                 MatchedRecipeList.add(ChickenParm);
                 MatchedRecipeList.add(PorkChop);
+                MatchedRecipeList.add(Salmon);
 
                 Collections.shuffle(MatchedRecipeList);
 

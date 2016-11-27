@@ -141,9 +141,13 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
     private void displayLocation() {
-
+        if ((ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) ==
+                PackageManager.PERMISSION_GRANTED) &&
+                (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) ==
+                        PackageManager.PERMISSION_GRANTED)) {
             mLastLocation = LocationServices.FusedLocationApi
                     .getLastLocation(mGoogleApiClient);
+        }
 
             if (mLastLocation != null) {
                 handleNewLocation(mLastLocation);
