@@ -866,6 +866,16 @@ public class FindMatches extends Fragment implements View.OnClickListener{
                         swipedRight = (swipedRight == null) ? new HashMap<String, String>() : swipedRight;
                         if(matchSwipedRight.containsKey(Constants.currentUser.getfbId())){
                             // TODO KEVIN PUT MATCHING ACTION HEREEEEE
+                            AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+                            alertDialog.setTitle("Alert");
+                            alertDialog.setMessage("It's a Match!");
+                            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                        }
+                                    });
+                            alertDialog.show();
                             matchFinMatches.put(currentUserId, currentUserId);
                             u.setFinalizedMatches(matchFinMatches);
                             finMatches.put(thisMatchId, thisMatchId);
