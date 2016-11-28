@@ -185,7 +185,7 @@ public class FirebaseTestActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot snapshot) {
                 User userHash = snapshot.getValue(User.class);
                 if (userHash != null) {
-                    updateUserMatches(snapshot);
+                    //updateUserMatches(snapshot);
                 }
             }
             @Override
@@ -298,7 +298,27 @@ public class FirebaseTestActivity extends AppCompatActivity {
 
     }
 
-    public void updateUser(DataSnapshot dataSnapshot){
+    public static void updateUser(){
+        Query myQuery = Constants.myRefIndiv.orderByChild("fbId").equalTo(Constants.currentUser.getfbId());
 
+        myQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                User userHash = snapshot.getValue(User.class);
+                if (userHash != null) {
+                    updateUserInfo(snapshot);
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError DatabaseError) {
+            }
+        });
+    }
+
+    public static void updateUserInfo(DataSnapshot snapshot){
+        if (snapshot.hasChildren()) {
+            DataSnapshot firstChild = snapshot.getChildren().iterator().next();
+            firstChild.getRef().setValue(Constants.currentUser);
+        }
     }
 }

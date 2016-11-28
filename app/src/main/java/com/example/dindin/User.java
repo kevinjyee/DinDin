@@ -2,12 +2,26 @@ package com.example.dindin;
 
 
 import android.telephony.TelephonyManager;
+import android.util.Log;
 
 import com.example.dindin.com.example.AgeRange;
 import com.example.dindin.com.example.Location;
+import com.example.dindin.utilities.Constants;
 import com.facebook.Profile;
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.TypeFactory;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,6 +31,8 @@ import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Set;
+
+import static com.google.android.gms.wearable.DataMap.TAG;
 
 public class User implements Serializable{
 
@@ -212,6 +228,108 @@ public class User implements Serializable{
     // TODO
     public boolean isInPreferredRange(User user2){
         return false;
+    }
+
+    public static void generateDummyUsers() {
+        User Kevin = new User("100001411585746", "Kevin", "21");
+        User Stefan = new User("1408027584", "Stefan", "21");
+        User Davin = new User("1151947893", "Davin", "21");
+        User Stephen = new User("705738627", "Stephen", "21");
+        User Yuriy = new User("100000050449525", "Yuriy", "20");
+        User Brandon = new User("100000384470712", "Brandon", "20");
+        User Rachel = new User("1512173415", "Rachel", "20");
+        ArrayList<User> newUsers = new ArrayList<>();
+        newUsers.add(Yuriy);
+        newUsers.add(Brandon);
+        newUsers.add(Rachel);
+        HashMap<String, String> dummySwipedRight = new HashMap<>();
+        String StefanFbId = "1408027584";
+        String KevinFbId = "100001411585746";
+        String DavinFbId = "1151947893";
+        String StephenFbId = "705738627";
+        dummySwipedRight.put(StefanFbId, StefanFbId);
+        dummySwipedRight.put(KevinFbId, KevinFbId);
+        dummySwipedRight.put(DavinFbId, DavinFbId);
+        dummySwipedRight.put(StephenFbId, StephenFbId);
+        Yuriy.setSwipedRight(dummySwipedRight);
+        Brandon.setSwipedRight(dummySwipedRight);
+        Rachel.setSwipedRight(dummySwipedRight);
+        Constants.dummyUsers = newUsers;
+
+        Query myQuery = Constants.myRefIndiv.orderByChild("fbId");
+
+        Constants.myRefIndiv.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                User userHash = snapshot.getValue(User.class);
+                if (userHash != null) {
+                    for(User u : Constants.dummyUsers) {
+                        DatabaseReference childRef = Constants.myRefIndiv.push();
+                        childRef.setValue(u);
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError DatabaseError) {
+            }
+        });
+
+        Constants.myRef.addChildEventListener(new ChildEventListener() {
+
+            // This function is called once for each child that exists
+            // when the listener is added. Then it is called
+            // each time a new child is added.
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
+                String userHash = dataSnapshot.getValue(String.class);
+                ObjectMapper mapper = new ObjectMapper();
+                TypeFactory typeFactory = mapper.getTypeFactory();
+                HashMap<String, User> users = null;
+                try {
+                    // Read out json hash set.
+                    users = mapper.readValue(userHash,
+                            new TypeReference<HashMap<String, User>>(){});
+                    for (User u : Constants.dummyUsers) {
+                        users.put(u.getfbId(), u);
+                    }
+                        try {
+                            String jsonUsers = mapper.writeValueAsString(users);
+                            System.out.println(jsonUsers);
+                            // Create a new child with a auto-generated ID.
+                            // Set the child's data to the value passed in from the text box.
+                            dataSnapshot.getRef().setValue(jsonUsers);
+                        } catch (JsonGenerationException e) {
+                            e.printStackTrace();
+                        } catch (JsonMappingException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            // This function is called each time a child item is removed.
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                String userJSON = dataSnapshot.getValue(String.class);
+                ObjectMapper mapper = new ObjectMapper();
+            }
+
+            // The following functions are also required in ChildEventListener implementations.
+            public void onChildChanged(DataSnapshot dataSnapshot, String previousChildName) {
+            }
+
+            public void onChildMoved(DataSnapshot dataSnapshot, String previousChildName) {
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w("TAG:", "Failed to read value.", error.toException());
+            }
+        });
+
     }
 
 }

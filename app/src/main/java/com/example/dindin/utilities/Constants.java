@@ -38,6 +38,7 @@ public class Constants {
     public static boolean isMatchedFound = false;
 
     public static User currentUser = new User();
+    public static ArrayList<User> dummyUsers = new ArrayList<>();
     public static ArrayList<User> usersMatchedwith = new ArrayList<>();
     public static ArrayList<Recipe> recipsesMatchedwith = new ArrayList<>();
     public static ArrayList<String> fbIDMatchedwith = new ArrayList<>();

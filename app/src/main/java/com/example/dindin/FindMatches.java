@@ -374,16 +374,18 @@ public class FindMatches extends Fragment implements View.OnClickListener{
                 User Brandon = new User("100000384470712","Brandon","20");
                 User Rachel = new User("1512173415","Rachel","20");
 
-            HashMap<String, User> testMatches = Constants.feasibleMatches;
-
+                HashMap<String, User> testMatches = Constants.feasibleMatches;
 
                 if (success) {
 
                     MatchedUserList = new ArrayList<>();
+                    for(String key : testMatches.keySet()){
+                        MatchedUserList.add(testMatches.get(key));
+                    }
                     // MatchedUserList = matchData.getMatches();
 
                     Kevin.setPhoneNumber("713-478-3035");
-
+                    /*
                     MatchedUserList.add(Kevin);
                     MatchedUserList.add(Stefan);
                     MatchedUserList.add(Davin);
@@ -391,6 +393,7 @@ public class FindMatches extends Fragment implements View.OnClickListener{
                     MatchedUserList.add(Yuriy);
                     MatchedUserList.add(Brandon);
                     MatchedUserList.add(Rachel);
+                    */
                     Log.i(TAG, "**** Matches Found MatchedUserList ****");
 
                     int pos = -1;
@@ -888,8 +891,6 @@ public class FindMatches extends Fragment implements View.OnClickListener{
             firstChild.getRef().setValue(u);
         }
     }
-
-
 
 
 }
