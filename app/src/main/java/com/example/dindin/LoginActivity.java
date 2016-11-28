@@ -205,6 +205,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 editor.commit();
                 Intent goToNextActivity = new Intent(getApplicationContext(), FirebaseTestActivity.class);
                 User currentUser = User.createUserFromProfile(userProfile);
+                Constants.currentUser = currentUser;
                 goToNextActivity.putExtra("currentUser", currentUser);
             //   editor.putString(Constants.PROFILE_IMAGE_ONE,
                         // getStoredImageUrl("1", data.getProfilePicture()));

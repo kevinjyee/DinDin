@@ -297,4 +297,8 @@ public class FirebaseTestActivity extends AppCompatActivity {
         }
 
     }
+
+    public void updateUser(DataSnapshot dataSnapshot){
+
+    }
 }

@@ -39,6 +39,10 @@ import com.example.dindin.utilities.ScreenSize;
 import com.example.dindin.utilities.Utilities;
 import com.facebook.internal.Utility;
 import com.facebook.login.widget.ProfilePictureView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
@@ -103,6 +107,8 @@ public class FindMatches extends Fragment implements View.OnClickListener{
     private String mParam2;
     private SharedPreferences preferences;
     private Animation anime;
+    private User thisMatch;
+    private DataSnapshot userSnapshot;
 
 
     public FindMatches() {
@@ -809,12 +815,76 @@ public class FindMatches extends Fragment implements View.OnClickListener{
     {
         if(isLiked)
         {
+            thisMatch = matchedUser;
             String myFaceBookID = Constants.FACEBOOK_ID;
             String currentUserFaceBookId = matchedUsersFaceBookID;
 
             Constants.usersMatchedwith.add(matchedUser);
+            Query myQuery = Constants.myRefIndiv.orderByChild("fbId").equalTo(Constants.currentUser.getfbId());
+
+            myQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot snapshot) {
+                    User u = snapshot.getValue(User.class);
+                    if(u != null) {
+                        userSnapshot = snapshot;
+                        updateUserSwipes(snapshot);
+                    }
+                }
+                @Override
+                public void onCancelled(DatabaseError DatabaseError) {
+                }
+            });
 
 
+        }
+    }
+
+    private void updateUserSwipes(DataSnapshot currentUserSnapshot){
+        if (currentUserSnapshot.hasChildren()) {
+            DataSnapshot firstChild = currentUserSnapshot.getChildren().iterator().next();
+            User u = firstChild.getValue(User.class);
+            Constants.currentUser = u;
+            String matchId = thisMatch.getfbId();
+            Query myQuery = Constants.myRefIndiv.orderByChild("fbId").equalTo(matchId);
+            myQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot snapshot) {
+                    User u = snapshot.getValue(User.class);
+                    if(u != null) {
+                        HashMap<String, String> matchSwipedRight = u.getSwipedRight();
+                        matchSwipedRight = (matchSwipedRight == null) ? new HashMap<String, String>() : matchSwipedRight;
+                        HashMap<String, String> matchFinMatches = u.getFinalizedMatches();
+                        matchFinMatches = (matchFinMatches == null) ? new HashMap<String, String>() : matchFinMatches;
+                        String thisMatchId = thisMatch.getfbId();
+                        String currentUserId = Constants.currentUser.getfbId();
+                        HashMap<String, String> potMatches = Constants.currentUser.getPotentialMatches();
+                        potMatches = (potMatches == null) ? new HashMap<String, String>() : potMatches;
+                        HashMap<String, String> finMatches = Constants.currentUser.getFinalizedMatches();
+                        finMatches = (finMatches == null) ? new HashMap<String, String>() : finMatches;
+                        HashMap<String, String> swipedRight = Constants.currentUser.getSwipedRight();
+                        swipedRight = (swipedRight == null) ? new HashMap<String, String>() : swipedRight;
+                        if(matchSwipedRight.containsKey(Constants.currentUser.getfbId())){
+                            matchFinMatches.put(currentUserId, currentUserId);
+                            u.setFinalizedMatches(matchFinMatches);
+                            finMatches.put(thisMatchId, thisMatchId);
+                            Constants.currentUser.setFinalizedMatches(finMatches);
+                        }
+                        swipedRight.put(thisMatchId, thisMatchId);
+                        potMatches.remove(thisMatchId);
+                        Constants.currentUser.setPotentialMatches(potMatches);
+                        Constants.currentUser.setSwipedRight(swipedRight);
+                        DataSnapshot currentUserChild = userSnapshot.getChildren().iterator().next();
+                        currentUserChild.getRef().setValue(Constants.currentUser);
+                        DataSnapshot matchUserChild = snapshot.getChildren().iterator().next();
+                        matchUserChild.getRef().setValue(u);
+                    }
+                }
+                @Override
+                public void onCancelled(DatabaseError DatabaseError) {
+                }
+            });
+            firstChild.getRef().setValue(u);
         }
     }
 
