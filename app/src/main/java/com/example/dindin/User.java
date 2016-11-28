@@ -243,8 +243,8 @@ public class User implements Serializable{
         newUsers.add(Brandon);
         newUsers.add(Rachel);
         HashMap<String, String> dummySwipedRight = new HashMap<>();
-        String StefanFbId = "1408027584";
-        String KevinFbId = "100001411585746";
+        String StefanFbId = "10210794537485351";
+        String KevinFbId = "1206579009399140";
         String DavinFbId = "1151947893";
         String StephenFbId = "705738627";
         dummySwipedRight.put(StefanFbId, StefanFbId);

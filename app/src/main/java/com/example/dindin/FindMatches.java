@@ -383,6 +383,7 @@ public class FindMatches extends Fragment implements View.OnClickListener{
                         MatchedUserList.add(testMatches.get(key));
                     }
                     // MatchedUserList = matchData.getMatches();
+                    //User.generateDummyUsers();
 
                     Kevin.setPhoneNumber("713-478-3035");
                     /*
@@ -855,9 +856,9 @@ public class FindMatches extends Fragment implements View.OnClickListener{
                 public void onDataChange(DataSnapshot snapshot) {
                     User u = snapshot.getValue(User.class);
                     if(u != null) {
-                        HashMap<String, String> matchSwipedRight = u.getSwipedRight();
+                        HashMap<String, String> matchSwipedRight = thisMatch.getSwipedRight();
                         matchSwipedRight = (matchSwipedRight == null) ? new HashMap<String, String>() : matchSwipedRight;
-                        HashMap<String, String> matchFinMatches = u.getFinalizedMatches();
+                        HashMap<String, String> matchFinMatches = thisMatch.getFinalizedMatches();
                         matchFinMatches = (matchFinMatches == null) ? new HashMap<String, String>() : matchFinMatches;
                         String thisMatchId = thisMatch.getfbId();
                         String currentUserId = Constants.currentUser.getfbId();
@@ -880,7 +881,7 @@ public class FindMatches extends Fragment implements View.OnClickListener{
                                     });
                             alertDialog.show();
                             matchFinMatches.put(currentUserId, currentUserId);
-                            u.setFinalizedMatches(matchFinMatches);
+                            thisMatch.setFinalizedMatches(matchFinMatches);
                             finMatches.put(thisMatchId, thisMatchId);
                             Constants.currentUser.setFinalizedMatches(finMatches);
                         }
@@ -891,7 +892,7 @@ public class FindMatches extends Fragment implements View.OnClickListener{
                         DataSnapshot currentUserChild = userSnapshot.getChildren().iterator().next();
                         currentUserChild.getRef().setValue(Constants.currentUser);
                         DataSnapshot matchUserChild = snapshot.getChildren().iterator().next();
-                        matchUserChild.getRef().setValue(u);
+                        matchUserChild.getRef().setValue(thisMatch);
                     }
                 }
                 @Override
