@@ -112,7 +112,7 @@ public class FirebaseTestActivity extends AppCompatActivity {
             // each time a new child is added.
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Object hash = dataSnapshot.getValue().toString();
+                Object hash = dataSnapshot.getValue();
                 if(hash != null) {
                     String hashString = hash.toString();
                     String userHash = parseSnapshot(hashString);
@@ -137,7 +137,7 @@ public class FirebaseTestActivity extends AppCompatActivity {
                         }
                         if (!currentUserIsInDatabase && !databaseReloaded) { // If user not found, add to database and update database.
                             users.put(currentUser.getfbId(), currentUser);
-                            // dataSnapshot.getRef().removeValue();
+                            dataSnapshot.getRef().removeValue();
                             try {
                                 String jsonUsers = mapper.writeValueAsString(users);
                                 System.out.println(jsonUsers);
