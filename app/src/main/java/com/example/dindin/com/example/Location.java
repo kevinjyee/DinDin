@@ -11,7 +11,9 @@ public class Location implements Serializable{
     private double latitude;
     private double longitude;
 
-    public Location(){
+    public Location(android.location.Location location){
+        this.latitude = location.getLatitude();
+        this.longitude = location.getLongitude();
     }
 
     public Location(double lat, double lon){

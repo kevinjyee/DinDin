@@ -482,6 +482,11 @@ public class FindMatches extends Fragment implements View.OnClickListener{
             tvAge.setText(MatchedUserList.get(i).getName()+ " , "
                     + MatchedUserList.get(i).getAge() + "");
 
+            TextView distance = (TextView) myRelativeView
+                    .findViewById(R.id.tv_pic_count_user_matches);
+            distance.setText(MatchedUserList.get(i).getLocation().getLongitude() + "," +
+            MatchedUserList.get(i).getLocation().getLongitude());
+
 
 
             final Button imageLike = new Button(getActivity());

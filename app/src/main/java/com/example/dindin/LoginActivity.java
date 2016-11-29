@@ -208,6 +208,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 Intent goToNextActivity = new Intent(getApplicationContext(), FirebaseTestActivity.class);
                 User currentUser = User.createUserFromProfile(userProfile);
                 Constants.currentUser = currentUser;
+                currentUser = Constants.currentUser;
                 goToNextActivity.putExtra("currentUser", currentUser);
             //   editor.putString(Constants.PROFILE_IMAGE_ONE,
                         // getStoredImageUrl("1", data.getProfilePicture()));
@@ -349,9 +350,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
 
-    public void handleNewLocation(Location location){
+    public void handleNewLocation(android.location.Location location){
+
         double latitude = location.getLatitude();
         double longitude = location.getLongitude();
+        com.example.dindin.com.example.Location ourLocation = new com.example.dindin.com.example.Location(latitude,longitude);
+        Constants.currentUser.setLocation(ourLocation);
 
         Log.d(TAG, location.toString());
     }
