@@ -484,8 +484,7 @@ public class FindMatches extends Fragment implements View.OnClickListener{
 
             TextView distance = (TextView) myRelativeView
                     .findViewById(R.id.tv_pic_count_user_matches);
-            distance.setText(MatchedUserList.get(i).getLocation().getLongitude() + "," +
-            MatchedUserList.get(i).getLocation().getLongitude());
+            distance.setText("30.28565, -97.73921");
 
 
 
