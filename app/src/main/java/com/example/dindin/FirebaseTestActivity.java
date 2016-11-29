@@ -33,6 +33,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.HashMap;
+import java.util.Map;
 
 public class FirebaseTestActivity extends AppCompatActivity {
 
@@ -104,6 +105,90 @@ public class FirebaseTestActivity extends AppCompatActivity {
 
         // Assign a listener to detect changes to the child items
         // of the database reference.
+        Constants.myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            // This function is called once for each child that exists
+            // when the listener is added. Then it is called
+            // each time a new child is added.
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Object hash = dataSnapshot.getValue().toString();
+                if(hash != null) {
+                    String hashString = hash.toString();
+                    String userHash = parseSnapshot(hashString);
+
+                    //DataSnapshot firstChild = dataSnapshot.getChildren().iterator().next();
+                    //String userHash = firstChild.getValue(String.class);
+                    ObjectMapper mapper = new ObjectMapper();
+                    TypeFactory typeFactory = mapper.getTypeFactory();
+                    HashMap<String, User> users = null;
+                    try {
+                        // Read out json hash set.
+                        users = mapper.readValue(userHash,
+                                new TypeReference<HashMap<String, User>>(){});
+                        for (String id : users.keySet()) {
+                            if (!id.equals(currentUser.getfbId()) && !databaseReloaded) {
+                                matches.put(id, users.get(id));
+                                adapter.add(users.get(id).getName());
+                            } else if(id.equals(currentUser.getfbId())){
+                                currentUserIsInDatabase = true;
+                                currentUser = users.get(id);
+                            }
+                        }
+                        if (!currentUserIsInDatabase && !databaseReloaded) { // If user not found, add to database and update database.
+                            users.put(currentUser.getfbId(), currentUser);
+                            // dataSnapshot.getRef().removeValue();
+                            try {
+                                String jsonUsers = mapper.writeValueAsString(users);
+                                System.out.println(jsonUsers);
+                                // Create a new child with a auto-generated ID.
+                                //DataSnapshot firstChild = dataSnapshot.iterator().next();
+                                //firstChild.getRef().setValue(jsonUsers);
+                                DatabaseReference childRef = Constants.myRef.push();
+
+                                // Set the child's data to the value passed in from the text box.
+                                childRef.setValue(jsonUsers);
+                                childRef = Constants.myRefIndiv.push();
+                                childRef.setValue(currentUser);
+                                databaseReloaded = true;
+                            } catch (JsonGenerationException e) {
+                                e.printStackTrace();
+                            } catch (JsonMappingException e) {
+                                e.printStackTrace();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    //goToNextActivity.putExtra("matchList", matches);
+                    Constants.feasibleMatches = matches;
+                    //   editor.putString(Constants.PROFILE_IMAGE_ONE,
+                    // getStoredImageUrl("1", data.getProfilePicture()));
+
+                    startActivity(goToNextActivity);
+                }
+                }
+
+            // This function is called each time a child item is removed.
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                String userJSON = dataSnapshot.getValue(String.class);
+                ObjectMapper mapper = new ObjectMapper();
+            }
+
+            void onChildMoved(DataSnapshot dataSnapshot, String previousChildName) {
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w("TAG:", "Failed to read value.", error.toException());
+            }
+        });
+    /*
+        // Assign a listener to detect changes to the child items
+        // of the database reference.
         Constants.myRef.addChildEventListener(new ChildEventListener() {
 
             // This function is called once for each child that exists
@@ -130,7 +215,7 @@ public class FirebaseTestActivity extends AppCompatActivity {
                     }
                     if (!currentUserIsInDatabase && !databaseReloaded) { // If user not found, add to database and update database.
                         users.put(currentUser.getfbId(), currentUser);
-                       // dataSnapshot.getRef().removeValue();
+                        // dataSnapshot.getRef().removeValue();
                         try {
                             String jsonUsers = mapper.writeValueAsString(users);
                             System.out.println(jsonUsers);
@@ -182,7 +267,7 @@ public class FirebaseTestActivity extends AppCompatActivity {
                 Log.w("TAG:", "Failed to read value.", error.toException());
             }
         });
-
+*/
         Query myQuery = Constants.myRefIndiv.orderByChild("fbId").equalTo(currentUser.getfbId());
 
         myQuery.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -325,5 +410,11 @@ public class FirebaseTestActivity extends AppCompatActivity {
             DataSnapshot firstChild = snapshot.getChildren().iterator().next();
             firstChild.getRef().setValue(Constants.currentUser);
         }
+    }
+
+    public String parseSnapshot(String json){
+        int equalsIndex = json.indexOf("=");
+        String parsed = json.substring(equalsIndex + 1, json.length() - 1);
+        return parsed;
     }
 }
