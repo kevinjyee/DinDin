@@ -54,6 +54,8 @@ import org.json.JSONObject;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import static android.R.attr.data;
+
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
@@ -239,6 +241,20 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                 Constants.currentUser = new User(fbId, name, birthday);
                             }
                         } catch (Exception e) {
+                            JSONObject data = response.getJSONObject();
+                            try{
+                                String name = data.getString("name");
+                                String fbId = data.getString("id");
+                                String birthday = "05/24/1995";
+                                Constants.currentUser = new User(fbId,name,birthday);
+                            }
+                            catch(Exception g)
+                            {
+
+                                g.printStackTrace();
+                            }
+
+
                             e.printStackTrace();
                         }
                             editor.putString(Constants.FACEBOOK_ID, Constants.currentUser.getfbId());
@@ -281,6 +297,20 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                 Constants.currentUser = new User(fbId, name, birthday);
                             }
                         } catch (Exception e) {
+                            JSONObject data = response.getJSONObject();
+                            try{
+                                String name = data.getString("name");
+                                String fbId = data.getString("id");
+                                String birthday = "05/24/1995";
+                                Constants.currentUser = new User(fbId,name,birthday);
+                            }
+                            catch(Exception g)
+                            {
+
+                                g.printStackTrace();
+                            }
+
+
                             e.printStackTrace();
                         }
                             editor.putString(Constants.FACEBOOK_ID, Constants.currentUser.getfbId());
