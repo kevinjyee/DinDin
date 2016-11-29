@@ -168,6 +168,7 @@ public class FirebaseTestActivity extends AppCompatActivity {
                     // getStoredImageUrl("1", data.getProfilePicture()));
 
                     startActivity(goToNextActivity);
+                    finish();
                 }
                 }
 
