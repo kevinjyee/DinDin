@@ -391,7 +391,8 @@ public class FindMatches extends Fragment implements View.OnClickListener{
                         MatchedUserList.add(testMatches.get(key));
                     }
                     // MatchedUserList = matchData.getMatches();
-                    User.generateDummyUsers();
+                    //
+                    //User.generateDummyUsers();
 
                     Kevin.setPhoneNumber("713-478-3035");
                     /*
