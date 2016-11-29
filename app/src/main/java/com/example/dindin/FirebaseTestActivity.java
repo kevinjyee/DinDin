@@ -130,11 +130,13 @@ public class FirebaseTestActivity extends AppCompatActivity {
                     }
                     if (!currentUserIsInDatabase && !databaseReloaded) { // If user not found, add to database and update database.
                         users.put(currentUser.getfbId(), currentUser);
-                        //dataSnapshot.getRef().removeValue();
+                        dataSnapshot.getRef().removeValue();
                         try {
                             String jsonUsers = mapper.writeValueAsString(users);
                             System.out.println(jsonUsers);
                             // Create a new child with a auto-generated ID.
+                            //DataSnapshot firstChild = dataSnapshot.iterator().next();
+                            //firstChild.getRef().setValue(jsonUsers);
                             DatabaseReference childRef = Constants.myRef.push();
 
                             // Set the child's data to the value passed in from the text box.

@@ -71,7 +71,7 @@ public class User implements Serializable{
         } catch (ParseException e) {
             e.printStackTrace();
         }
-       this.birthday = date;
+       //this.birthday = date;
         this.age = Integer.toString(AgeRange.findAge(date));
     }
 
