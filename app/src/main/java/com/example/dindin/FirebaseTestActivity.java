@@ -130,7 +130,7 @@ public class FirebaseTestActivity extends AppCompatActivity {
                     }
                     if (!currentUserIsInDatabase && !databaseReloaded) { // If user not found, add to database and update database.
                         users.put(currentUser.getfbId(), currentUser);
-                        dataSnapshot.getRef().removeValue();
+                       // dataSnapshot.getRef().removeValue();
                         try {
                             String jsonUsers = mapper.writeValueAsString(users);
                             System.out.println(jsonUsers);
