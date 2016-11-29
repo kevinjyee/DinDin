@@ -851,16 +851,17 @@ public class FindMatches extends Fragment implements View.OnClickListener{
             Constants.currentUser = u;
             String matchId = thisMatch.getfbId();
             Query myQuery = Constants.myRefIndiv.orderByChild("fbId").equalTo(matchId);
-            myQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            myQuery.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {
-                    User u = snapshot.getValue(User.class);
-                    if(u != null) {
-                        HashMap<String, String> matchSwipedRight = thisMatch.getSwipedRight();
+                    DataSnapshot matchChild = snapshot.getChildren().iterator().next();
+                    User match = matchChild.getValue(User.class);
+                    if(match != null) {
+                        HashMap<String, String> matchSwipedRight = match.getSwipedRight();
                         matchSwipedRight = (matchSwipedRight == null) ? new HashMap<String, String>() : matchSwipedRight;
-                        HashMap<String, String> matchFinMatches = thisMatch.getFinalizedMatches();
+                        HashMap<String, String> matchFinMatches = match.getFinalizedMatches();
                         matchFinMatches = (matchFinMatches == null) ? new HashMap<String, String>() : matchFinMatches;
-                        String thisMatchId = thisMatch.getfbId();
+                        String thisMatchId = match.getfbId();
                         String currentUserId = Constants.currentUser.getfbId();
                         HashMap<String, String> potMatches = Constants.currentUser.getPotentialMatches();
                         potMatches = (potMatches == null) ? new HashMap<String, String>() : potMatches;
@@ -881,7 +882,7 @@ public class FindMatches extends Fragment implements View.OnClickListener{
                                     });
                             alertDialog.show();
                             matchFinMatches.put(currentUserId, currentUserId);
-                            thisMatch.setFinalizedMatches(matchFinMatches);
+                            match.setFinalizedMatches(matchFinMatches);
                             finMatches.put(thisMatchId, thisMatchId);
                             Constants.currentUser.setFinalizedMatches(finMatches);
                         }
@@ -892,7 +893,7 @@ public class FindMatches extends Fragment implements View.OnClickListener{
                         DataSnapshot currentUserChild = userSnapshot.getChildren().iterator().next();
                         currentUserChild.getRef().setValue(Constants.currentUser);
                         DataSnapshot matchUserChild = snapshot.getChildren().iterator().next();
-                        matchUserChild.getRef().setValue(thisMatch);
+                        matchUserChild.getRef().setValue(match);
                     }
                 }
                 @Override
