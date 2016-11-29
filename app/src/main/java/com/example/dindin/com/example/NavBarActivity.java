@@ -1,5 +1,6 @@
 
         package com.example.dindin.com.example;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -18,7 +19,8 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
         import android.support.v7.app.ActionBarDrawerToggle;
-        import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
         import android.support.v7.widget.Toolbar;
         import android.view.LayoutInflater;
         import android.view.Menu;
@@ -31,6 +33,7 @@ import com.example.dindin.CookBookActivity;
 import com.example.dindin.FindMatches;
 import com.example.dindin.FindRecipe;
 import com.example.dindin.MessageActivity;
+import com.example.dindin.Preferences;
 import com.example.dindin.PreferencesFragment;
 import com.example.dindin.ProfileFragment;
 import com.example.dindin.R;
@@ -93,6 +96,7 @@ import java.net.URL;
                 try {
                     FragmentManager fm = NavBarActivity.this.getSupportFragmentManager();
                     FragmentTransaction ft = fm.beginTransaction();
+
                     FindMatches fragment = new FindMatches();
                     ft.add(R.id.activity_main_content_fragment, fragment);
                    // tvTitle.setText(getResources().getString(R.string.app_name));

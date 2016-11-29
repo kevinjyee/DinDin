@@ -43,7 +43,7 @@ public class User implements Serializable{
     private int id;
     private Date birthday;
     private String name;
-    private Location location;
+    private com.example.dindin.com.example.Location location;
     private Profile facebookProfile;
     private double userRating;
     private HashMap<String, String> potentialMatches;
@@ -175,7 +175,7 @@ public class User implements Serializable{
         this.name = name;
     }
 
-    public void setLocation(Location location) {
+    public void setLocation(com.example.dindin.com.example.Location location) {
         this.location = location;
     }
 

@@ -30,6 +30,11 @@ public class Preferences implements Serializable{
         this.preferredCuisines = cuisines;
     }
 
+    public Preferences(String prefTask)
+    {
+        this.preferredTask = prefTask;
+    }
+
     public String getPreferredTask(){
         return this.preferredTask;
     }

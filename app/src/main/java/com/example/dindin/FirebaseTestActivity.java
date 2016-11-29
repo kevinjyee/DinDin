@@ -1,6 +1,8 @@
 package com.example.dindin;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -155,6 +157,7 @@ public class FirebaseTestActivity extends AppCompatActivity {
                 Constants.feasibleMatches = matches;
                 //   editor.putString(Constants.PROFILE_IMAGE_ONE,
                 // getStoredImageUrl("1", data.getProfilePicture()));
+
                 startActivity(goToNextActivity);
             }
 
