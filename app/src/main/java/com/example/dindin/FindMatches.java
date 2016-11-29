@@ -851,7 +851,7 @@ public class FindMatches extends Fragment implements View.OnClickListener{
             Constants.currentUser = u;
             String matchId = thisMatch.getfbId();
             Query myQuery = Constants.myRefIndiv.orderByChild("fbId").equalTo(matchId);
-            myQuery.addValueEventListener(new ValueEventListener() {
+            myQuery.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {
                     DataSnapshot matchChild = snapshot.getChildren().iterator().next();
