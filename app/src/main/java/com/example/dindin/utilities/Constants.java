@@ -32,6 +32,8 @@ public class Constants {
     public static final String GENDER = "gender";
     public static final String UNKNOWN = "N/A";
 
+    public static boolean isFirstTime = false;
+
 
 
     public static final String methodeName = "POST";

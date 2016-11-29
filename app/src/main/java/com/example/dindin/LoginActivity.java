@@ -1,5 +1,6 @@
 package com.example.dindin;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
@@ -13,6 +14,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
@@ -209,6 +211,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 goToNextActivity.putExtra("currentUser", currentUser);
             //   editor.putString(Constants.PROFILE_IMAGE_ONE,
                         // getStoredImageUrl("1", data.getProfilePicture()));
+                Constants.isFirstTime = false;
                 startActivity(goToNextActivity);
             }
     }
@@ -225,13 +228,15 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     public void onCompleted(
                             JSONObject json_object,
                             GraphResponse response) {
-                                userProfile = Profile.getCurrentProfile();
-                                if(userProfile != null) {
+
+
                                     editor.putString(Constants.FACEBOOK_ID, userProfile.getId());
                                     editor.putString(Constants.FIRST_NAME, userProfile.getFirstName());
                                     editor.putString(Constants.LAST_NAME, userProfile.getLastName());
                                     editor.commit();
-                                }
+                                Constants.isFirstTime = true;
+
+
                                 Intent intent = new Intent(LoginActivity.this, NavBarActivity.class);
                                 intent.putExtra("jsondata",json_object.toString());
                                 startActivity(intent);

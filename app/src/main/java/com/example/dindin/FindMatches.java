@@ -247,8 +247,16 @@ public class FindMatches extends Fragment implements View.OnClickListener{
 
         try {
             //sets user profile image nad pic
-            setProfilePic(userProfilImage, profileImageHeightAndWidth[0],
-                    profileImageHeightAndWidth[1]);
+            //setProfilePic(userProfilImage, profileImageHeightAndWidth[0],
+              //      profileImageHeightAndWidth[1]);
+            Picasso.with(getActivity())
+                    .load("https://graph.facebook.com/v2.2/" + preferences
+                            .getString("fbid", "") + "/picture?height=120&type=normal") //extract as User instance method
+                    .error(R.drawable.dislike_off) //
+                    .resize(profileImageHeightAndWidth[1],
+                            profileImageHeightAndWidth[0]) //
+                    .into(userProfilImage);
+
         } catch (Exception e) {
             AppLog.handleException(TAG + " onCreateView  Exception ", e);
         }
@@ -431,11 +439,11 @@ public class FindMatches extends Fragment implements View.OnClickListener{
     /*Add Matches to View with ArrayList*/
     private void addMatchesView(final ArrayList<User> MatchedUserList){
 
-        numMatches = MatchedUserList.size();
+        MatchCount = MatchedUserList.size();
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
-        for(int i = 0; i < numMatches; i++)
+        for(int i = 0; i < MatchedUserList.size(); i++)
         {
             final int position = i;
             final RelativeLayout myRelativeView = (RelativeLayout) inflater.inflate(
@@ -618,11 +626,13 @@ public class FindMatches extends Fragment implements View.OnClickListener{
                 }
             });
             // set visible true if match user count is more than one
-            if (numMatches > 0) {
+            if (MatchCount > 0) {
                 likedislikelayout.setVisibility(View.VISIBLE);
                 swipeviewlayout.setVisibility(View.VISIBLE);
 
             }
+
+
 
 
             swipeviewlayout.addView(myRelativeView);
@@ -684,6 +694,7 @@ public class FindMatches extends Fragment implements View.OnClickListener{
                 Button dislikesButton = (Button) animatedview.getChildAt(4);
                 dislikesButton.setAlpha(1);
             }
+            Log.e("Swipe Status",String.valueOf(removeViewindex));
             if (removeViewindex == 0) {
 
                 swipeviewlayout.setVisibility(View.GONE);
@@ -717,6 +728,7 @@ public class FindMatches extends Fragment implements View.OnClickListener{
                 Button dislikesButton = (Button) animatedview.getChildAt(4);
                 dislikesButton.setAlpha(1);
             }
+            Log.e("Swipe Status",String.valueOf(removeViewindex));
             if (removeViewindex == 0) {
                 // likedislikelayout.setVisibility(View.GONE);
                 // invitebuttonlayout.setVisibility(View.VISIBLE);
