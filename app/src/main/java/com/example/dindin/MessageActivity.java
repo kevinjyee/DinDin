@@ -53,13 +53,11 @@ public class MessageActivity extends Fragment {
                 Bundle mBundle = new Bundle();
                 String targetID;
                 User targetUser = (User)matcheslistview.getAdapter().getItem(position);
-                targetID = targetUser.getName();
+                targetID = targetUser.getfbId();
 
                 mBundle.putString("targetID", targetID);
                 Intent mIntent = new Intent(getActivity(),MessagingActivity.class);
-
                 mIntent.putExtras(mBundle);
-
                 startActivity(mIntent);
             }
         });

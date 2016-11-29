@@ -61,11 +61,11 @@ public class MessagingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_mess);
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         // Set username.
-        mUsername = mSharedPreferences.getString(Constants.FIRST_NAME,"") + " " + mSharedPreferences.getString(Constants.LAST_NAME,"");
-        fbID = mSharedPreferences.getString(Constants.FACEBOOK_ID,"");
+        mUsername = Constants.currentUser.getName();
+        fbID = Constants.currentUser.getfbId();
         String currentID = mSharedPreferences.getString(Constants.FIRST_NAME,""); //just using first name, for now
         String targetUser = getIntent().getExtras().getString("targetID"); //just using first name, for now
-        chatHash = Integer.toString(currentID.hashCode() ^ targetUser.hashCode());
+        chatHash = Integer.toString(fbID.hashCode() ^ targetUser.hashCode());
         System.out.println("currentID: " + currentID);
         System.out.println("targetID: " + targetUser);
         System.out.println("chatHash" + chatHash);
