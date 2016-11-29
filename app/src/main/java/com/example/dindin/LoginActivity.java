@@ -241,12 +241,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-                        if(userProfile != null) {
-                            editor.putString(Constants.FACEBOOK_ID, userProfile.getId());
-                            editor.putString(Constants.FIRST_NAME, userProfile.getFirstName());
-                            editor.putString(Constants.LAST_NAME, userProfile.getLastName());
+                            editor.putString(Constants.FACEBOOK_ID, Constants.currentUser.getfbId());
+                            editor.putString(Constants.FIRST_NAME, Constants.currentUser.getName());
                             editor.commit();
-                        }
                         Intent goToNextActivity = new Intent(getApplicationContext(), FirebaseTestActivity.class);
                         //User currentUser = User.createUserFromProfile(userProfile);
                         goToNextActivity.putExtra("currentUser", Constants.currentUser);
@@ -286,12 +283,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-                        if(userProfile != null) {
-                            editor.putString(Constants.FACEBOOK_ID, userProfile.getId());
-                            editor.putString(Constants.FIRST_NAME, userProfile.getFirstName());
-                            editor.putString(Constants.LAST_NAME, userProfile.getLastName());
+                            editor.putString(Constants.FACEBOOK_ID, Constants.currentUser.getfbId());
+                            editor.putString(Constants.FIRST_NAME, Constants.currentUser.getName());
                             editor.commit();
-                        }
                         Intent goToNextActivity = new Intent(getApplicationContext(), FirebaseTestActivity.class);
                         //User currentUser = User.createUserFromProfile(userProfile);
                         goToNextActivity.putExtra("currentUser", Constants.currentUser);
