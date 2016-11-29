@@ -45,13 +45,13 @@ public class AgeRange implements Serializable{
         return (age_in_years >= this.minAge) && (age_in_years <= this.maxAge);
     }
 
-    public int findAge(Date birthday){
+    public static int findAge(Date birthday){
         Date currentDate = findCurrentDate();
         int age = getDiffYears(birthday, currentDate);
         return age;
     }
 
-    public Date findCurrentDate(){
+    public static Date findCurrentDate(){
         //getting current date and time using Date class
         DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
         Date dateobj = new Date();

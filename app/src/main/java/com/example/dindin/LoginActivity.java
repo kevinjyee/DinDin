@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.example.dindin.com.example.NavBarActivity;
 import com.example.dindin.com.example.UserFaceBookInfo;
 import com.example.dindin.utilities.Constants;
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -83,7 +84,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         facebookSDKInitialize();
         setContentView(R.layout.activity_login);
         LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
-        loginButton.setReadPermissions("email"); // https://developers.facebook.com/docs/facebook-login/permissions/
+        loginButton.setReadPermissions("email, user_birthday"); // https://developers.facebook.com/docs/facebook-login/permissions/
         // First we need to check availability of play services
 
         // Building the GoogleApi client
@@ -171,7 +172,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     private ProfileTracker mProfileTracker;
             @Override
             public void onSuccess(LoginResult login_result) {
-                                getUserInfo(login_result);
+                getUserInfo(login_result);
 
 
             }
@@ -203,13 +204,15 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 editor.putString(Constants.LAST_NAME,userProfile.getLastName());
 
                 editor.commit();
-                Intent goToNextActivity = new Intent(getApplicationContext(), FirebaseTestActivity.class);
-                User currentUser = User.createUserFromProfile(userProfile);
-                Constants.currentUser = currentUser;
-                goToNextActivity.putExtra("currentUser", currentUser);
+                AccessToken accessToken = AccessToken.getCurrentAccessToken();
+                getUserInfo(accessToken);
+                //Intent goToNextActivity = new Intent(getApplicationContext(), FirebaseTestActivity.class);
+                //User currentUser = User.createUserFromProfile(userProfile);
+                //Constants.currentUser = currentUser;
+                //goToNextActivity.putExtra("currentUser", currentUser);
             //   editor.putString(Constants.PROFILE_IMAGE_ONE,
                         // getStoredImageUrl("1", data.getProfilePicture()));
-                startActivity(goToNextActivity);
+                //startActivity(goToNextActivity);
             }
     }
 /*
@@ -225,23 +228,82 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     public void onCompleted(
                             JSONObject json_object,
                             GraphResponse response) {
-                                userProfile = Profile.getCurrentProfile();
-                                if(userProfile != null) {
-                                    editor.putString(Constants.FACEBOOK_ID, userProfile.getId());
-                                    editor.putString(Constants.FIRST_NAME, userProfile.getFirstName());
-                                    editor.putString(Constants.LAST_NAME, userProfile.getLastName());
-                                    editor.commit();
-                                }
-                                Intent intent = new Intent(LoginActivity.this, NavBarActivity.class);
-                                intent.putExtra("jsondata",json_object.toString());
-                                startActivity(intent);
+                        userProfile = Profile.getCurrentProfile();
+                        try {
+                            JSONObject data = response.getJSONObject();
+                            if (data.has("name")) {
+                                String name = data.getString("name");
+                                String fbId = data.getString("id");
+                                String birthday = data.getString("birthday");
+                                String email = data.getString("email");
+                                Constants.currentUser = new User(name, fbId, birthday);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        if(userProfile != null) {
+                            editor.putString(Constants.FACEBOOK_ID, userProfile.getId());
+                            editor.putString(Constants.FIRST_NAME, userProfile.getFirstName());
+                            editor.putString(Constants.LAST_NAME, userProfile.getLastName());
+                            editor.commit();
+                        }
+                        Intent goToNextActivity = new Intent(getApplicationContext(), FirebaseTestActivity.class);
+                        //User currentUser = User.createUserFromProfile(userProfile);
+                        goToNextActivity.putExtra("currentUser", Constants.currentUser);
+                        goToNextActivity.putExtra("jsondata",json_object.toString());
+                        startActivity(goToNextActivity);
                     }
                 });
                 Bundle permission_param = new Bundle();
-                permission_param.putString("fields", "id,name,email,picture.width(120).height(120)");
+                permission_param.putString("fields", "id,name,birthday,email,picture.width(120).height(120)");
                 data_request.setParameters(permission_param);
                 data_request.executeAsync();
             }
+
+    /*
+    To get the facebook user's own profile information via  creating a new request.
+    When the request is completed, a callback is called to handle the success condition.
+ */
+    protected void getUserInfo(AccessToken thisToken){
+        GraphRequest data_request = GraphRequest.newMeRequest(
+
+                thisToken,
+                new GraphRequest.GraphJSONObjectCallback() {
+                    @Override
+                    public void onCompleted(
+                            JSONObject json_object,
+                            GraphResponse response) {
+                        userProfile = Profile.getCurrentProfile();
+                        try {
+                            JSONObject data = response.getJSONObject();
+                            if (data.has("name")) {
+                                String name = data.getString("name");
+                                String fbId = data.getString("id");
+                                String birthday = data.getString("birthday");
+                                Constants.currentUser = new User(name, fbId, birthday);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        if(userProfile != null) {
+                            editor.putString(Constants.FACEBOOK_ID, userProfile.getId());
+                            editor.putString(Constants.FIRST_NAME, userProfile.getFirstName());
+                            editor.putString(Constants.LAST_NAME, userProfile.getLastName());
+                            editor.commit();
+                        }
+                        Intent goToNextActivity = new Intent(getApplicationContext(), FirebaseTestActivity.class);
+                        //User currentUser = User.createUserFromProfile(userProfile);
+                        goToNextActivity.putExtra("currentUser", Constants.currentUser);
+                        goToNextActivity.putExtra("jsondata",json_object.toString());
+                        startActivity(goToNextActivity);
+                    }
+                });
+        Bundle permission_param = new Bundle();
+        permission_param.putString("fields", "id,name,birthday,email,picture.width(120).height(120)");
+        data_request.setParameters(permission_param);
+        data_request.executeAsync();
+    }
+
         @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
             super.onActivityResult(requestCode, resultCode, data);

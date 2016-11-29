@@ -366,13 +366,13 @@ public class FindMatches extends Fragment implements View.OnClickListener{
 
                 success = true;
 
-                User Kevin = new User("100001411585746","Kevin","21");
-                User Stefan = new User("1408027584","Stefan","21");
-                User Davin = new User("1151947893","Davin","21");
-                User Stephen = new User("705738627","Stephen","21");
-                User Yuriy = new User("100000050449525","Yuriy","20");
-                User Brandon = new User("100000384470712","Brandon","20");
-                User Rachel = new User("1512173415","Rachel","20");
+                User Kevin = new User("100001411585746","Kevin","05/24/1995");
+                User Stefan = new User("1408027584","Stefan","09/23/1994");
+                User Davin = new User("1151947893","Davin","07/17/1995");
+                User Stephen = new User("705738627","Stephen","02/06/1995");
+                User Yuriy = new User("100000050449525","Yuriy","02/01/1996");
+                User Brandon = new User("100000384470712","Brandon","06/06/1996");
+                User Rachel = new User("1512173415","Rachel","12/03/1996");
 
                 HashMap<String, User> testMatches = Constants.feasibleMatches;
 

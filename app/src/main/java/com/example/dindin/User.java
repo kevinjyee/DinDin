@@ -23,11 +23,15 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Set;
@@ -57,11 +61,18 @@ public class User implements Serializable{
     {
     }
 
-    public User(String userId, String firstName, String Age)
-    {
+    public User(String userId, String name, String birthday){
         this.fbId = userId;
-        this.name = firstName;
-        this.age = Age;
+        this.name = name;
+        DateFormat format = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
+        Date date = null;
+        try {
+            date = format.parse(birthday);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+       this.birthday = date;
+        this.age = Integer.toString(AgeRange.findAge(date));
     }
 
     public User(int userId, String fbID, String userName, Location userLoc, Profile userProfile, double rating,
@@ -231,13 +242,13 @@ public class User implements Serializable{
     }
 
     public static void generateDummyUsers() {
-        User Kevin = new User("100001411585746", "Kevin", "21");
-        User Stefan = new User("1408027584", "Stefan", "21");
-        User Davin = new User("1151947893", "Davin", "21");
-        User Stephen = new User("705738627", "Stephen", "21");
-        User Yuriy = new User("100000050449525", "Yuriy", "20");
-        User Brandon = new User("100000384470712", "Brandon", "20");
-        User Rachel = new User("1512173415", "Rachel", "20");
+        User Kevin = new User("100001411585746","Kevin","05/24/1995");
+        User Stefan = new User("1408027584","Stefan","09/23/1994");
+        User Davin = new User("1151947893","Davin","07/17/1995");
+        User Stephen = new User("705738627","Stephen","02/06/1995");
+        User Yuriy = new User("100000050449525","Yuriy","02/01/1996");
+        User Brandon = new User("100000384470712","Brandon","06/06/1996");
+        User Rachel = new User("1512173415","Rachel","12/03/1996");
         ArrayList<User> newUsers = new ArrayList<>();
         newUsers.add(Yuriy);
         newUsers.add(Brandon);
