@@ -346,6 +346,7 @@ public class FirebaseTestActivity extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        User.generateDummyUsers();
     }
 
     // Fill DB with recipes
