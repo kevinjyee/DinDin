@@ -236,7 +236,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                 String fbId = data.getString("id");
                                 String birthday = data.getString("birthday");
                                 String email = data.getString("email");
-                                Constants.currentUser = new User(name, fbId, birthday);
+                                Constants.currentUser = new User(fbId, name, birthday);
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -281,7 +281,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                 String fbId = data.getString("id");
                                 String birthday = data.getString("birthday");
                                 String email = data.getString("email");
-                                Constants.currentUser = new User(name, fbId, birthday);
+                                Constants.currentUser = new User(fbId, name, birthday);
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
