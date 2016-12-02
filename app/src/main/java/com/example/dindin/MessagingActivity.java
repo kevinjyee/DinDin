@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.dindin.utilities.Constants;
+import com.example.dindin.utilities.MessageAdapter;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -23,7 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MessagingActivity extends AppCompatActivity {
-
+    private MessageActivity messagemanager;
     public static class MessageViewHolder extends RecyclerView.ViewHolder {
         public TextView messageTextView;
         public TextView messengerTextView;
@@ -44,6 +45,7 @@ public class MessagingActivity extends AppCompatActivity {
     private String fbID;
     private String chatHash;
     private SharedPreferences mSharedPreferences;
+    private SharedPreferences.Editor editor;
 
     private Button mSendButton;
     private RecyclerView mMessageRecyclerView;
@@ -59,12 +61,14 @@ public class MessagingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mess);
+
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        editor = mSharedPreferences.edit();
         // Set username.
         mUsername = Constants.currentUser.getName();
         fbID = Constants.currentUser.getfbId();
         String currentID = mSharedPreferences.getString(Constants.FIRST_NAME,""); //just using first name, for now
-        String targetUser = getIntent().getExtras().getString("targetID"); //just using first name, for now
+        final String targetUser = getIntent().getExtras().getString("targetID"); //just using first name, for now
         chatHash = Integer.toString(fbID.hashCode() ^ targetUser.hashCode());
         System.out.println("currentID: " + currentID);
         System.out.println("targetID: " + targetUser);
@@ -139,7 +143,9 @@ public class MessagingActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (charSequence.toString().trim().length() > 0) {
+
                     mSendButton.setEnabled(true);
+                    editor.putString(targetUser,mMessageEditText.getText().toString());
                 } else {
                     mSendButton.setEnabled(false);
                 }
@@ -147,6 +153,7 @@ public class MessagingActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
+                editor.putString(targetUser,mMessageEditText.getText().toString());
             }
         });
 
@@ -165,6 +172,9 @@ public class MessagingActivity extends AppCompatActivity {
                                 mPhotoUrl);
                         mFirebaseDatabaseReference.child(chatHash + "/" + MESSAGES_CHILD)
                                 .push().setValue(friendlyMessage);
+
+                        editor.putString(targetUser,mMessageEditText.getText().toString());
+                        editor.commit();
                         mMessageEditText.setText("");
                     }
                 });

@@ -24,6 +24,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.Espresso.pressBack;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.replaceText;
@@ -34,6 +35,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withParent;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
 import static org.hamcrest.Matchers.allOf;
 
 @RunWith(AndroidJUnit4.class)
@@ -179,7 +181,7 @@ public class IntegrationTest {
     /*
      * Test 2) Test match list is properly updated
      */
-    @Test
+  //  @Test
     public void testMatchesDB() {
         try {
             Thread.sleep(8000);
@@ -228,16 +230,7 @@ public class IntegrationTest {
                 allOf(withId(R.id.design_menu_item_text), withText("Matches"), isDisplayed()));
         appCompatCheckedTextView2.perform(click());
 
-        ViewInteraction textView = onView(
-                allOf(withText("Davin Siu"),
-                        childAtPosition(
-                                allOf(withId(R.id.storybookTextItemlayout),
-                                        childAtPosition(
-                                                IsInstanceOf.<View>instanceOf(android.widget.RelativeLayout.class),
-                                                1)),
-                                0),
-                        isDisplayed()));
-        textView.check(matches(withText("Davin Siu")));
+
 
     }
 
@@ -362,6 +355,17 @@ public class IntegrationTest {
                 allOf(withId(R.id.design_menu_item_text), withText("Matches"), isDisplayed()));
         appCompatCheckedTextView2.perform(click());
 
+        ViewInteraction textView = onView(
+                allOf(withText("Davin Siu"),
+                        childAtPosition(
+                                allOf(withId(R.id.storybookTextItemlayout),
+                                        childAtPosition(
+                                                IsInstanceOf.<View>instanceOf(android.widget.RelativeLayout.class),
+                                                1)),
+                                0),
+                        isDisplayed()));
+        textView.check(matches(withText("Davin Siu")));
+
         ViewInteraction relativeLayout = onView(
                 allOf(withId(R.id.albumlistviewitem),
                         childAtPosition(
@@ -376,13 +380,51 @@ public class IntegrationTest {
                         withParent(withId(R.id.linearLayout)),
                         isDisplayed()));
         appCompatEditText.perform(replaceText("hi"), closeSoftKeyboard());
-
+        try {
+            Thread.sleep(1000);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
         ViewInteraction appCompatButton2 = onView(
                 allOf(withId(R.id.sendButton), withText("SEND"),
                         withParent(withId(R.id.linearLayout)),
                         isDisplayed()));
         appCompatButton2.perform(click());
 
+        try{
+            Thread.sleep(2000);
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        appCompatButton2 = onView(
+                allOf(withId(R.id.sendButton), withText("SEND"),
+                        withParent(withId(R.id.linearLayout)),
+                        isDisplayed()));
+        appCompatButton2.perform(click());
+
+        pressBack();
+
+        appCompatImageButton3 = onView(
+                allOf(withContentDescription("Open navigation drawer"),
+                        withParent(withId(R.id.toolbar)),
+                        isDisplayed()));
+        appCompatImageButton3.perform(click());
+
+        appCompatCheckedTextView2 = onView(
+                allOf(withId(R.id.design_menu_item_text), withText("Matches"), isDisplayed()));
+        appCompatCheckedTextView2.perform(click());
+
+
+        try{
+            Thread.sleep(4000);
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
 
     }
 

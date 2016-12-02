@@ -3,7 +3,9 @@ package com.example.dindin;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +17,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.dindin.utilities.Constants;
+import com.example.dindin.utilities.MessageAdapter;
 import com.example.dindin.utilities.Utilities;
 import com.google.android.gms.cast.framework.SessionManager;
 import com.squareup.picasso.Picasso;
@@ -72,6 +75,10 @@ public class MessageActivity extends Fragment {
 
         private ArrayList<User> listContact;
         private LayoutInflater mInflater;
+        // Shared Preferences
+        private SharedPreferences pref;
+        // Editor for Shared preferences
+        private SharedPreferences.Editor editor;
 
 
         public MatchedDataAdapter(Context context,
@@ -79,6 +86,9 @@ public class MessageActivity extends Fragment {
                                   ) {
             listContact = objects;
             mInflater = LayoutInflater.from(context);
+
+            pref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+            editor = pref.edit();
 
         }
 
@@ -128,7 +138,7 @@ public class MessageActivity extends Fragment {
                     .load("https://graph.facebook.com/v2.2/" + getItem(position).getfbId() + "/picture?height=120&type=normal")
                     .into(holder.imageview);
             try {
-                holder.lastMasage.setText(getItem(position).getPhoneNumber());
+                holder.lastMasage.setText(pref.getString(getItem(position).getfbId(),null));
             } catch (Exception e) {
 
             }
@@ -142,6 +152,8 @@ public class MessageActivity extends Fragment {
             TextView lastMasage;
 
         }
+
+
     }
 
 
