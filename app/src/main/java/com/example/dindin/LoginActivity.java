@@ -372,7 +372,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     if(!mGoogleApiClient.isConnected()){
                         mGoogleApiClient.connect();
                     }else {
-                        displayLocation();
+                        //displayLocation();
                     }
                 } else {
 
@@ -406,12 +406,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     @Override
     public void onConnected(@Nullable Bundle bundle) {
         // Once connected with google api, get the location
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_REQUEST_ACCESS_FINE_LOCATION);
-        }else {
-            displayLocation();
-        }
+//        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
+//                != PackageManager.PERMISSION_GRANTED) {
+//            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_REQUEST_ACCESS_FINE_LOCATION);
+//        }else {
+//            displayLocation();
+//        }
     }
 
     @Override
