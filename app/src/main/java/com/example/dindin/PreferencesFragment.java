@@ -96,7 +96,7 @@ public class PreferencesFragment extends Fragment {
         });
 
         final RadioGroup radioGroupGender = (RadioGroup) root.findViewById(R.id.preference_gender);
-        radioGroupPref.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+        radioGroupGender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
         {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -131,7 +131,7 @@ public class PreferencesFragment extends Fragment {
         });
 
         final RadioGroup radioGroupMyGender = (RadioGroup) root.findViewById(R.id.my_gender);
-        radioGroupPref.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+        radioGroupMyGender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
         {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
