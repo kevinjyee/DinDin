@@ -62,8 +62,15 @@ public class PreferencesFragment extends Fragment {
         {
             currentPref = new Preferences();
         }
+        if(Constants.currentUser.getPreferences().getAgeRange() != null)
+        {
+            currentAgeRange = Constants.currentUser.getPreferences().getAgeRange();
+        }
+        else
+        {
+            currentAgeRange = new AgeRange();
+        }
 
-        currentAgeRange = new AgeRange();
         //Init Buttons
         cookButton = (RadioButton) root.findViewById(R.id.cook);
         cleanButton = (RadioButton) root.findViewById(R.id.cleaner);
@@ -297,6 +304,16 @@ public class PreferencesFragment extends Fragment {
         {
             cleanButton.setChecked(true);
         }
+
+        if(currentUser.getPreferences().getAgeRange() != null) {
+            minAge = currentUser.getPreferences().getAgeRange().getMinAge();
+            maxAge = currentUser.getPreferences().getAgeRange().getMaxAge();
+            rangebar.setThumbIndices(minAge - 18, maxAge - 18);
+            minagevalue.setText("" + minAge);
+            maxage.setText("" + maxAge);
+        }
+
+
     }
 
 
