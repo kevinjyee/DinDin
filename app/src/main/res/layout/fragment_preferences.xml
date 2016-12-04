@@ -236,6 +236,25 @@
                     android:thumb="@drawable/slider_switch" />
             </RelativeLayout>
 
+            <RelativeLayout
+                android:id="@+id/clearhistorylayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp" >
+
+            <Button
+                android:id="@+id/clearHistoryButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/selector_for_settingbutts"
+                android:gravity="center"
+                android:text="Clear Match History" />
+            </RelativeLayout>
+
 
         </LinearLayout>
     </ScrollView>
