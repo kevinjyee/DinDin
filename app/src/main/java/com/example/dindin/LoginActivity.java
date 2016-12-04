@@ -66,6 +66,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private Profile userProfile;
     private ProfilePictureView profilePictureView;
     private UserFaceBookInfo currentUserFaceBookInfo;
+    private AccessToken accessToken;
     CallbackManager callbackManager;
 
 
@@ -170,6 +171,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         protected void getLoginDetails(LoginButton login_button){
                 // Callback registration
             info = (TextView)findViewById(R.id.info);
+            accessToken = AccessToken.getCurrentAccessToken();
                 login_button.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
                     private ProfileTracker mProfileTracker;
             @Override
@@ -206,7 +208,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 editor.putString(Constants.LAST_NAME,userProfile.getLastName());
 
                 editor.commit();
-                AccessToken accessToken = AccessToken.getCurrentAccessToken();
                 getUserInfo(accessToken);
                 //Intent goToNextActivity = new Intent(getApplicationContext(), FirebaseTestActivity.class);
                 //User currentUser = User.createUserFromProfile(userProfile);

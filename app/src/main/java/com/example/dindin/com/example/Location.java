@@ -43,7 +43,7 @@ public class Location implements Serializable{
         double phi1 = this.latitude * deg_to_rad_scalar;
         double phi2 = loc.getLatitude() * deg_to_rad_scalar;
         double lambda1 = this.longitude * deg_to_rad_scalar;
-        double lambda2 = loc.getLatitude() * deg_to_rad_scalar;
+        double lambda2 = loc.getLongitude() * deg_to_rad_scalar;
         double a = Math.pow(Math.sin((phi2 - phi1) / 2), 2) + (Math.cos(phi1) * Math.cos(phi2) *
                 Math.pow(Math.sin((lambda2 - lambda1) / 2), 2));
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));

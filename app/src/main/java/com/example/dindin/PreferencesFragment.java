@@ -117,6 +117,7 @@ public class PreferencesFragment extends Fragment {
                         break;
                 }
                 currentUser.setPreferences(currentPref);
+                Constants.fbHelp.updateUser();
 
             }
         });
@@ -152,6 +153,7 @@ public class PreferencesFragment extends Fragment {
                         break;
                 }
                 currentUser.setPreferences(currentPref);
+                Constants.fbHelp.updateUser();
 
             }
         });
@@ -167,12 +169,14 @@ public class PreferencesFragment extends Fragment {
                     case R.id.iamamale:
                         if (checked)
                             currentUser.setGender("male");
+                            Constants.fbHelp.updateUser();
 
 
                         break;
                     case R.id.iamafemale:
                         if (checked)
                             currentUser.setGender("female");
+                            Constants.fbHelp.updateUser();
                         break;
                 }
 
@@ -194,6 +198,7 @@ public class PreferencesFragment extends Fragment {
                 currentAgeRange.setMaxAge(maxAge);
                 currentPref.setAgeRange(currentAgeRange);
                 currentUser.setPreferences(currentPref);
+                Constants.fbHelp.updateUser();
             }
         });
 
@@ -222,6 +227,7 @@ public class PreferencesFragment extends Fragment {
                     break;
         }
         currentUser.setPreferences(currentPref);
+        Constants.fbHelp.updateUser();
     }
 
     public void onGenderRadioButtonClicked(View view) {
@@ -253,6 +259,7 @@ public class PreferencesFragment extends Fragment {
                 break;
         }
         currentUser.setPreferences(currentPref);
+        Constants.fbHelp.updateUser();
     }
 
     public void initView()
@@ -262,11 +269,11 @@ public class PreferencesFragment extends Fragment {
             myMaleButton.setChecked(false);
             myFemaleButton.setChecked(false);
         }
-        else if(currentUser.getGender() == "male")
+        else if(currentUser.getGender().equalsIgnoreCase("male"))
         {
             myMaleButton.setChecked(true);
         }
-        else if(currentUser.getGender() == "female")
+        else if(currentUser.getGender().equalsIgnoreCase("female"))
         {
             myFemaleButton.setChecked(true);
         }
@@ -278,15 +285,15 @@ public class PreferencesFragment extends Fragment {
             femaleButton.setChecked(false);
 
         }
-        else if(currentUser.getPreferences().getPreferredGender() == "female")
+        else if(currentUser.getPreferences().getPreferredGender().equalsIgnoreCase("female"))
         {
             femaleButton.setChecked(true);
         }
-        else if(currentUser.getPreferences().getPreferredGender() == "male")
+        else if(currentUser.getPreferences().getPreferredGender().equalsIgnoreCase("male"))
         {
             maleButton.setChecked(true);
         }
-        else if(currentUser.getPreferences().getPreferredGender() == "both")
+        else if(currentUser.getPreferences().getPreferredGender().equalsIgnoreCase("both"))
         {
             bothMandFButton.setChecked(true);
         }
@@ -296,11 +303,11 @@ public class PreferencesFragment extends Fragment {
             cookButton.setChecked(false);
             cleanButton.setChecked(false);
         }
-        else if(currentUser.getPreferences().getPreferredTask() == "cook")
+        else if(currentUser.getPreferences().getPreferredTask().equalsIgnoreCase("cook"))
         {
             cookButton.setChecked(true);
         }
-        else if(currentUser.getPreferences().getPreferredTask() == "clean")
+        else if(currentUser.getPreferences().getPreferredTask().equalsIgnoreCase("clean"))
         {
             cleanButton.setChecked(true);
         }

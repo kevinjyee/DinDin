@@ -671,8 +671,13 @@ public class FindMatches extends Fragment implements View.OnClickListener{
             User matchesData = MatchedUserList.get(viewCount - 1);
             int selectedImageIndex = viewCount - 1;
             AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
-            alertDialog.setTitle("Alert");
-            alertDialog.setMessage("Likes to cook");
+            alertDialog.setTitle("Preferred Role:");
+            String thisMatchRole = "cook or clean";
+            try {
+                thisMatchRole = matchesData.getPreferences().getPreferredTask();
+            } catch(NullPointerException e){
+            }
+            alertDialog.setMessage("Likes to " + thisMatchRole);
             alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
@@ -855,8 +860,29 @@ public class FindMatches extends Fragment implements View.OnClickListener{
                 public void onCancelled(DatabaseError DatabaseError) {
                 }
             });
+        } else{
+            thisMatch = matchedUser;
+            Query myQuery = Constants.myRefIndiv.orderByChild("fbId").equalTo(Constants.currentUser.getfbId());
 
-
+            myQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot snapshot) {
+                    DataSnapshot firstChild = snapshot.getChildren().iterator().next();
+                    User u = firstChild.getValue(User.class);
+                    Constants.currentUser = u;
+                    HashMap<String, String> leftSwipes = u.getSwipedLeft();
+                    if(leftSwipes == null){
+                        leftSwipes = new HashMap<String, String>();
+                    }
+                    leftSwipes.put(thisMatch.getfbId(), thisMatch.getfbId());
+                    Constants.currentUser.setSwipedLeft(leftSwipes);
+                    DataSnapshot currentUserChild = snapshot.getChildren().iterator().next();
+                    currentUserChild.getRef().setValue(Constants.currentUser);
+                }
+                @Override
+                public void onCancelled(DatabaseError DatabaseError) {
+                }
+            });
         }
     }
 
@@ -886,10 +912,9 @@ public class FindMatches extends Fragment implements View.OnClickListener{
                         HashMap<String, String> swipedRight = Constants.currentUser.getSwipedRight();
                         swipedRight = (swipedRight == null) ? new HashMap<String, String>() : swipedRight;
                         if(matchSwipedRight.containsKey(Constants.currentUser.getfbId())){
-                            // TODO KEVIN PUT MATCHING ACTION HEREEEEE
                             AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
-                            alertDialog.setTitle("Alert");
-                            alertDialog.setMessage("It's a Match!");
+                            alertDialog.setTitle("Congratulations, it's a match!");
+                            alertDialog.setMessage("Navigate to the matches page to message your new cooking partner.");
                             alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                                     new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int which) {

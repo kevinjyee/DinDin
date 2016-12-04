@@ -57,7 +57,6 @@ public class User implements Serializable{
     private String fbId;
     private String age;
     private String phoneNumber = "713-478-3035";
-    private String gender;
 
     public User()
     {
@@ -127,8 +126,6 @@ public class User implements Serializable{
         return name;
     }
 
-    public String getGender() { return gender; }
-
     public String getAge() {return age;}
 
     public Location getLocation() {
@@ -179,8 +176,6 @@ public class User implements Serializable{
     public void setName(String name) {
         this.name = name;
     }
-
-    public void setGender(String gender) {this.gender = gender; }
 
     public void setLocation(com.example.dindin.com.example.Location location) {
         this.location = location;
@@ -248,6 +243,14 @@ public class User implements Serializable{
         }
         try{
             preferencesMatch = this.getPreferences().shareCuisineInterests(user2.getPreferences());
+            if(!preferencesMatch){
+                return false;
+            }
+        } catch(NullPointerException e){
+        }
+        try{
+            preferencesMatch = this.getPreferences().getPreferredGender().equalsIgnoreCase(user2.getGender()) ||
+                this.getPreferences().getPreferredGender().equalsIgnoreCase("both");
             if(!preferencesMatch){
                 return false;
             }

@@ -1,5 +1,9 @@
 package com.example.dindin.utilities;
 
+import android.content.Context;
+import android.content.Intent;
+
+import com.example.dindin.FirebaseHelper;
 import com.example.dindin.Recipe;
 import com.example.dindin.User;
 import com.google.firebase.database.DatabaseReference;
@@ -47,6 +51,10 @@ public class Constants {
     public static ArrayList<String> recipeIDMatchedwith = new ArrayList<>();
     public static HashMap<String, User> feasibleMatches = new HashMap<>();
 
+    public static Intent goToMatching;
+    public static Context context;
+
+    public static final FirebaseHelper fbHelp = new FirebaseHelper("");
     public static final FirebaseDatabase database = FirebaseDatabase.getInstance();
     public static final DatabaseReference myRef = database.getReference("usersHashSet");
     public static final DatabaseReference myRefIndiv = database.getReference("user");

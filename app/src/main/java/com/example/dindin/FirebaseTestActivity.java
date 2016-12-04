@@ -33,11 +33,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 public class FirebaseTestActivity extends AppCompatActivity {
 
     public HashMap<String, User> matches = new HashMap<String, User>();
+    private HashMap<String, User> uList = new HashMap<>();
     User currentUser;
     boolean currentUserIsInDatabase;
     boolean databaseReloaded;
@@ -49,15 +51,24 @@ public class FirebaseTestActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_firebase_test);
+        //User u = User.makeMeAUserDamnit();
+        //fbHelp.addUser(u);
+        //fbHelp.getUsers();
         // Get ListView object from xml
         final ListView listView = (ListView) findViewById(R.id.listView);
         Intent intent = getIntent();
+        //updateUserHash();
         // Load User passed down by LoginActivity
         currentUser = (User) intent.getSerializableExtra("currentUser");
+        Constants.fbHelp.addUser(currentUser);
         currentUserIsInDatabase = false;
         databaseReloaded = false;
         databaseEmpty = true;
         goToNextActivity = new Intent(getApplicationContext(), NavBarActivity.class);
+        Constants.goToMatching = new Intent(getApplicationContext(), NavBarActivity.class);
+        Constants.goToMatching.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        Constants.context = getApplicationContext();
+        Constants.fbHelp.findMatches();
 
         // Create a new Adapter
         final ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
@@ -90,6 +101,7 @@ public class FirebaseTestActivity extends AppCompatActivity {
             }
         });
 
+        /*
         Constants.myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
@@ -163,11 +175,11 @@ public class FirebaseTestActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                     //goToNextActivity.putExtra("matchList", matches);
-                    Constants.feasibleMatches = matches;
+                    //Constants.feasibleMatches = matches;
                     //   editor.putString(Constants.PROFILE_IMAGE_ONE,
                     // getStoredImageUrl("1", data.getProfilePicture()));
 
-                    startActivity(goToNextActivity);
+                    //startActivity(goToNextActivity);
                     finish();
                 }
                 }
@@ -347,7 +359,7 @@ public class FirebaseTestActivity extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        User.generateDummyUsers();
+        //User.generateDummyUsers();
     }
 
     // Fill DB with recipes
@@ -399,6 +411,59 @@ public class FirebaseTestActivity extends AppCompatActivity {
                 User userHash = snapshot.getValue(User.class);
                 if (userHash != null) {
                     updateUserInfo(snapshot);
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError DatabaseError) {
+            }
+        });
+    }
+
+    public void updateUserHash(){
+        Constants.myRefIndiv.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                User userHash = snapshot.getValue(User.class);
+                HashMap<String, User> users = new HashMap<>();
+                if (userHash != null) {
+                    Iterator it = snapshot.getChildren().iterator();
+                    while(it.hasNext()){
+                        DataSnapshot data = (DataSnapshot) it.next();
+                        User u = data.getValue(User.class);
+                        users.put(u.getfbId(), u);
+                    }
+                    uList = users;
+                    changeUserData();
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError DatabaseError) {
+            }
+        });
+    }
+
+    public void changeUserData(){
+        Constants.myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                Object userHash = snapshot.getValue();
+                if (userHash != null) {
+                    ObjectMapper mapper = new ObjectMapper();
+                    try {
+                        String jsonUsers = mapper.writeValueAsString(uList);
+                        System.out.println(jsonUsers);
+                        // Create a new child with a auto-generated ID.
+                        if (snapshot.hasChildren()) {
+                            DataSnapshot firstChild = snapshot.getChildren().iterator().next();
+                            firstChild.getRef().setValue(jsonUsers);
+                        }
+                    } catch (JsonGenerationException e) {
+                        e.printStackTrace();
+                    } catch (JsonMappingException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
             @Override
