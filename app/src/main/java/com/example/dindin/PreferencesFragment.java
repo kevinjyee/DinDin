@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
@@ -18,6 +19,9 @@ import com.edmodo.rangebar.RangeBar;
 
 import com.example.dindin.com.example.AgeRange;
 import com.example.dindin.utilities.Constants;
+
+import static android.R.attr.checked;
+import static com.example.dindin.R.id.radio;
 
 /**
  * Created by Davin on 10/23/2016.
@@ -62,6 +66,93 @@ public class PreferencesFragment extends Fragment {
 
         rangebar.setTickCount(38);
         rangebar.setTickHeight(0);
+
+        final RadioGroup radioGroupPref = (RadioGroup) root.findViewById(R.id.preference_role);
+        radioGroupPref.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+        {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                View view = radioGroupPref.findViewById(checkedId);
+                boolean checked = ((RadioButton) view).isChecked();
+                switch(view.getId()) {
+                    case R.id.cook:
+                        if (checked)
+                            currentPref.setPreferredTask("Cook");
+                        Log.e("Cook Selected","Cook");
+                        cookButton.setChecked(true);
+                        cleanButton.setChecked(false);
+                        break;
+                    case R.id.cleaner:
+                        if (checked)
+                            currentPref.setPreferredTask("Clean");
+                        Log.e("Clean Selected","Clean");
+                        cookButton.setChecked(false);
+                        cleanButton.setChecked(true);
+                        break;
+                }
+                currentUser.setPreferences(currentPref);
+
+            }
+        });
+
+        final RadioGroup radioGroupGender = (RadioGroup) root.findViewById(R.id.preference_gender);
+        radioGroupPref.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+        {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                View view = radioGroupGender.findViewById(checkedId);
+                boolean checked = ((RadioButton) view).isChecked();
+                switch(view.getId()) {
+                    case R.id.male:
+                        if (checked)
+                            currentPref.setPreferredGender("male");
+                        maleButton.setChecked(true);
+                        femaleButtton.setChecked(false);
+                        bothMandFButton.setChecked(false);
+                        break;
+                    case R.id.female:
+                        if (checked)
+                            currentPref.setPreferredGender("female");
+                        maleButton.setChecked(false);
+                        femaleButtton.setChecked(true);
+                        bothMandFButton.setChecked(false);
+                        break;
+                    case R.id.both:
+                        if (checked)
+                            currentPref.setPreferredGender("both");
+                        maleButton.setChecked(false);
+                        femaleButtton.setChecked(false);
+                        bothMandFButton.setChecked(true);
+                        break;
+                }
+                currentUser.setPreferences(currentPref);
+
+            }
+        });
+
+        final RadioGroup radioGroupMyGender = (RadioGroup) root.findViewById(R.id.my_gender);
+        radioGroupPref.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+        {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                View view = radioGroupMyGender.findViewById(checkedId);
+                boolean checked = ((RadioButton) view).isChecked();
+                switch(view.getId()) {
+                    case R.id.iamamale:
+                        if (checked)
+                            currentUser.setGender("male");
+
+
+                        break;
+                    case R.id.cleaner:
+                        if (checked)
+                            currentUser.setGender("female");
+                        break;
+                }
+
+
+            }
+        });
 
         rangebar.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
             @Override

@@ -22,7 +22,31 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
+            <!-- I am a  -->
+            <TextView
+                android:text="I am a"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView7"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
+            <RadioGroup
+                android:id="@+id/my_gender"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/line">
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/iamamale"
+                    android:text="Male" />
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/iamafemale"
+                    android:text="Female" />
+
+            </RadioGroup>
 
 
 
@@ -36,7 +60,7 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
             <RadioGroup
-                android:id="@+id/preference_role"
+                android:id="@+id/preference_gender"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/line">
@@ -67,7 +91,7 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
             <RadioGroup
-                android:id="@+id/preference_gender"
+                android:id="@+id/preference_role"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/line">

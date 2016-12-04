@@ -56,6 +56,7 @@ public class User implements Serializable{
     private String fbId;
     private String age;
     private String phoneNumber = "713-478-3035";
+    private String gender;
 
     public User()
     {
@@ -133,6 +134,9 @@ public class User implements Serializable{
         return location;
     }
 
+    public String getGender(){return gender;}
+
+
     public Profile getFacebookProfile() {
         return facebookProfile;
     }
@@ -179,6 +183,7 @@ public class User implements Serializable{
         this.location = location;
     }
 
+    public void setGender(String gender) {this.gender = gender;}
 
     public void setPhoneNumber(String number){this.phoneNumber = number;};
 
