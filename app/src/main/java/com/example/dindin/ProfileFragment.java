@@ -22,10 +22,10 @@ import static com.example.dindin.utilities.Constants.currentUser;
 
 public class ProfileFragment extends Fragment implements View.OnClickListener {
     private View view;
-    Button editButton;
-    TextView nameage, bio, loc, favdish, favcuisine, gender;
-    ImageView imageview;
-    private SharedPreferences preferences;
+    private dindinProfile currentProf;
+    private Button editButton;
+    private TextView nameage, bio, loc, favdish, favcuisine, gender;
+    private ImageView imageview;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -42,21 +42,26 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         favcuisine = (TextView)view.findViewById(R.id.profile_cuisine);
         gender = (TextView)view.findViewById(R.id.user_profile_gender);
         imageview = (ImageView) view.findViewById(R.id.user_profile_photo);
-        preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        String fbId = preferences.getString(Constants.FACEBOOK_ID, "");
-        String firstname = preferences.getString(Constants.FIRST_NAME,"");
         Picasso.with(getActivity())
-                .load("https://graph.facebook.com/v2.2/" + fbId + "/picture?height=120&type=normal") //extract as User instance method
+                .load("https://graph.facebook.com/v2.2/" + currentUser.getfbId() + "/picture?height=120&type=normal") //extract as User instance method
                 .error(R.drawable.dislike_off) //
                 .into(imageview);
 
+
+        //Instantiate User;
+        if (currentUser.getDindinProfile() != null) {
+            currentProf = currentUser.getDindinProfile();
+        } else {
+            currentProf = new dindinProfile();
+            currentUser.setDindinProfile(currentProf);
+        }
         setProfileInfo(currentUser.getName(),
                 currentUser.getGender(),
                 currentUser.getAge(),
-                preferences.getString(Constants.SHORT_BIO,""),
-                preferences.getString(Constants.LOCATION,"Austin,TX"),
-                preferences.getString(Constants.DISH,""),
-                preferences.getString(Constants.CUISINE,"")
+                currentUser.getDindinProfile().getShortBio(),
+                currentUser.getDindinProfile().getCustomLocation(),
+                currentUser.getDindinProfile().getFavoriteDishes(),
+                currentUser.getDindinProfile().getFavoriteCuisines()
                 );
 
         return root;
@@ -79,11 +84,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
 
         Picasso.with(getActivity())
-                .load("https://graph.facebook.com/v2.2/" + preferences.getString(Constants.FACEBOOK_ID,"") + "/picture?height=120&type=normal") //extract as User instance method
+                .load("https://graph.facebook.com/v2.2/" + currentUser.getfbId() + "/picture?height=120&type=normal") //extract as User instance method
                 .error(R.drawable.dislike_off) //
 
                 .into(imageview);
         favcuisine.setText(cuisine);
+        if(gen == null){gen = "gender: n/a";}
         gender.setText(gen);
     }
 }

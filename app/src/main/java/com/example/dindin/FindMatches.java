@@ -5,6 +5,7 @@ package com.example.dindin;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -669,6 +670,12 @@ public class FindMatches extends Fragment implements View.OnClickListener{
         if (v.getId() == R.id.matchedUserInfoButton) {
             int viewCount = swipeviewlayout.getChildCount();
             User matchesData = MatchedUserList.get(viewCount - 1);
+            Bundle mBundle = new Bundle();
+            mBundle.putSerializable("viewedUser", matchesData);
+            Intent goToNextActivity = new Intent(getActivity(), ProfileActivity.class);
+            goToNextActivity.putExtras(mBundle);
+            startActivity(goToNextActivity);
+            /*
             int selectedImageIndex = viewCount - 1;
             AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
             alertDialog.setTitle("Preferred Role:");
@@ -685,6 +692,7 @@ public class FindMatches extends Fragment implements View.OnClickListener{
                         }
                     });
             alertDialog.show();
+            */
         }
 
         if (v.getId() == R.id.likeButton) {
