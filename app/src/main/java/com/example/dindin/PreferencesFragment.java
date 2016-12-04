@@ -61,6 +61,7 @@ public class PreferencesFragment extends Fragment {
         else
         {
             currentPref = new Preferences();
+            currentUser.setPreferences(currentPref);
         }
         if(Constants.currentUser.getPreferences().getAgeRange() != null)
         {
@@ -69,6 +70,7 @@ public class PreferencesFragment extends Fragment {
         else
         {
             currentAgeRange = new AgeRange();
+            currentUser.getPreferences().setAgeRange(currentAgeRange);
         }
 
         //Init Buttons
@@ -85,11 +87,13 @@ public class PreferencesFragment extends Fragment {
         myFemaleButton = (RadioButton) root.findViewById(R.id.iamafemale);
 
 
+        rangebar.setTickCount(38);
+        rangebar.setTickHeight(0);
+
         initView();
 
 
-        rangebar.setTickCount(38);
-        rangebar.setTickHeight(0);
+
 
         final RadioGroup radioGroupPref = (RadioGroup) root.findViewById(R.id.preference_role);
         radioGroupPref.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
@@ -103,15 +107,13 @@ public class PreferencesFragment extends Fragment {
                         if (checked)
                             currentPref.setPreferredTask("cook");
                         Log.e("Cook Selected","Cook");
-                        cookButton.setChecked(true);
-                        cleanButton.setChecked(false);
+
                         break;
                     case R.id.cleaner:
                         if (checked)
                             currentPref.setPreferredTask("clean");
                         Log.e("Clean Selected","Clean");
-                        cookButton.setChecked(false);
-                        cleanButton.setChecked(true);
+
                         break;
                 }
                 currentUser.setPreferences(currentPref);
@@ -168,7 +170,7 @@ public class PreferencesFragment extends Fragment {
 
 
                         break;
-                    case R.id.cleaner:
+                    case R.id.iamafemale:
                         if (checked)
                             currentUser.setGender("female");
                         break;
@@ -210,15 +212,13 @@ public class PreferencesFragment extends Fragment {
                 if (checked)
                     currentPref.setPreferredTask("Cook");
                     Log.e("Cook Selected","Cook");
-                    cookButton.setChecked(true);
-                    cleanButton.setChecked(false);
+
                     break;
             case R.id.cleaner:
                 if (checked)
                     currentPref.setPreferredTask("Clean");
                      Log.e("Clean Selected","Clean");
-                cookButton.setChecked(false);
-                cleanButton.setChecked(true);
+
                     break;
         }
         currentUser.setPreferences(currentPref);
@@ -300,7 +300,7 @@ public class PreferencesFragment extends Fragment {
         {
             cookButton.setChecked(true);
         }
-        else if(currentUser.getPreferences().getPreferredGender() == "clean")
+        else if(currentUser.getPreferences().getPreferredTask() == "clean")
         {
             cleanButton.setChecked(true);
         }
@@ -308,9 +308,12 @@ public class PreferencesFragment extends Fragment {
         if(currentUser.getPreferences().getAgeRange() != null) {
             minAge = currentUser.getPreferences().getAgeRange().getMinAge();
             maxAge = currentUser.getPreferences().getAgeRange().getMaxAge();
-            rangebar.setThumbIndices(minAge - 18, maxAge - 18);
-            minagevalue.setText("" + minAge);
-            maxage.setText("" + maxAge);
+            if(minAge >= 18 && maxAge <= 55) {
+                rangebar.setThumbIndices(minAge - 18, maxAge - 18);
+                minagevalue.setText("" + minAge);
+                maxage.setText("" + maxAge);
+            }
+
         }
 
 
