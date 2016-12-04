@@ -6,12 +6,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -26,9 +28,10 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-public class MessageActivity extends Fragment {
+public class MessageActivity extends Fragment{
     private ListView matcheslistview;
     private View view;
+    private FloatingActionButton fab;
 
 
 
@@ -39,6 +42,12 @@ public class MessageActivity extends Fragment {
             ViewGroup root = (ViewGroup) inflater.inflate(R.layout.activity_message, null);
             view = root;
 
+            fab = (FloatingActionButton) view.findViewById(R.id.fab);
+            fab.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //TODO: STEFAN DO THIS HERE TOO
+            }
+        });
             matcheslistview = (ListView) view.findViewById(R.id.menu_right_ListView);
         Utilities  currUtils = new Utilities();
         int imageHeightandWidht[] = currUtils.getImageHeightandWidthforMatchView(getActivity());
@@ -67,6 +76,9 @@ public class MessageActivity extends Fragment {
 
             return root;
         }
+
+
+
 
     private class MatchedDataAdapter extends
             BaseAdapter {
