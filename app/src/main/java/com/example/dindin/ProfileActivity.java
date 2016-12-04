@@ -24,7 +24,7 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_profileview);
         editButton = (Button) findViewById(R.id.editProfileButton);
-        editButton.setVisibility(View.GONE);
+        editButton.setVisibility(View.INVISIBLE);
         nameage = (TextView)findViewById(R.id.user_profile_name);
         bio = (TextView)findViewById(R.id.profile_short_bio);
         loc = (TextView)findViewById(R.id.user_profile_location);
