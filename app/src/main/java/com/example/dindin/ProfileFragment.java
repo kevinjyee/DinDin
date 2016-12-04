@@ -18,6 +18,8 @@ import android.widget.TextView;
 import com.example.dindin.utilities.Constants;
 import com.squareup.picasso.Picasso;
 
+import static com.example.dindin.utilities.Constants.currentUser;
+
 public class ProfileFragment extends Fragment implements View.OnClickListener {
     private View view;
     Button editButton;
@@ -48,13 +50,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 .error(R.drawable.dislike_off) //
                 .into(imageview);
 
-        setProfileInfo(preferences.getString(Constants.DISPLAY_NAME,firstname),
-                preferences.getString(Constants.GENDER,"Gender: N/A"),
-                preferences.getString(Constants.AGE,"21"),
-                preferences.getString(Constants.SHORT_BIO,Constants.UNKNOWN),
+        setProfileInfo(currentUser.getName(),
+                currentUser.getGender(),
+                currentUser.getAge(),
+                preferences.getString(Constants.SHORT_BIO,""),
                 preferences.getString(Constants.LOCATION,"Austin,TX"),
-                preferences.getString(Constants.DISH,Constants.UNKNOWN),
-                preferences.getString(Constants.CUISINE,Constants.UNKNOWN)
+                preferences.getString(Constants.DISH,""),
+                preferences.getString(Constants.CUISINE,"")
                 );
 
         return root;

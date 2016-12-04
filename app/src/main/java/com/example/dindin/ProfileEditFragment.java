@@ -47,7 +47,6 @@ public class ProfileEditFragment extends Fragment implements View.OnClickListene
         location = (EditText)view.findViewById(R.id.profile_location);
         dish = (EditText)view.findViewById(R.id.profile_dish);
         cuisine = (EditText) view.findViewById(R.id.profile_cuisine);
-        gender = (RadioGroup)view.findViewById(R.id.user_profile_gender);
 
         preferences = PreferenceManager.getDefaultSharedPreferences(inflater.getContext());
         saveButton = (Button) view.findViewById(R.id.saveProfileButton);
@@ -61,7 +60,6 @@ public class ProfileEditFragment extends Fragment implements View.OnClickListene
 
                 .into(imageview);
         setCurrentValues(
-                preferences.getString(Constants.GENDER,""),
                 preferences.getString(Constants.SHORT_BIO,""),
                 preferences.getString(Constants.LOCATION,""),
                 preferences.getString(Constants.DISH,""),
@@ -70,31 +68,16 @@ public class ProfileEditFragment extends Fragment implements View.OnClickListene
 
         return root;
     }
-    public void setCurrentValues(String gen, String bio, String location, String dish, String cuisine){
+    public void setCurrentValues(String bio, String location, String dish, String cuisine){
         short_bio.setText(bio);
         this.location.setText(location);
         this.dish.setText(dish);
         this.cuisine.setText(cuisine);
-
-        RadioButton gender_male = (RadioButton)view.findViewById(R.id.male);
-        RadioButton gender_female = (RadioButton)view.findViewById(R.id.female);
-        if(gen.equals(gender_male.getText().toString())){
-            ((RadioButton)gender.getChildAt(0)).setChecked(true);
-        }else if(gen.equals(gender_female.getText().toString())){
-            ((RadioButton)gender.getChildAt(1)).setChecked(true);
-        }else{}
     }
     @Override
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.saveProfileButton:
-                String gender_text = "Gender: N/A";
-                if(gender.getCheckedRadioButtonId() == -1){
-                }else{
-                    chosengender = (RadioButton)view.findViewById(gender.getCheckedRadioButtonId());
-                    gender_text = chosengender.getText().toString();
-                    editor.putString(Constants.GENDER, gender_text);
-                }
 
                 String short_bio_text = short_bio.getText().toString();
                 String location_text = location.getText().toString();

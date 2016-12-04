@@ -33,31 +33,6 @@
                 android:layout_height="wrap_content"
                 android:background="#fff"
                 android:clickable="false"
-                android:text="Gender"
-                android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
-
-            <RadioGroup
-                android:id="@+id/user_profile_gender"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/line">
-            <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/male"
-            android:text="Male" />
-            <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/female"
-            android:text="Female" />
-            </RadioGroup>
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="#fff"
-                android:clickable="false"
                 android:text="Location"
                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
             <EditText
