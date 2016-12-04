@@ -43,6 +43,7 @@ public class User implements Serializable{
     private int id;
     private Date birthday;
     private String name;
+    private String gender;
     private com.example.dindin.com.example.Location location;
     private Profile facebookProfile;
     private double userRating;
@@ -75,14 +76,13 @@ public class User implements Serializable{
         this.age = Integer.toString(AgeRange.findAge(date));
     }
 
-    public User(int userId, String fbID, String userName, Location userLoc, Profile userProfile, double rating,
+    public User(int userId, String fbID, String userName, Location userLoc, double rating,
                 HashMap<String, String> potMatches, HashMap<String, String> finMatches, Preferences prefs)
     {
         this.id = userId;
         this.fbId = fbID;
         this.name = userName;
         this.location = userLoc;
-        this.facebookProfile = userProfile;
         this.userRating = rating;
         this.potentialMatches = potMatches;
         this.finalizedMatches = finMatches;
@@ -94,7 +94,6 @@ public class User implements Serializable{
         String fbID = "1";
         String uName = "Tom";
         Location uLoc = new Location(1, 2);
-        Profile uProfile = null;
         double uRating = 3.9;
         AgeRange range = new AgeRange(18, 22);
         ArrayList<String> prefCuisine = new ArrayList<String>();
@@ -110,7 +109,7 @@ public class User implements Serializable{
         finMatches.put("5", "5");
         finMatches.put("6", "6");
         finMatches.put("7", "7");
-        return new User(uID, fbID, uName, uLoc, uProfile, uRating, potMatches, finMatches, prefs);
+        return new User(uID, fbID, uName, uLoc, uRating, potMatches, finMatches, prefs);
     }
 
     public int getId() {
@@ -126,6 +125,8 @@ public class User implements Serializable{
     public String getName() {
         return name;
     }
+
+    public String getGender() { return gender; }
 
     public String getAge() {return age;}
 
@@ -175,6 +176,8 @@ public class User implements Serializable{
         this.name = name;
     }
 
+    public void setGender(String gender) {this.gender = gender; }
+
     public void setLocation(com.example.dindin.com.example.Location location) {
         this.location = location;
     }
@@ -223,22 +226,54 @@ public class User implements Serializable{
     }
 
     public boolean matchesPreferences(User user2){
-        if(this.getPreferences().areComplementaryRoles(user2.getPreferences()) &&
-                this.isInAgeRange(user2) &&
-                this.getPreferences().shareCuisineInterests(user2.getPreferences())){
-            return true;
-        } else{
-            return false;
+        boolean preferencesMatch = false;
+        try{
+            preferencesMatch = this.getPreferences().areComplementaryRoles(user2.getPreferences());
+            if(!preferencesMatch){
+                return false;
+            }
+        } catch(NullPointerException e){
         }
+        try{
+            preferencesMatch = this.isInAgeRange(user2);
+            if(!preferencesMatch){
+                return false;
+            }
+        } catch(NullPointerException e){
+        }
+        try{
+            preferencesMatch = this.getPreferences().shareCuisineInterests(user2.getPreferences());
+            if(!preferencesMatch){
+                return false;
+            }
+        } catch(NullPointerException e){
+        }
+        return true;
+
     }
 
     public boolean isInAgeRange(User user2){
-        return this.getPreferences().getAgeRange().isInAgeRange(user2.getBirthday());
+        try {
+            return this.getPreferences().getAgeRange().isInAgeRange(user2.getBirthday());
+        } catch(NullPointerException e){
+            return true;
+        }
     }
 
-    // TODO
     public boolean isInPreferredRange(User user2){
-        return false;
+        try{
+            return this.getLocation().isInRange(user2.getLocation(), this.getPreferences().getMaxMatchDistance());
+        } catch(NullPointerException e){
+            return true;
+        }
+    }
+
+    public boolean isPotentialMatchFor(User user){
+        try {
+            return this.matchesPreferences(user) && this.isInAgeRange(user) && isInPreferredRange(user);
+        } catch(NullPointerException e){
+            return true;
+        }
     }
 
     public static void generateDummyUsers() {
@@ -341,6 +376,48 @@ public class User implements Serializable{
             }
         });
 
+    }
+
+    public static User makeMeAUserDamnit(){
+        Location loc1 = new Location(30.2672, -97.7431);
+        ArrayList<String> preferredCuisine1 = new ArrayList<String>();
+        preferredCuisine1.add("Mexican");
+        preferredCuisine1.add("Chinese");
+        preferredCuisine1.add("Indian");
+        preferredCuisine1.add("American");
+        preferredCuisine1.add("Trash");
+        AgeRange range1 = new AgeRange(18, 24);
+        Preferences pref1 = new Preferences("Cook", 20, range1, preferredCuisine1);
+        HashMap<String, String> empty = new HashMap<>();
+        User testUser = new User(1, "123", "Test User1", loc1, 5.0, empty, empty, pref1);
+        testUser.setBirthday(new Date("09/23/1994"));
+        return testUser;
+    }
+
+    public static void filterMatches(HashMap<String, User> users){
+        HashMap<String, User> matches = new HashMap<>();
+        User currentUser = Constants.currentUser;
+        HashMap<String, String> swipedRight = currentUser.getSwipedRight();
+        if(swipedRight == null){
+            swipedRight = new HashMap<String, String>();
+        }
+        HashMap<String, String> swipedLeft = currentUser.getSwipedLeft();
+        if(swipedLeft == null){
+            swipedLeft = new HashMap<String, String>();
+        }
+        HashMap<String, String> potentialMatches = currentUser.getPotentialMatches();
+        if(potentialMatches == null){
+            potentialMatches = new HashMap<String, String>();
+        }
+        for(String id : users.keySet()){
+            User u = users.get(id);
+            if(currentUser.getfbId() != u.getfbId() && currentUser.isPotentialMatchFor(u) &&
+                    !swipedLeft.containsKey(id) && !swipedRight.containsKey(id) &&
+                    !potentialMatches.containsKey(id)){
+                matches.put(id, u);
+            }
+        }
+        Constants.feasibleMatches = matches;
     }
 
 }
