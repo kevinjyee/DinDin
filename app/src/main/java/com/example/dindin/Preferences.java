@@ -18,6 +18,7 @@ public class Preferences implements Serializable{
     private double maxMatchDistance; //radius size (miles) within user location for matching
     private AgeRange ageRange;
     private ArrayList<String> preferredCuisines;
+    private String preferredGender;
 
     public Preferences(){
 
@@ -38,6 +39,8 @@ public class Preferences implements Serializable{
     public String getPreferredTask(){
         return this.preferredTask;
     }
+
+    public String getPreferredGender(){return this.preferredGender;}
 
     public double getMaxMatchDistance(){
         return this.maxMatchDistance;
@@ -62,6 +65,8 @@ public class Preferences implements Serializable{
     public void setAgeRange(AgeRange range){
         this.ageRange = range;
     }
+
+    public void setPreferredGender(String gender){this.preferredGender = gender;}
 
     public void setPreferredCuisines(ArrayList<String> cuisinePreferences){
         this.preferredCuisines = cuisinePreferences;

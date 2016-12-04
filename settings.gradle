@@ -1,2 +1,3 @@
 include ':app', ':lib', ':dindinServlet'
 include ':lib:libs'
+include ':rangeBar'
