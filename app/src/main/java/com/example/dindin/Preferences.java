@@ -5,6 +5,7 @@ import com.example.dindin.com.example.AgeRange;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -76,10 +77,6 @@ public class Preferences implements Serializable{
         } else{
             return false;
         }
-    }
-
-    public boolean isInAgeRange(Preferences pref2){
-        return false; // PLACEHOLDER. FIX THIS
     }
 
     public boolean shareCuisineInterests(Preferences pref2){
