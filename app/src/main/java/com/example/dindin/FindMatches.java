@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -72,7 +73,7 @@ public class FindMatches extends Fragment implements View.OnClickListener{
     private RelativeLayout noMatchFound;
     private ImageView userProfilImage, amimagetedview;
     private TextView messagetextview;
-
+    private FloatingActionButton fab;
     private ArrayList<User> MatchedUserList;
     private User UserData;
     private String matchedUsersFaceBookID;
@@ -275,6 +276,13 @@ public class FindMatches extends Fragment implements View.OnClickListener{
         }
 
         // addView Here
+
+        fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //TODO: STEFAN DO THIS HERE TOO
+            }
+        });
 
         return view;
     }
@@ -634,7 +642,7 @@ public class FindMatches extends Fragment implements View.OnClickListener{
             if (MatchCount > 0) {
                 likedislikelayout.setVisibility(View.VISIBLE);
                 swipeviewlayout.setVisibility(View.VISIBLE);
-
+                fab.setVisibility(View.VISIBLE);
             }
 
 

@@ -8,12 +8,18 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -25,64 +31,89 @@ import com.google.android.gms.cast.framework.SessionManager;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
-public class MessageActivity extends Fragment{
+import static android.R.attr.filter;
+
+public class MessageActivity extends Fragment {
     private ListView matcheslistview;
     private View view;
     private FloatingActionButton fab;
-
+    private EditText searchThings;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-            // Inflate the layout for this fragment
-            ViewGroup root = (ViewGroup) inflater.inflate(R.layout.activity_message, null);
-            view = root;
+        // Inflate the layout for this fragment
+        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.activity_message, null);
 
-            fab = (FloatingActionButton) view.findViewById(R.id.fab);
-            fab.setOnClickListener(new View.OnClickListener() {
+        view = root;
+
+        fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //TODO: STEFAN DO THIS HERE TOO
             }
         });
-            matcheslistview = (ListView) view.findViewById(R.id.menu_right_ListView);
-        Utilities  currUtils = new Utilities();
+        matcheslistview = (ListView) view.findViewById(R.id.menu_right_ListView);
+        Utilities currUtils = new Utilities();
         int imageHeightandWidht[] = currUtils.getImageHeightandWidthforMatchView(getActivity());
         HashSet<User> usersHashSet = new HashSet<>();
         usersHashSet.addAll(Constants.usersMatchedwith);
         Constants.usersMatchedwith.clear();
         Constants.usersMatchedwith.addAll(usersHashSet);
-        MatchedDataAdapter adapter = new MatchedDataAdapter(getActivity(), Constants.usersMatchedwith);
+        final MatchedDataAdapter adapter = new MatchedDataAdapter(getActivity(), Constants.usersMatchedwith);
         matcheslistview.setAdapter(adapter);
-        matcheslistview.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {
+        matcheslistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1,int position, long arg3)
-            {
+            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
                 Bundle mBundle = new Bundle();
                 String targetID;
-                User targetUser = (User)matcheslistview.getAdapter().getItem(position);
+                User targetUser = (User) matcheslistview.getAdapter().getItem(position);
                 targetID = targetUser.getfbId();
 
                 mBundle.putString("targetID", targetID);
-                Intent mIntent = new Intent(getActivity(),MessagingActivity.class);
+                Intent mIntent = new Intent(getActivity(), MessagingActivity.class);
                 mIntent.putExtras(mBundle);
                 startActivity(mIntent);
             }
         });
 
-            return root;
-        }
+
+        // search
+        searchThings = (EditText) view
+                .findViewById(R.id.et_serch_right_side_menu);
+        searchThings.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before,
+                                      int count) {
 
 
+                adapter.getFilter().filter(s.toString().trim());
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+
+
+        });
+
+        return root;
+    }
 
 
     private class MatchedDataAdapter extends
-            BaseAdapter {
-
+            BaseAdapter implements Filterable {
 
 
         private ArrayList<User> listContact;
@@ -93,10 +124,14 @@ public class MessageActivity extends Fragment{
         private SharedPreferences.Editor editor;
 
 
+        private ArrayList<User> filteredData;
+
+
         public MatchedDataAdapter(Context context,
                                   ArrayList<User> objects
-                                  ) {
+        ) {
             listContact = objects;
+            filteredData = objects;
             mInflater = LayoutInflater.from(context);
 
             pref = PreferenceManager.getDefaultSharedPreferences(getActivity());
@@ -105,16 +140,14 @@ public class MessageActivity extends Fragment{
         }
 
 
-
-
         @Override
         public int getCount() {
-            return listContact.size();
+            return filteredData.size();
         }
 
         @Override
         public User getItem(int position) {
-            return listContact.get(position);
+            return filteredData.get(position);
         }
 
         @Override
@@ -150,12 +183,13 @@ public class MessageActivity extends Fragment{
                     .load("https://graph.facebook.com/v2.2/" + getItem(position).getfbId() + "/picture?height=120&type=normal")
                     .into(holder.imageview);
             try {
-                holder.lastMasage.setText(pref.getString(getItem(position).getfbId(),null));
+                holder.lastMasage.setText(pref.getString(getItem(position).getfbId(), null));
             } catch (Exception e) {
 
             }
 
             return convertView;
+
         }
 
         class ViewHolder {
@@ -166,8 +200,44 @@ public class MessageActivity extends Fragment{
         }
 
 
+        @Override
+        public Filter getFilter() {
+            return new Filter() {
+                @Override
+                protected Filter.FilterResults performFiltering(CharSequence charSequence) {
+                    FilterResults results = new FilterResults();
+
+                    //If there's nothing to filter on, return the original data for your list
+                    if (charSequence == null || charSequence.length() == 0) {
+                        results.values = listContact;
+                        results.count = listContact.size();
+                    } else {
+                        ArrayList<User> filterResultsData = new ArrayList<User>();
+
+                        for (User data : listContact) {
+                            //In this loop, you'll filter through originalData and compare each item to charSequence.
+                            //If you find a match, add it to your new ArrayList
+                            //I'm not sure how you're going to do comparison, so you'll need to fill out this conditional
+                            if (data.getName().contains(charSequence)) {
+                                filterResultsData.add(data);
+                            }
+                        }
+
+                        results.values = filterResultsData;
+                        results.count = filterResultsData.size();
+                    }
+
+                    return results;
+                }
+
+                @Override
+                protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                    filteredData = (ArrayList<User>) filterResults.values;
+                    notifyDataSetChanged();
+                }
+
+
+            };
+        }
     }
-
-
-
 }

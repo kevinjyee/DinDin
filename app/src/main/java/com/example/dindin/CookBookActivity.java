@@ -15,6 +15,8 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +24,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -40,7 +45,7 @@ import java.util.List;
 public class CookBookActivity extends Fragment {
     private ListView matcheslistview;
     private View view;
-
+    private EditText searchThings;
 
 
     @Override
@@ -53,22 +58,47 @@ public class CookBookActivity extends Fragment {
         view = root;
 
         matcheslistview = (ListView) view.findViewById(R.id.menu_right_ListView);
-        Utilities  currUtils = new Utilities();
+        Utilities currUtils = new Utilities();
         int imageHeightandWidht[] = currUtils.getImageHeightandWidthforMatchView(getActivity());
 
 
-        MatchedDataAdapter adapter = new MatchedDataAdapter(getActivity(), Constants.recipsesMatchedwith);
+        final MatchedDataAdapter adapter = new MatchedDataAdapter(getActivity(), Constants.recipsesMatchedwith);
         matcheslistview.setAdapter(adapter);
+
+        // search
+        searchThings = (EditText) view
+                .findViewById(R.id.et_serch_right_side_menu);
+        searchThings.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before,
+                                      int count) {
+
+
+                adapter.getFilter().filter(s.toString().trim());
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+
+
+        });
 
         return root;
     }
 
     private class MatchedDataAdapter extends
-            BaseAdapter {
-
+            BaseAdapter implements Filterable {
 
 
         private ArrayList<Recipe> listContact;
+        private ArrayList<Recipe> filteredData;
         private LayoutInflater mInflater;
 
 
@@ -76,21 +106,20 @@ public class CookBookActivity extends Fragment {
                                   ArrayList<Recipe> objects
         ) {
             listContact = objects;
+            filteredData = objects;
             mInflater = LayoutInflater.from(context);
 
         }
 
 
-
-
         @Override
         public int getCount() {
-            return listContact.size();
+            return filteredData.size();
         }
 
         @Override
         public Recipe getItem(int position) {
-            return listContact.get(position);
+            return filteredData.get(position);
         }
 
         @Override
@@ -131,12 +160,10 @@ public class CookBookActivity extends Fragment {
 
             }
 
-            holder.imageview.setOnClickListener(new View.OnClickListener()
-            {
-                public void onClick(View v)
-                {
+            holder.imageview.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
                     int[] location = new int[2];
-                   int  currentRowId = position;
+                    int currentRowId = position;
                     View currentRow = v;
                     // Get the x, y location and store it in the location[] array
                     // location[0] = x, location[1] = y.
@@ -146,7 +173,7 @@ public class CookBookActivity extends Fragment {
                     Point point = new Point();
                     point.x = location[0];
                     point.y = location[1];
-                    showStatusPopup(getActivity(), point,getItem(position));
+                    showStatusPopup(getActivity(), point, getItem(position));
                 }
             });
 
@@ -160,37 +187,76 @@ public class CookBookActivity extends Fragment {
             TextView lastMasage;
 
         }
+
+        @Override
+        public Filter getFilter() {
+            return new Filter() {
+                @Override
+                protected Filter.FilterResults performFiltering(CharSequence charSequence) {
+                    FilterResults results = new FilterResults();
+
+                    //If there's nothing to filter on, return the original data for your list
+                    if (charSequence == null || charSequence.length() == 0) {
+                        results.values = listContact;
+                        results.count = listContact.size();
+                    } else {
+                        ArrayList<Recipe> filterResultsData = new ArrayList<Recipe>();
+
+                        for (Recipe data : listContact) {
+                            //In this loop, you'll filter through originalData and compare each item to charSequence.
+                            //If you find a match, add it to your new ArrayList
+                            //I'm not sure how you're going to do comparison, so you'll need to fill out this conditional
+                            if (data.getFoodName().contains(charSequence)) {
+                                filterResultsData.add(data);
+                            }
+                        }
+
+                        results.values = filterResultsData;
+                        results.count = filterResultsData.size();
+                    }
+
+                    return results;
+                }
+
+                @Override
+                protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                    filteredData = (ArrayList<Recipe>) filterResults.values;
+                    notifyDataSetChanged();
+                }
+
+
+            };
+        }
+
+        private void showStatusPopup(final Activity context, Point p, Recipe currentRecipe) {
+
+            // Inflate the popup_layout.xml
+            LinearLayout viewGroup = (LinearLayout) context.findViewById(R.id.recipe_view);
+            LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View layout = layoutInflater.inflate(R.layout.recipe_list, null);
+
+            TextView recipeText = (TextView) layout.findViewById(R.id.recipes);
+            recipeText.setText(currentRecipe.getRecipe());
+            // Creating the PopupWindow
+            PopupWindow changeStatusPopUp = new PopupWindow(context);
+            changeStatusPopUp.setContentView(layout);
+            changeStatusPopUp.setWidth(LinearLayout.LayoutParams.WRAP_CONTENT);
+            changeStatusPopUp.setHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
+            changeStatusPopUp.setFocusable(true);
+
+            // Some offset to align the popup a bit to the left, and a bit down, relative to button's position.
+            int OFFSET_X = -20;
+            int OFFSET_Y = 50;
+
+            //Clear the default translucent background
+            ColorDrawable colorDrawable = new ColorDrawable();
+            colorDrawable.setColor(0xffFEBB31);
+            changeStatusPopUp.setBackgroundDrawable(colorDrawable);
+
+            // Displaying the popup at the specified location, + offsets.
+            changeStatusPopUp.showAtLocation(layout, Gravity.NO_GRAVITY, p.x + OFFSET_X, p.y + OFFSET_Y);
+        }
+
+
     }
-
-    private void showStatusPopup(final Activity context, Point p,Recipe currentRecipe) {
-
-        // Inflate the popup_layout.xml
-        LinearLayout viewGroup = (LinearLayout) context.findViewById(R.id.recipe_view);
-        LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View layout = layoutInflater.inflate(R.layout.recipe_list, null);
-
-        TextView recipeText = (TextView) layout.findViewById(R.id.recipes);
-        recipeText.setText(currentRecipe.getRecipe());
-        // Creating the PopupWindow
-        PopupWindow changeStatusPopUp = new PopupWindow(context);
-        changeStatusPopUp.setContentView(layout);
-        changeStatusPopUp.setWidth(LinearLayout.LayoutParams.WRAP_CONTENT);
-        changeStatusPopUp.setHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
-        changeStatusPopUp.setFocusable(true);
-
-        // Some offset to align the popup a bit to the left, and a bit down, relative to button's position.
-        int OFFSET_X = -20;
-        int OFFSET_Y = 50;
-
-        //Clear the default translucent background
-        ColorDrawable colorDrawable = new ColorDrawable();
-        colorDrawable.setColor(0xffFEBB31);
-        changeStatusPopUp.setBackgroundDrawable(colorDrawable);
-
-        // Displaying the popup at the specified location, + offsets.
-        changeStatusPopUp.showAtLocation(layout, Gravity.NO_GRAVITY, p.x + OFFSET_X, p.y + OFFSET_Y);
-    }
-
-
-
 }
