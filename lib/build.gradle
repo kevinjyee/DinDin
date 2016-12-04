@@ -6,6 +6,7 @@ dependencies {
     compile files('libs/jackson-core-2.8.4.jar')
     compile files('libs/jackson-databind-2.8.4.jar')
     compile files('libs/gson-2.2.4.jar', 'libs/gson-2.2.4-javadoc.jar', 'libs/gson-2.2.4-javadoc.jar')
+
 }
 
 sourceCompatibility = "1.7"
