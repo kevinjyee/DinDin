@@ -24,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.dindin.com.example.NavBarActivity;
 import com.example.dindin.utilities.Constants;
 import com.example.dindin.utilities.MessageAdapter;
 import com.example.dindin.utilities.Utilities;
@@ -36,6 +37,7 @@ import java.util.HashSet;
 import java.util.List;
 
 import static android.R.attr.filter;
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class MessageActivity extends Fragment {
     private ListView matcheslistview;
@@ -55,7 +57,10 @@ public class MessageActivity extends Fragment {
         fab = (FloatingActionButton) view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //TODO: STEFAN DO THIS HERE TOO
+                Constants.goToMatching = new Intent(getApplicationContext(), NavBarActivity.class);
+                Constants.goToMatching.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                Constants.context = getApplicationContext();
+                Constants.fbHelp.findMatches();
             }
         });
         matcheslistview = (ListView) view.findViewById(R.id.menu_right_ListView);

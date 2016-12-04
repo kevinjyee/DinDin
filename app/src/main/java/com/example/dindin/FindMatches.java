@@ -55,6 +55,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import static android.R.attr.action;
+import static com.facebook.FacebookSdk.getApplicationContext;
 import static com.google.android.gms.wearable.DataMap.TAG;
 
 /**
@@ -280,7 +281,10 @@ public class FindMatches extends Fragment implements View.OnClickListener{
         fab = (FloatingActionButton) view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //TODO: STEFAN DO THIS HERE TOO
+                Constants.goToMatching = new Intent(getApplicationContext(), NavBarActivity.class);
+                Constants.goToMatching.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                Constants.context = getApplicationContext();
+                Constants.fbHelp.findMatches();
             }
         });
 
