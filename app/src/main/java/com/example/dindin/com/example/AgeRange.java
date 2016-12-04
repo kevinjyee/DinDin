@@ -16,8 +16,8 @@ public class AgeRange implements Serializable{
     private int maxAge;
 
     public AgeRange(){
-        this.minAge = 0;
-        this.maxAge = 0;
+        this.minAge = 18;
+        this.maxAge = 55;
     }
 
     public AgeRange(int minimumAge, int maximumAge){
