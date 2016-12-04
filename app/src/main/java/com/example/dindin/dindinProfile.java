@@ -1,10 +1,12 @@
 package com.example.dindin;
 
+import java.io.Serializable;
+
 /**
  * Created by Stefan on 12/4/2016.
  */
 
-public class dindinProfile {
+public class dindinProfile implements Serializable{
     private String customLocation;
     private String shortBio;
     private String favoriteDishes;

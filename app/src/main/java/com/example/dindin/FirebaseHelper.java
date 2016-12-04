@@ -135,12 +135,12 @@ public class FirebaseHelper implements Runnable{
                     }
                     User.filterMatches(users);
                 }
+                Constants.context.startActivity(Constants.goToMatching);
             }
             @Override
             public void onCancelled(DatabaseError DatabaseError) {
             }
         });
-        Constants.context.startActivity(Constants.goToMatching);
     }
 
     public void clearMatchHistory(){
@@ -160,13 +160,14 @@ public class FirebaseHelper implements Runnable{
                     Constants.currentUser.setSwipedLeft(empty);
                     Constants.currentUser.setSwipedRight(empty);
                     data.getRef().setValue(Constants.currentUser);
+                    Constants.usersMatchedwith.clear();
                 }
             }
             @Override
             public void onCancelled(DatabaseError DatabaseError) {
             }
         });
-        Constants.context.startActivity(Constants.goToMatching);
+        //Constants.context.startActivity(Constants.goToMatching);
     }
 
     public void instantiateDB(){

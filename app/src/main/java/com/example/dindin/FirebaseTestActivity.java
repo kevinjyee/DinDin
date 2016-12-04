@@ -64,7 +64,7 @@ public class FirebaseTestActivity extends AppCompatActivity {
         Constants.goToMatching.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         Constants.context = getApplicationContext();
         Constants.fbHelp.findMatches();
-        Constants.fbHelp.clearMatchHistory();
+        //Constants.fbHelp.clearMatchHistory();
 
         // Create a new Adapter
         final ArrayAdapter<String> adapter = new ArrayAdapter<>(this,

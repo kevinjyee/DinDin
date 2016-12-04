@@ -287,7 +287,7 @@ public class User implements Serializable{
 
     public boolean isPotentialMatchFor(User user){
         try {
-            return this.matchesPreferences(user) && this.isInAgeRange(user) && isInPreferredRange(user);
+            return this.matchesPreferences(user) && isInPreferredRange(user);
         } catch(NullPointerException e){
             return true;
         }

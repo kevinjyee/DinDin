@@ -202,6 +202,7 @@ public class PreferencesFragment extends Fragment implements OnClickListener {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 currentPref.setMaxMatchDistance((double) progress);
                 searchradius.setText("" + progress);
+                Constants.usersMatchedwith.clear();
                 Constants.fbHelp.updateUser();
             }
 
@@ -331,7 +332,7 @@ public class PreferencesFragment extends Fragment implements OnClickListener {
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.clearHistoryButton) {
-            //TODO: Stefan todo here
+            Constants.fbHelp.clearMatchHistory();
         }
     }
 
