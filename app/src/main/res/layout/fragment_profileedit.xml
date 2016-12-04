@@ -21,31 +21,13 @@
             android:scaleType="centerCrop"
             />
 
-
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/user_profile_photo"
             android:layout_marginTop="5dp"
             android:orientation="vertical">
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="#fff"
-                android:clickable="false"
-                android:text="Display Name"
-                android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
-            <EditText
-                android:id="@+id/user_profile_name"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:background="@drawable/line"
-                android:clickable="true"
-                android:elevation="4dp"
-                android:maxLength="200"
-                android:padding="20dp"
-                android:top = "2dp" />
+
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -70,23 +52,6 @@
             android:id="@+id/female"
             android:text="Female" />
             </RadioGroup>
-
-            <TextView
-
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="#fff"
-                android:clickable="false"
-                android:text="Age"
-                android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                android:ems="10"
-                android:maxLength="3"
-                android:id="@+id/profile_age" />
 
             <TextView
                 android:layout_width="fill_parent"

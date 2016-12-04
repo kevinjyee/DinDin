@@ -48,9 +48,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 .error(R.drawable.dislike_off) //
                 .into(imageview);
 
-        //nameage.setText(firstname+ ", " + "21");
         setProfileInfo(preferences.getString(Constants.DISPLAY_NAME,firstname),
-                preferences.getString(Constants.GENDER,"TBD"),
+                preferences.getString(Constants.GENDER,"Gender: N/A"),
                 preferences.getString(Constants.AGE,"21"),
                 preferences.getString(Constants.SHORT_BIO,Constants.UNKNOWN),
                 preferences.getString(Constants.LOCATION,"Austin,TX"),
