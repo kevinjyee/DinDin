@@ -143,6 +143,32 @@ public class FirebaseHelper implements Runnable{
         Constants.context.startActivity(Constants.goToMatching);
     }
 
+    public void clearMatchHistory(){
+        this.currentUser = Constants.currentUser;
+        Query myQuery = myRefIndiv.orderByChild("fbId").equalTo(currentUser.getfbId());
+        myQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                HashMap<String, String> empty = new HashMap<>();
+                Object user = snapshot.getValue();
+                if(user == null){
+                } else{
+                    DataSnapshot data = (DataSnapshot) snapshot.getChildren().iterator().next();
+                    User u = data.getValue(User.class);
+                    Constants.currentUser.setFinalizedMatches(empty);
+                    Constants.currentUser.setPotentialMatches(empty);
+                    Constants.currentUser.setSwipedLeft(empty);
+                    Constants.currentUser.setSwipedRight(empty);
+                    data.getRef().setValue(Constants.currentUser);
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError DatabaseError) {
+            }
+        });
+        Constants.context.startActivity(Constants.goToMatching);
+    }
+
     public void instantiateDB(){
             DatabaseReference childRef = myRefIndiv.push();
             childRef.setValue(currentUser);

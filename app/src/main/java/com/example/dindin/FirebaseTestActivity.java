@@ -51,14 +51,9 @@ public class FirebaseTestActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_firebase_test);
-        //User u = User.makeMeAUserDamnit();
-        //fbHelp.addUser(u);
-        //fbHelp.getUsers();
-        // Get ListView object from xml
         final ListView listView = (ListView) findViewById(R.id.listView);
         Intent intent = getIntent();
-        //updateUserHash();
-        // Load User passed down by LoginActivity
+
         currentUser = (User) intent.getSerializableExtra("currentUser");
         Constants.fbHelp.addUser(currentUser);
         currentUserIsInDatabase = false;
@@ -69,6 +64,7 @@ public class FirebaseTestActivity extends AppCompatActivity {
         Constants.goToMatching.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         Constants.context = getApplicationContext();
         Constants.fbHelp.findMatches();
+        Constants.fbHelp.clearMatchHistory();
 
         // Create a new Adapter
         final ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
@@ -76,17 +72,6 @@ public class FirebaseTestActivity extends AppCompatActivity {
 
         // Assign adapter to ListView
         listView.setAdapter(adapter);
-
-        /*
-        // Connect to the Firebase database
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-
-        // Get a reference to the todoItems child items it the database
-        final DatabaseReference myRef = database.getReference("usersHashSet");
-        final DatabaseReference myRefIndiv = database.getReference("user");
-        final DatabaseReference myRecipeRef = database.getReference("recipesHashSet");
-        final DatabaseReference myRecipeRefIndiv = database.getReference("recipe");
-        */
 
         Constants.myRecipeRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -96,247 +81,13 @@ public class FirebaseTestActivity extends AppCompatActivity {
                     instantiateRecipeDB();
                 }
             }
+
             @Override
             public void onCancelled(DatabaseError DatabaseError) {
             }
         });
-
-        /*
-        Constants.myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                Object userHash = snapshot.getValue();
-                if (userHash == null) {
-                    instantiateDB();
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError DatabaseError) {
-            }
-        });
-
-        // Assign a listener to detect changes to the child items
-        // of the database reference.
-        Constants.myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-
-            // This function is called once for each child that exists
-            // when the listener is added. Then it is called
-            // each time a new child is added.
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Object hash = dataSnapshot.getValue();
-                if(hash != null) {
-                    String hashString = hash.toString();
-                    String userHash = parseSnapshot(hashString);
-
-                    //DataSnapshot firstChild = dataSnapshot.getChildren().iterator().next();
-                    //String userHash = firstChild.getValue(String.class);
-                    ObjectMapper mapper = new ObjectMapper();
-                    TypeFactory typeFactory = mapper.getTypeFactory();
-                    HashMap<String, User> users = null;
-                    try {
-                        // Read out json hash set.
-                        users = mapper.readValue(userHash,
-                                new TypeReference<HashMap<String, User>>(){});
-                        for (String id : users.keySet()) {
-                            if (!id.equals(currentUser.getfbId()) && !databaseReloaded) {
-                                matches.put(id, users.get(id));
-                                adapter.add(users.get(id).getName());
-                            } else if(id.equals(currentUser.getfbId())){
-                                currentUserIsInDatabase = true;
-                                currentUser = users.get(id);
-                            }
-                        }
-                        if (!currentUserIsInDatabase && !databaseReloaded) { // If user not found, add to database and update database.
-                            users.put(currentUser.getfbId(), currentUser);
-                            dataSnapshot.getRef().removeValue();
-                            try {
-                                String jsonUsers = mapper.writeValueAsString(users);
-                                System.out.println(jsonUsers);
-                                // Create a new child with a auto-generated ID.
-                                //DataSnapshot firstChild = dataSnapshot.iterator().next();
-                                //firstChild.getRef().setValue(jsonUsers);
-                                DatabaseReference childRef = Constants.myRef.push();
-
-                                // Set the child's data to the value passed in from the text box.
-                                childRef.setValue(jsonUsers);
-                                childRef = Constants.myRefIndiv.push();
-                                childRef.setValue(currentUser);
-                                databaseReloaded = true;
-                            } catch (JsonGenerationException e) {
-                                e.printStackTrace();
-                            } catch (JsonMappingException e) {
-                                e.printStackTrace();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    //goToNextActivity.putExtra("matchList", matches);
-                    //Constants.feasibleMatches = matches;
-                    //   editor.putString(Constants.PROFILE_IMAGE_ONE,
-                    // getStoredImageUrl("1", data.getProfilePicture()));
-
-                    //startActivity(goToNextActivity);
-                    finish();
-                }
-                }
-
-            // This function is called each time a child item is removed.
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-                String userJSON = dataSnapshot.getValue(String.class);
-                ObjectMapper mapper = new ObjectMapper();
-            }
-
-            void onChildMoved(DataSnapshot dataSnapshot, String previousChildName) {
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w("TAG:", "Failed to read value.", error.toException());
-            }
-        });
-    /*
-        // Assign a listener to detect changes to the child items
-        // of the database reference.
-        Constants.myRef.addChildEventListener(new ChildEventListener() {
-
-            // This function is called once for each child that exists
-            // when the listener is added. Then it is called
-            // each time a new child is added.
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
-                String userHash = dataSnapshot.getValue(String.class);
-                ObjectMapper mapper = new ObjectMapper();
-                TypeFactory typeFactory = mapper.getTypeFactory();
-                HashMap<String, User> users = null;
-                try {
-                    // Read out json hash set.
-                    users = mapper.readValue(userHash,
-                            new TypeReference<HashMap<String, User>>(){});
-                    for (String id : users.keySet()) {
-                        if (!id.equals(currentUser.getfbId()) && !databaseReloaded) {
-                            matches.put(id, users.get(id));
-                            adapter.add(users.get(id).getName());
-                        } else if(id.equals(currentUser.getfbId())){
-                            currentUserIsInDatabase = true;
-                            currentUser = users.get(id);
-                        }
-                    }
-                    if (!currentUserIsInDatabase && !databaseReloaded) { // If user not found, add to database and update database.
-                        users.put(currentUser.getfbId(), currentUser);
-                        // dataSnapshot.getRef().removeValue();
-                        try {
-                            String jsonUsers = mapper.writeValueAsString(users);
-                            System.out.println(jsonUsers);
-                            // Create a new child with a auto-generated ID.
-                            //DataSnapshot firstChild = dataSnapshot.iterator().next();
-                            //firstChild.getRef().setValue(jsonUsers);
-                            DatabaseReference childRef = Constants.myRef.push();
-
-                            // Set the child's data to the value passed in from the text box.
-                            childRef.setValue(jsonUsers);
-                            childRef = Constants.myRefIndiv.push();
-                            childRef.setValue(currentUser);
-                            databaseReloaded = true;
-                        } catch (JsonGenerationException e) {
-                            e.printStackTrace();
-                        } catch (JsonMappingException e) {
-                            e.printStackTrace();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                //goToNextActivity.putExtra("matchList", matches);
-                Constants.feasibleMatches = matches;
-                //   editor.putString(Constants.PROFILE_IMAGE_ONE,
-                // getStoredImageUrl("1", data.getProfilePicture()));
-
-                startActivity(goToNextActivity);
-            }
-
-            // This function is called each time a child item is removed.
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-                String userJSON = dataSnapshot.getValue(String.class);
-                ObjectMapper mapper = new ObjectMapper();
-            }
-
-            // The following functions are also required in ChildEventListener implementations.
-            public void onChildChanged(DataSnapshot dataSnapshot, String previousChildName) {
-            }
-
-            public void onChildMoved(DataSnapshot dataSnapshot, String previousChildName) {
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w("TAG:", "Failed to read value.", error.toException());
-            }
-        });
-*/
-        Query myQuery = Constants.myRefIndiv.orderByChild("fbId").equalTo(currentUser.getfbId());
-
-        myQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                User userHash = snapshot.getValue(User.class);
-                if (userHash != null) {
-                    //updateUserMatches(snapshot);
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError DatabaseError) {
-            }
-        });
-
+        finish();
     }
-
-    /*
-    public void createDefaultUsers(DatabaseReference myRef, DatabaseReference myRefIndiv){
-        User Kevin = User.createDefaultUser();
-        Kevin.setfbId("100001411585746");
-        User Tom = User.createDefaultUser();
-        User Davin = User.createDefaultUser();
-        Davin.setfbId("1151947893");
-        User Stephen = User.createDefaultUser();
-        Stephen.setfbId("705738627");
-        HashSet<User> users = new HashSet<User>();
-        users.add(Kevin);
-        users.add(Tom);
-        users.add(Davin);
-        users.add(Stephen);
-
-        for(User u : users){
-            DatabaseReference childRef2 = myRefIndiv.push();
-            childRef2.setValue(u);
-        }
-        ObjectMapper mapper = new ObjectMapper();
-
-        try {
-            String jsonUsers = mapper.writeValueAsString(users);
-            System.out.println(jsonUsers);
-            // Create a new child with a auto-generated ID.
-            DatabaseReference childRef = myRef.push();
-
-            // Set the child's data to the value passed in from the text box.
-            childRef.setValue(jsonUsers);
-        } catch (JsonGenerationException e) {
-            e.printStackTrace();
-        } catch (JsonMappingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-    */
 
     public void instantiateDB(){
         DatabaseReference childRef = Constants.myRefIndiv.push();

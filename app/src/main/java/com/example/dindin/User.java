@@ -52,6 +52,7 @@ public class User implements Serializable{
     private HashMap<String, String> swipedRight;
     private HashMap<String, String> finalizedMatches;
     private Preferences preferences;
+    private dindinProfile dindinProfile;
     @SerializedName("fbId")
 
     private String fbId;
@@ -163,6 +164,10 @@ public class User implements Serializable{
         return preferences;
     }
 
+    public dindinProfile getDindinProfile(){
+        return dindinProfile;
+    }
+
     public void setfbId(String id) {
         this.fbId = id;
     }
@@ -223,6 +228,10 @@ public class User implements Serializable{
 
     public void setPreferences(Preferences preferences) {
         this.preferences = preferences;
+    }
+
+    public void setDindinProfile(dindinProfile profile){
+        this.dindinProfile = profile;
     }
 
     public boolean matchesPreferences(User user2){
