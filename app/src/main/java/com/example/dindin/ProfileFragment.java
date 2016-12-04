@@ -26,6 +26,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private Button editButton;
     private TextView nameage, bio, loc, favdish, favcuisine, gender;
     private ImageView imageview;
+    private View toolbar;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -34,7 +35,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         view = root;
         editButton = (Button) view.findViewById(R.id.editProfileButton);
         editButton.setOnClickListener(this);
-
+        toolbar = view.findViewById(R.id.toolbar);
+        toolbar.setVisibility(View.GONE);
         nameage = (TextView)view.findViewById(R.id.user_profile_name);
         bio = (TextView)view.findViewById(R.id.profile_short_bio);
         loc = (TextView)view.findViewById(R.id.user_profile_location);

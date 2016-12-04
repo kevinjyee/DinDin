@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -34,6 +35,7 @@ public class ProfileActivity extends AppCompatActivity {
         imageview = (ImageView) findViewById(R.id.user_profile_photo);
         viewedUser = (User)getIntent().getExtras().getSerializable("viewedUser");
         layout = (RelativeLayout)findViewById(R.id.profile_layout);
+
         layout.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View arg0, MotionEvent arg1) {
