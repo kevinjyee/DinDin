@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.example.dindin.utilities.Constants;
 import com.squareup.picasso.Picasso;
 
 import static com.example.dindin.utilities.Constants.currentUser;
@@ -84,7 +85,7 @@ public class ProfileEditFragment extends Fragment implements View.OnClickListene
                 currentUser.getDindinProfile().setCustomLocation(location_text);
                 currentUser.getDindinProfile().setFavoriteDishes(dish_text);
                 currentUser.getDindinProfile().setFavoriteCuisines(cuisine_text);
-
+                Constants.fbHelp.updateUser();
                 break;
             case R.id.cancelProfileButton:
                 break;
