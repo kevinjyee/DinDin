@@ -147,7 +147,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginRight="10dp"
                     android:layout_toLeftOf="@+id/agedeshtextview"
-                    android:text="miniage" />
+                    android:text="18" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -178,6 +178,64 @@
                     android:progressDrawable="@drawable/styled_progress"
                     android:thumb="@drawable/slider_switch" />
             </RelativeLayout>
+
+            <!-- Show distance layout -->
+
+            <!-- limit to searchlayout -->
+
+            <RelativeLayout
+                android:id="@+id/limittosearchtextlayout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp" >
+
+                <TextView
+                    android:id="@+id/limitsearchtextview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="15dp"
+                    android:text="Search Distance" />
+
+                <TextView
+                    android:id="@+id/limitotsearchvalue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="15dp"
+                    android:text="55" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/limittosearchseekbarlayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                 >
+
+                <SeekBar
+                    android:id="@+id/seeklitmitosearch"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:max="100"
+                    android:maxHeight="4dp"
+                    android:minHeight="4dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:progressDrawable="@drawable/styled_progress"
+                    android:secondaryProgress="0"
+                    android:thumb="@drawable/slider_switch" />
+            </RelativeLayout>
+
 
         </LinearLayout>
     </ScrollView>

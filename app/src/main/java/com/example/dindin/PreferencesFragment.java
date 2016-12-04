@@ -41,7 +41,8 @@ public class PreferencesFragment extends Fragment {
     private RadioButton myMaleButton, myFemaleButton;
     private int minAge, maxAge;
     private RangeBar rangebar;
-    private TextView maxage, minagevalue;
+    private SeekBar distancebar;
+    private TextView maxage, minagevalue, searchradius;
 
 
     @Override
@@ -80,8 +81,10 @@ public class PreferencesFragment extends Fragment {
         femaleButton = (RadioButton) root.findViewById(R.id.female);
         bothMandFButton = (RadioButton) root.findViewById(R.id.both);
         rangebar = (RangeBar) root.findViewById(R.id.rangebar1);
+        distancebar = (SeekBar) root.findViewById(R.id.seeklitmitosearch);
         maxage = (TextView) root.findViewById(R.id.maxage);
         minagevalue = (TextView) root.findViewById(R.id.minagevalue);
+        searchradius = (TextView) root.findViewById(R.id. limitotsearchvalue);
 
         myMaleButton = (RadioButton) root.findViewById(R.id.iamamale);
         myFemaleButton = (RadioButton) root.findViewById(R.id.iamafemale);
@@ -89,7 +92,7 @@ public class PreferencesFragment extends Fragment {
 
         rangebar.setTickCount(38);
         rangebar.setTickHeight(0);
-
+        distancebar.setMax(55);
         initView();
 
 
@@ -201,6 +204,27 @@ public class PreferencesFragment extends Fragment {
                 Constants.fbHelp.updateUser();
             }
         });
+
+        distancebar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+               currentPref.setMaxMatchDistance((double) progress);
+                searchradius.setText("" + progress);
+                Constants.fbHelp.updateUser();
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+
 
         return root;
 
@@ -321,6 +345,11 @@ public class PreferencesFragment extends Fragment {
                 maxage.setText("" + maxAge);
             }
 
+        }
+
+        if(currentUser.getPreferences().getMaxMatchDistance() != 0)
+        {
+            distancebar.setProgress((int) currentUser.getPreferences().getMaxMatchDistance());
         }
 
 

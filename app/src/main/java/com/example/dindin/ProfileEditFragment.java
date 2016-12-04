@@ -25,11 +25,9 @@ public class ProfileEditFragment extends Fragment implements View.OnClickListene
     private View view;
     private Button saveButton;
     private Button cancelButton;
-    private EditText name;
     private RadioGroup gender;
     private RadioButton chosengender;
     private EditText short_bio;
-    private EditText age;
     private EditText location;
     private EditText dish;
     private EditText cuisine;
@@ -45,15 +43,12 @@ public class ProfileEditFragment extends Fragment implements View.OnClickListene
         view = root;
         preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         editor = preferences.edit();
-        name = (EditText)view.findViewById(R.id.user_profile_name);
         short_bio = (EditText)view.findViewById(R.id.profile_short_bio);
         location = (EditText)view.findViewById(R.id.profile_location);
         dish = (EditText)view.findViewById(R.id.profile_dish);
         cuisine = (EditText) view.findViewById(R.id.profile_cuisine);
         gender = (RadioGroup)view.findViewById(R.id.user_profile_gender);
-        age = (EditText) view.findViewById(R.id.profile_age);
 
-        imageview = (ImageView) view.findViewById(R.id.user_profile_photo);
         preferences = PreferenceManager.getDefaultSharedPreferences(inflater.getContext());
         saveButton = (Button) view.findViewById(R.id.saveProfileButton);
         saveButton.setOnClickListener(this);
@@ -65,9 +60,8 @@ public class ProfileEditFragment extends Fragment implements View.OnClickListene
                 .error(R.drawable.dislike_off) //
 
                 .into(imageview);
-        setCurrentValues(preferences.getString(Constants.DISPLAY_NAME,""),
+        setCurrentValues(
                 preferences.getString(Constants.GENDER,""),
-                preferences.getString(Constants.AGE,""),
                 preferences.getString(Constants.SHORT_BIO,""),
                 preferences.getString(Constants.LOCATION,""),
                 preferences.getString(Constants.DISH,""),
@@ -76,9 +70,7 @@ public class ProfileEditFragment extends Fragment implements View.OnClickListene
 
         return root;
     }
-    public void setCurrentValues(String name, String gen, String age, String bio, String location, String dish, String cuisine){
-        this.name.setText(name);
-        this.age.setText(age);
+    public void setCurrentValues(String gen, String bio, String location, String dish, String cuisine){
         short_bio.setText(bio);
         this.location.setText(location);
         this.dish.setText(dish);
@@ -96,8 +88,7 @@ public class ProfileEditFragment extends Fragment implements View.OnClickListene
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.saveProfileButton:
-                String name_text = name.getText().toString();
-                String gender_text;
+                String gender_text = "Gender: N/A";
                 if(gender.getCheckedRadioButtonId() == -1){
                 }else{
                     chosengender = (RadioButton)view.findViewById(gender.getCheckedRadioButtonId());
@@ -106,18 +97,25 @@ public class ProfileEditFragment extends Fragment implements View.OnClickListene
                 }
 
                 String short_bio_text = short_bio.getText().toString();
-                String age_text = age.getText().toString();
                 String location_text = location.getText().toString();
                 String dish_text = dish.getText().toString();
                 String cuisine_text = cuisine.getText().toString();
 
-                editor.putString(Constants.DISPLAY_NAME, name_text);
                 editor.putString(Constants.SHORT_BIO, short_bio_text);
-                editor.putString(Constants.AGE, age_text);
                 editor.putString(Constants.LOCATION, location_text);
                 editor.putString(Constants.DISH, dish_text);
                 editor.putString(Constants.CUISINE, cuisine_text);
                 editor.commit();
+/*
+                Constants.currentUser.setProfNickname(name_text);
+                Constants.currentUser.setProfBio(short_bio_text);
+                Constants.currentUser.setProfAge(age_text);
+                Constants.currentUser.setProfLocation(location_text);
+                Constants.currentUser.setProfDish(dish_text);
+                Constants.currentUser.setProfCuisine(cuisine_text);
+                Constants.currentUser.setProfGender(gender_text);
+                FirebaseTestActivity.updateUser();
+*/
                 break;
             case R.id.cancelProfileButton:
                 break;
