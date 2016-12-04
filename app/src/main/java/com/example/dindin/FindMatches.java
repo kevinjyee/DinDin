@@ -858,13 +858,14 @@ public class FindMatches extends Fragment implements View.OnClickListener{
 
     private void userisLiked(boolean isLiked, User matchedUser)
     {
+        Constants.feasibleMatches.remove(matchedUser.getfbId());
         if(isLiked)
         {
             thisMatch = matchedUser;
             String myFaceBookID = Constants.FACEBOOK_ID;
             String currentUserFaceBookId = matchedUsersFaceBookID;
 
-            Constants.usersMatchedwith.add(matchedUser);
+            //Constants.usersMatchedwith.add(matchedUser);
             Query myQuery = Constants.myRefIndiv.orderByChild("fbId").equalTo(Constants.currentUser.getfbId());
 
             myQuery.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -932,6 +933,7 @@ public class FindMatches extends Fragment implements View.OnClickListener{
                         HashMap<String, String> swipedRight = Constants.currentUser.getSwipedRight();
                         swipedRight = (swipedRight == null) ? new HashMap<String, String>() : swipedRight;
                         if(matchSwipedRight.containsKey(Constants.currentUser.getfbId())){
+                            Constants.usersMatchedwith.add(match);
                             AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
                             alertDialog.setTitle("Congratulations, it's a match!");
                             alertDialog.setMessage("Navigate to the matches page to message your new cooking partner.");

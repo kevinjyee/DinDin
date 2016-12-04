@@ -41,12 +41,11 @@ public class AgeRange implements Serializable{
         this.maxAge = maximumAge >= this.minAge ? maximumAge : this.minAge;
     }
 
-    public boolean isInAgeRange(Date date){
-        if(date == null){
+    public boolean isInAgeRange(int age){
+        if(age == 0){
             return true;
         }
-        int age_in_years = findAge(date);
-        return (age_in_years >= this.minAge) && (age_in_years <= this.maxAge);
+        return (age >= this.minAge) && (age <= this.maxAge);
     }
 
     public static int findAge(Date birthday){

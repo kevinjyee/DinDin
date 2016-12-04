@@ -271,7 +271,7 @@ public class User implements Serializable{
 
     public boolean isInAgeRange(User user2){
         try {
-            return this.getPreferences().getAgeRange().isInAgeRange(user2.getBirthday());
+            return this.getPreferences().getAgeRange().isInAgeRange(Integer.parseInt(user2.getAge()));
         } catch(NullPointerException e){
             return true;
         }
@@ -287,7 +287,7 @@ public class User implements Serializable{
 
     public boolean isPotentialMatchFor(User user){
         try {
-            return this.matchesPreferences(user) && isInPreferredRange(user);
+            return this.matchesPreferences(user) && this.isInAgeRange(user) && isInPreferredRange(user);
         } catch(NullPointerException e){
             return true;
         }

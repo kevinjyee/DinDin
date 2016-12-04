@@ -42,7 +42,7 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 public class MessageActivity extends Fragment {
     private ListView matcheslistview;
     private View view;
-    private FloatingActionButton fab;
+    //private FloatingActionButton fab;
     private EditText searchThings;
 
 
@@ -54,6 +54,7 @@ public class MessageActivity extends Fragment {
 
         view = root;
 
+        /*
         fab = (FloatingActionButton) view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -63,6 +64,7 @@ public class MessageActivity extends Fragment {
                 Constants.fbHelp.findMatches();
             }
         });
+        */
         matcheslistview = (ListView) view.findViewById(R.id.menu_right_ListView);
         Utilities currUtils = new Utilities();
         int imageHeightandWidht[] = currUtils.getImageHeightandWidthforMatchView(getActivity());
