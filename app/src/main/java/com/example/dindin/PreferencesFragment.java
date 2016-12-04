@@ -19,6 +19,7 @@ import com.edmodo.rangebar.RangeBar;
 
 import com.example.dindin.com.example.AgeRange;
 import com.example.dindin.utilities.Constants;
+import com.facebook.login.widget.ProfilePictureView;
 
 import static android.R.attr.checked;
 import static com.example.dindin.R.id.radio;
@@ -35,8 +36,9 @@ public class PreferencesFragment extends Fragment {
     private RadioButton cookButton;
     private RadioButton cleanButton;
     private RadioButton maleButton;
-    private RadioButton femaleButtton;
+    private RadioButton femaleButton;
     private RadioButton bothMandFButton;
+    private RadioButton myMaleButton, myFemaleButton;
     private int minAge, maxAge;
     private RangeBar rangebar;
     private TextView maxage, minagevalue;
@@ -52,17 +54,32 @@ public class PreferencesFragment extends Fragment {
 
         //Instantiate User;
         currentUser = Constants.currentUser;
-        currentPref = new Preferences();
+        if(Constants.currentUser.getPreferences() != null)
+        {
+         currentPref = Constants.currentUser.getPreferences();
+        }
+        else
+        {
+            currentPref = new Preferences();
+        }
+
         currentAgeRange = new AgeRange();
         //Init Buttons
         cookButton = (RadioButton) root.findViewById(R.id.cook);
         cleanButton = (RadioButton) root.findViewById(R.id.cleaner);
         maleButton = (RadioButton) root.findViewById(R.id.male);
-        femaleButtton = (RadioButton) root.findViewById(R.id.female);
+        femaleButton = (RadioButton) root.findViewById(R.id.female);
         bothMandFButton = (RadioButton) root.findViewById(R.id.both);
         rangebar = (RangeBar) root.findViewById(R.id.rangebar1);
         maxage = (TextView) root.findViewById(R.id.maxage);
         minagevalue = (TextView) root.findViewById(R.id.minagevalue);
+
+        myMaleButton = (RadioButton) root.findViewById(R.id.iamamale);
+        myFemaleButton = (RadioButton) root.findViewById(R.id.iamafemale);
+
+
+        initView();
+
 
         rangebar.setTickCount(38);
         rangebar.setTickHeight(0);
@@ -77,14 +94,14 @@ public class PreferencesFragment extends Fragment {
                 switch(view.getId()) {
                     case R.id.cook:
                         if (checked)
-                            currentPref.setPreferredTask("Cook");
+                            currentPref.setPreferredTask("cook");
                         Log.e("Cook Selected","Cook");
                         cookButton.setChecked(true);
                         cleanButton.setChecked(false);
                         break;
                     case R.id.cleaner:
                         if (checked)
-                            currentPref.setPreferredTask("Clean");
+                            currentPref.setPreferredTask("clean");
                         Log.e("Clean Selected","Clean");
                         cookButton.setChecked(false);
                         cleanButton.setChecked(true);
@@ -107,21 +124,21 @@ public class PreferencesFragment extends Fragment {
                         if (checked)
                             currentPref.setPreferredGender("male");
                         maleButton.setChecked(true);
-                        femaleButtton.setChecked(false);
+                        femaleButton.setChecked(false);
                         bothMandFButton.setChecked(false);
                         break;
                     case R.id.female:
                         if (checked)
                             currentPref.setPreferredGender("female");
                         maleButton.setChecked(false);
-                        femaleButtton.setChecked(true);
+                        femaleButton.setChecked(true);
                         bothMandFButton.setChecked(false);
                         break;
                     case R.id.both:
                         if (checked)
                             currentPref.setPreferredGender("both");
                         maleButton.setChecked(false);
-                        femaleButtton.setChecked(false);
+                        femaleButton.setChecked(false);
                         bothMandFButton.setChecked(true);
                         break;
                 }
@@ -210,26 +227,78 @@ public class PreferencesFragment extends Fragment {
                 if (checked)
                     currentPref.setPreferredGender("male");
                          maleButton.setChecked(true);
-                        femaleButtton.setChecked(false);
+                        femaleButton.setChecked(false);
                          bothMandFButton.setChecked(false);
                 break;
             case R.id.female:
                 if (checked)
                     currentPref.setPreferredGender("female");
                 maleButton.setChecked(false);
-                femaleButtton.setChecked(true);
+                femaleButton.setChecked(true);
                 bothMandFButton.setChecked(false);
                 break;
             case R.id.both:
                 if (checked)
                     currentPref.setPreferredGender("both");
                 maleButton.setChecked(false);
-                femaleButtton.setChecked(false);
+                femaleButton.setChecked(false);
                 bothMandFButton.setChecked(true);
                 break;
         }
         currentUser.setPreferences(currentPref);
     }
+
+    public void initView()
+    {
+        if(currentUser.getGender() == null)
+        {
+            myMaleButton.setChecked(false);
+            myFemaleButton.setChecked(false);
+        }
+        else if(currentUser.getGender() == "male")
+        {
+            myMaleButton.setChecked(true);
+        }
+        else if(currentUser.getGender() == "female")
+        {
+            myFemaleButton.setChecked(true);
+        }
+
+
+        if(currentUser.getPreferences() == null || currentUser.getPreferences().getPreferredGender() == null)
+        {
+            maleButton.setChecked(false);
+            femaleButton.setChecked(false);
+
+        }
+        else if(currentUser.getPreferences().getPreferredGender() == "female")
+        {
+            femaleButton.setChecked(true);
+        }
+        else if(currentUser.getPreferences().getPreferredGender() == "male")
+        {
+            maleButton.setChecked(true);
+        }
+        else if(currentUser.getPreferences().getPreferredGender() == "both")
+        {
+            bothMandFButton.setChecked(true);
+        }
+
+        if(currentUser.getPreferences() == null || currentUser.getPreferences().getPreferredTask() == null)
+        {
+            cookButton.setChecked(false);
+            cleanButton.setChecked(false);
+        }
+        else if(currentUser.getPreferences().getPreferredTask() == "cook")
+        {
+            cookButton.setChecked(true);
+        }
+        else if(currentUser.getPreferences().getPreferredGender() == "clean")
+        {
+            cleanButton.setChecked(true);
+        }
+    }
+
 
     }
 
