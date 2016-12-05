@@ -19,13 +19,11 @@ Update your Preferences:
 Begin Swiping to find your Match:
 
 ![Alt text](/dindin graphics/UI/Preswipepage.png "dindin")
-
 ![Alt text](/dindin graphics/UI/AfterSwipepage.png "dindin")
 
 Message your matches:
 
 ![Alt text](/dindin graphics/UI/MatchesPage.png "dindin")
-
 ![Alt text](/dindin graphics/UI/MessagePage.png "dindin")
 
 Find a Recipe you would like to eat
