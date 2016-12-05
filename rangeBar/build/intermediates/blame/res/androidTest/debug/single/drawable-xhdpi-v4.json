@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "C:\\Users\\Kevin\\AndroidStudioProjects\\dindin\\rangeBar\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\seek_thumb_normal.png",
+        "source": "C:\\Users\\Kevin\\AndroidStudioProjects\\dindin\\rangeBar\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\seek_thumb_normal.png"
+    },
+    {
+        "merged": "C:\\Users\\Kevin\\AndroidStudioProjects\\dindin\\rangeBar\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\seek_thumb_pressed.png",
+        "source": "C:\\Users\\Kevin\\AndroidStudioProjects\\dindin\\rangeBar\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\seek_thumb_pressed.png"
+    }
+]

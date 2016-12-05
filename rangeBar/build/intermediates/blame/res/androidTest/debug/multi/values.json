@@ -1,0 +1,68 @@
+[
+    {
+        "outputFile": "C:\\Users\\Kevin\\AndroidStudioProjects\\dindin\\rangeBar\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values\\values.xml",
+        "map": [
+            {
+                "to": {
+                    "startLine": 3,
+                    "startColumn": 4,
+                    "startOffset": 663,
+                    "endColumn": 45,
+                    "endOffset": 704
+                },
+                "from": {
+                    "file": "C:\\Users\\Kevin\\AndroidStudioProjects\\dindin\\rangeBar\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 3,
+                        "startColumn": 4,
+                        "startOffset": 663,
+                        "endColumn": 45,
+                        "endOffset": 704
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 4,
+                    "startColumn": 4,
+                    "startOffset": 709,
+                    "endLine": 10,
+                    "endColumn": 12,
+                    "endOffset": 995
+                },
+                "from": {
+                    "file": "C:\\Users\\Kevin\\AndroidStudioProjects\\dindin\\rangeBar\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 4,
+                        "startColumn": 4,
+                        "startOffset": 709,
+                        "endLine": 10,
+                        "endColumn": 12,
+                        "endOffset": 995
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 11,
+                    "startColumn": 4,
+                    "startOffset": 1000,
+                    "endLine": 13,
+                    "endColumn": 12,
+                    "endOffset": 1155
+                },
+                "from": {
+                    "file": "C:\\Users\\Kevin\\AndroidStudioProjects\\dindin\\rangeBar\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 11,
+                        "startColumn": 4,
+                        "startOffset": 1000,
+                        "endLine": 13,
+                        "endColumn": 12,
+                        "endOffset": 1155
+                    }
+                }
+            }
+        ]
+    }
+]
