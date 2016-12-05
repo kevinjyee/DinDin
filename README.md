@@ -24,7 +24,7 @@ Find a Recipe you would like to eat
 
 ![Alt text](/dindin graphics/UI/RecipePage.png "dindin")
 ![Alt text](/dindin graphics/UI/CookBookPage.png "dindin")
-![Alt text](/dindin graphics/UI/RecipePage.png "dindin")
+
 
 Navigate the menu:
 
