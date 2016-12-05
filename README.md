@@ -32,4 +32,4 @@ Davin Siu
 Kevin Yee
 Stephen Tran
 
-![Alt text](/dindin graphics/UI/MeetTheTeam.png "dindin")
+![Alt text](/dindin graphics/UI/MeetTheTeam.PNG "dindin")
