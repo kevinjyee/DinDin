@@ -1,11 +1,8 @@
 # dindin
 
 Welcome to dindin! Where we pair you with your next dinner time partner:
-
-![Alt text](/dindin graphics/UI/splash.png "dindin")
-
-Login with Facebook:
-
+Begin by logging into your facebook:
+![Alt text](/dindin graphics/UI/Splash.png "dindin")
 ![Alt text](/dindin graphics/UI/LoginwithFB.png "dindin")
 
 Update your Profile and Preferences:
