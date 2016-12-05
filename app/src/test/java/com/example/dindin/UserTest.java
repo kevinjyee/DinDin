@@ -46,7 +46,6 @@ public class UserTest {
     User user5;
     User user6;
     User user7;
-    FirebaseHelper fbHelp = new FirebaseHelper("test");
 
     @Before
     public void setUp(){
@@ -181,8 +180,4 @@ public class UserTest {
                                                     // geographic range check.
     }
 
-    @Test
-    public void testAddUser(){
-        fbHelp.addUser(user1);
-    }
 }
