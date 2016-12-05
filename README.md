@@ -8,12 +8,9 @@ Login with Facebook:
 
 ![Alt text](/dindin graphics/UI/LoginwithFB.png "dindin")
 
-Update your Profile:
+Update your Profile and Preferences:
 
 ![Alt text](/dindin graphics/UI/ProfilePage.png "dindin")
-
-Update your Preferences:
-
 ![Alt text](/dindin graphics/UI/PreferencePage.png "dindin")
 
 Begin Swiping to find your Match:
@@ -29,9 +26,6 @@ Message your matches:
 Find a Recipe you would like to eat
 
 ![Alt text](/dindin graphics/UI/RecipePage.png "dindin")
-
-See your saved Recipes:
-
 ![Alt text](/dindin graphics/UI/CookBookPage.png "dindin")
 ![Alt text](/dindin graphics/UI/RecipePage.png "dindin")
 
