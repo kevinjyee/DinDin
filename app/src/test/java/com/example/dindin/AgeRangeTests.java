@@ -24,6 +24,12 @@ public class AgeRangeTests {
     Date TravisBD;
     Date oldBD;
     Date babyBD;
+    int StefanAge = 22;
+    int AmyAge = 26;
+    int nullAge = 0;
+    int TravisAge = 23;
+    int oldAge = 116;
+    int babyAge = 0;
 
 
     @Before
@@ -48,11 +54,11 @@ public class AgeRangeTests {
      * Test if AgeRange properly detects cases where a birthday puts someone out of AgeRange.
      */
     public void testOutOfAgeRange(){
-        assertFalse(typicalAgeRange.isInAgeRange(oldBD));
-        assertFalse(typicalAgeRange.isInAgeRange(AmyBD));
-        assertFalse(illegalAgeRange.isInAgeRange(StefanBD));
-        assertFalse(illegalAgeRange.isInAgeRange(TravisBD));
-        assertFalse(illegalAgeRange.isInAgeRange(oldBD));
+        assertFalse(typicalAgeRange.isInAgeRange(oldAge));
+        assertFalse(typicalAgeRange.isInAgeRange(AmyAge));
+        assertFalse(illegalAgeRange.isInAgeRange(StefanAge));
+        assertFalse(illegalAgeRange.isInAgeRange(TravisAge));
+        assertFalse(illegalAgeRange.isInAgeRange(oldAge));
     }
 
     /* testInAgeRange()
@@ -60,19 +66,19 @@ public class AgeRangeTests {
      */
     @Test
     public void testInRange(){
-        assertTrue(typicalAgeRange.isInAgeRange(StefanBD));
-        assertTrue(typicalAgeRange.isInAgeRange(TravisBD));
-        assertTrue(illegalAgeRange.isInAgeRange(babyBD));
+        assertTrue(typicalAgeRange.isInAgeRange(StefanAge));
+        assertTrue(typicalAgeRange.isInAgeRange(TravisAge));
+        assertTrue(illegalAgeRange.isInAgeRange(babyAge));
     }
 
     @Test
     public void invalidAgeRange(){
-        assertFalse(invalidAgeRange.isInAgeRange(StefanBD));
+        assertFalse(invalidAgeRange.isInAgeRange(StefanAge));
     }
 
     @Test
-    public void emptyAgeRange(){
-        assertFalse(emptyAgeRange.isInAgeRange(StefanBD));
+    public void emptyAgeRange(){ // AgeRanges are initialized to the widest possible value, so this should return true.
+        assertTrue(emptyAgeRange.isInAgeRange(StefanAge));
     }
 
     @Test

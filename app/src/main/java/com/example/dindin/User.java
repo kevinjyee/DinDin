@@ -176,7 +176,7 @@ public class User implements Serializable{
         this.age = age;
     }
 
-    public void setBirthday(Date date){ this.birthday = date; }
+    public void setBirthday(Date date){ this.birthday = date; this.age = Integer.toString(AgeRange.findAge(date)); }
 
     public void setName(String name) {
         this.name = name;

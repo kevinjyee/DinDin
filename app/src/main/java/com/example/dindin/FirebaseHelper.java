@@ -229,6 +229,7 @@ public class FirebaseHelper implements Runnable{
         });
     }
 
+
     public static void updateUserInfo(DataSnapshot snapshot){
         if (snapshot.hasChildren()) {
             DataSnapshot firstChild = snapshot.getChildren().iterator().next();
