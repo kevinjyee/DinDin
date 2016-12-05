@@ -26,6 +26,10 @@ Find a Recipe you would like to eat
 ![Alt text](/dindin graphics/UI/CookBookPage.png "dindin")
 
 
-Navigate the menu:
+Meet the Team:
+Stefan Bordovsky
+Davin Siu
+Kevin Yee
+Stephen Tran
 
-![Alt text](/dindin graphics/UI/NavBar.png "dindin")
+![Alt text](/dindin graphics/UI/MeetTheTeam.png "dindin")
